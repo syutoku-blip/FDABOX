@@ -1,244 +1,357 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <title>販売予測ダッシュボード 再現</title>
-  <style>
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    body { background:#f3f6fb; padding:16px; }
+import { ArrowRight } from "lucide-react";
 
-    :root{
-      --legendW: 150px;
-      --gap: 12px;
-      --radius: 20px;
-    }
+export default function FDAExportHubPage() {
+  return (
+    <div className="relative min-h-screen overflow-x-hidden bg-[#fdfcff] text-slate-900">
+      {/* Decorative blobs */}
+      <div className="pointer-events-none absolute left-[-100px] top-[-100px] h-[400px] w-[400px] rounded-full bg-blue-200 opacity-30 blur-3xl" />
+      <div className="pointer-events-none absolute right-[-100px] top-[300px] h-[300px] w-[300px] rounded-full bg-pink-200 opacity-30 blur-3xl" />
+      <div className="pointer-events-none absolute left-[20%] top-[900px] h-[260px] w-[260px] rounded-full bg-cyan-100 opacity-30 blur-3xl" />
 
-    .card{
-      background:#eaf3ff;
-      border-radius:24px;
-      padding:20px;
-      width:min(1220px, 100%);
-      margin:0 auto;
-      overflow:hidden; /* 横はみ出し防止 */
-    }
-
-    /* ===== セクション ===== */
-    .section{ margin-bottom:16px; }
-    .section-header{
-      display:flex;
-      align-items:flex-start;
-      gap:18px;
-    }
-    .left-legend{
-      width:var(--legendW);
-      flex:0 0 var(--legendW);
-    }
-    .section-title{
-      margin:0 0 10px;
-      font-size:18px;
-      font-weight:900;
-      color:#2b3a4e;
-    }
-    .legend-item{
-      display:flex; align-items:center; gap:8px;
-      margin-bottom:8px;
-      color:#4a5d75;
-      font-size:14px;
-      font-weight:800;
-    }
-    .dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
-    .green{background:#3bb273;}
-    .orange{background:#f5a623;}
-    .red{background:#e94e4e;}
-    .blue1{background:#7fb7ff;}
-    .blue2{background:#4aa0ff;}
-
-    /* 右側（カラム群）は“縮めて収める”ためにmin-width:0が必須 */
-    .right{
-      flex:1;
-      min-width:0;
-    }
-
-    /* ===== 日数カラム：横幅は“常に5等分で収める” ===== */
-    .columns{
-      display:grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap:var(--gap);
-      width:100%;
-    }
-    .col{
-      background:#cfe5ff;
-      border-radius:var(--radius);
-      padding:10px;
-      text-align:center;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
-      min-width:0;
-    }
-    .col-title{
-      background:#e6f1ff;
-      border-radius:14px;
-      padding:7px 0;
-      font-weight:900;
-      margin-bottom:10px;
-      font-size:14px;
-      white-space:nowrap;
-    }
-    .col-box{
-      background:#c7e0ff;
-      border-radius:14px;
-      padding:12px 0;
-      margin-bottom:8px;
-      color:#7d8fa6;
-      font-weight:800;
-      font-size:15px;
-    }
-    .col-box:last-child{ margin-bottom:0; }
-
-    /* ===== 販売数：スクロール領域（横はみ出し禁止） ===== */
-    .scroll-area{
-      background:#d9ebff;
-      border-radius:22px;
-      padding:14px;
-      max-height:260px;
-      overflow-y:auto;
-      overflow-x:hidden; /* 横スクロールさせない */
-    }
-    .scroll-area::-webkit-scrollbar { width:10px; }
-    .scroll-area::-webkit-scrollbar-thumb { background: rgba(74,93,117,0.22); border-radius:999px; }
-    .scroll-area::-webkit-scrollbar-track { background: transparent; }
-
-    /* ===== 追加項目（5列で必ず収める） ===== */
-    .metrics5{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap:12px;
-      width:100%;
-    }
-    .mcard{
-      background:#fff;
-      border-radius:18px;
-      padding:12px 14px;
-      min-height:70px;
-      min-width:0;
-    }
-    .mlabel{ font-size:12px; color:#7a8ca5; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .mval{ font-size:18px; font-weight:900; color:#1f2a3a; }
-
-    /* ===== 下部指標 ===== */
-    .grid-top{
-      display:grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap:12px;
-      margin-top:16px;
-      margin-bottom:14px;
-    }
-    .grid-bottom{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:12px;
-    }
-    .item{
-      background:#fff;
-      border-radius:18px;
-      padding:12px 14px;
-      min-height:70px;
-      min-width:0;
-    }
-    .label{ font-size:12px; color:#7a8ca5; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .num{ font-size:20px; font-weight:900; }
-    .note{ font-size:12px; color:#7a8ca5; line-height:1.5; margin-top:6px; }
-
-    /* さらに狭い場合は余白と文字を詰める（“赤線内に収める”優先） */
-    @media (max-width: 980px){
-      :root{ --legendW: 140px; --gap: 10px; }
-      .card{ padding:16px; }
-      .col-title{ font-size:13px; }
-      .col-box{ font-size:14px; padding:10px 0; }
-      .mval{ font-size:17px; }
-    }
-  </style>
-</head>
-<body>
-<div class="card">
-
-  <!-- 推奨仕入数 -->
-  <div class="section">
-    <div class="section-header">
-      <div class="left-legend">
-        <div class="section-title">推奨仕入数</div>
-        <div class="legend-item"><span class="dot green"></span>コツコツ</div>
-        <div class="legend-item"><span class="dot orange"></span>ほどよく</div>
-        <div class="legend-item"><span class="dot red"></span>しっかり</div>
-      </div>
-
-      <div class="right">
-        <div class="columns">
-          <div class="col"><div class="col-title">180日間</div><div class="col-box">—</div><div class="col-box">—</div><div class="col-box">—</div></div>
-          <div class="col"><div class="col-title">120日間</div><div class="col-box">—</div><div class="col-box">—</div><div class="col-box">—</div></div>
-          <div class="col"><div class="col-title">90日間</div><div class="col-box">119</div><div class="col-box">140</div><div class="col-box">168</div></div>
-          <div class="col"><div class="col-title">60日間</div><div class="col-box">98</div><div class="col-box">115</div><div class="col-box">138</div></div>
-          <div class="col"><div class="col-title">30日間</div><div class="col-box">43</div><div class="col-box">50</div><div class="col-box">60</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 販売数（スクロール） -->
-  <div class="section">
-    <div class="section-header">
-      <div class="left-legend">
-        <div class="section-title">販売数</div>
-        <div class="legend-item"><span class="dot blue1"></span>販売数（実績）</div>
-        <div class="legend-item"><span class="dot blue2"></span>販売予測数</div>
-      </div>
-
-      <div class="right">
-        <div class="scroll-area">
-          <div class="columns">
-            <div class="col"><div class="col-title">180日間</div><div class="col-box">290</div><div class="col-box">—</div></div>
-            <div class="col"><div class="col-title">120日間</div><div class="col-box">—</div><div class="col-box">—</div></div>
-            <div class="col"><div class="col-title">90日間</div><div class="col-box">150</div><div class="col-box">150</div></div>
-            <div class="col"><div class="col-title">60日間</div><div class="col-box">—</div><div class="col-box">120</div></div>
-            <div class="col"><div class="col-title">30日間</div><div class="col-box">55</div><div class="col-box">65</div></div>
+      {/* Header */}
+      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/75 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-3">
+            <img
+              src="/mnt/data/段落テキスト (3).png"
+              alt="FDA Hub logo"
+              className="h-10 w-10 object-contain"
+            />
+            <div>
+              <p className="text-xs font-semibold tracking-[0.2em] text-blue-500">
+                FDA HUB
+              </p>
+              <p className="text-sm font-bold text-slate-900">
+                Export Playground
+              </p>
+            </div>
           </div>
 
-          <div class="metrics5">
-            <div class="mcard"><div class="mlabel">日本最安値</div><div class="mval">—</div></div>
-            <div class="mcard"><div class="mlabel">ライバル偏差×２</div><div class="mval">—</div></div>
-            <div class="mcard"><div class="mlabel">ライバル偏差×４</div><div class="mval">—</div></div>
-            <div class="mcard"><div class="mlabel">送料</div><div class="mval">—</div></div>
-            <div class="mcard"><div class="mlabel">FBA手数料</div><div class="mval">—</div></div>
+          <nav className="hidden gap-8 text-sm font-medium text-slate-600 md:flex">
+            <a href="#overview" className="transition hover:text-slate-950">
+              Overview
+            </a>
+            <a href="#news" className="transition hover:text-slate-950">
+              News
+            </a>
+            <a href="#guides" className="transition hover:text-slate-950">
+              Guides
+            </a>
+            <a href="#tools" className="transition hover:text-slate-950">
+              Tools
+            </a>
+            <a href="#services" className="transition hover:text-slate-950">
+              Services
+            </a>
+          </nav>
 
-            <div class="mcard"><div class="mlabel">入金額</div><div class="mval">—</div></div>
-            <div class="mcard"><div class="mlabel">ライバル増加率</div><div class="mval">—</div></div>
+          <button className="rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:scale-[1.02]">
+            Contact
+          </button>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section
+        id="overview"
+        className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 py-24 lg:grid-cols-2"
+      >
+        <div>
+          <div className="inline-flex items-center rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600">
+            For Food & Cosmetics Exporters
+          </div>
+
+          <h1 className="mt-6 text-5xl font-black leading-[1.05] tracking-tight md:text-6xl">
+            アメリカ輸出を
+            <br />
+            <span className="bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              もっとスマートに、
+            </span>
+            <br />
+            もっと分かりやすく
+          </h1>
+
+          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
+            食品や化粧品をアメリカに輸出する企業のために、
+            FDA関連情報、実務ガイド、チェックリスト、支援サービスを
+            ひとつにまとめたナレッジハブです。
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-4">
+            <button className="rounded-full bg-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition hover:scale-[1.03]">
+              チェックを始める
+            </button>
+            <button className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+              サービスを見る
+            </button>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {[
+              ["Food Export", "食品のFDA対応"],
+              ["Cosmetics", "MoCRA・成分表示"],
+              ["Pre-shipment", "出荷前の確認事項"],
+            ].map(([title, desc]) => (
+              <div
+                key={title}
+                className="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm"
+              >
+                <p className="text-sm font-bold text-slate-900">{title}</p>
+                <p className="mt-1 text-sm text-slate-500">{desc}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+
+        <div className="relative">
+          <div className="absolute -left-6 -top-6 h-full w-full rounded-[32px] bg-gradient-to-tr from-blue-100 to-pink-100 rotate-3" />
+          <div className="relative overflow-hidden rounded-[32px] bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.12)]">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold text-slate-500">
+                  Export Dashboard
+                </p>
+                <p className="mt-1 text-2xl font-bold tracking-tight text-slate-900">
+                  US Compliance Preview
+                </p>
+              </div>
+              <img
+                src="/mnt/data/段落テキスト (1).gif"
+                alt="Working illustration"
+                className="h-24 w-24 object-contain"
+              />
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <div className="rounded-2xl bg-blue-50 p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-500">
+                  Food Export
+                </p>
+                <p className="mt-2 text-base font-semibold text-slate-900">
+                  🇺🇸 FDA施設登録とFCE/SIDの確認
+                </p>
+                <p className="mt-1 text-sm text-slate-600">
+                  加工食品や低酸性食品など、輸出前に確認したい登録要件を整理
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-yellow-50 p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-500">
+                  Cosmetics
+                </p>
+                <p className="mt-2 text-base font-semibold text-slate-900">
+                  💄 MoCRA対応・成分表示チェック
+                </p>
+                <p className="mt-1 text-sm text-slate-600">
+                  化粧品責任者、成分表示、ラベル表現の確認ポイントを把握
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-green-50 p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-600">
+                  Pre-shipment
+                </p>
+                <p className="mt-2 text-base font-semibold text-slate-900">
+                  📋 ラベル・英語表記・輸入者情報の最終確認
+                </p>
+                <p className="mt-1 text-sm text-slate-600">
+                  出荷前に見落としやすい表示・書類・輸入者情報をひとまとめ
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Category cards */}
+      <section className="mx-auto max-w-6xl px-6 py-8">
+        <div className="grid gap-6 md:grid-cols-4">
+          {[
+            ["News", "📢", "FDAニュースや制度更新を確認"],
+            ["Guides", "📘", "実務に使える解説記事を読む"],
+            ["Tools", "🛠", "チェックリストで準備状況を確認"],
+            ["Services", "🚀", "必要な支援サービスへ進む"],
+          ].map(([title, icon, desc]) => (
+            <div key={title} className="group relative">
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-100 to-purple-100 opacity-0 blur transition duration-300 group-hover:opacity-100" />
+              <div className="relative rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div className="text-3xl">{icon}</div>
+                <p className="mt-4 text-lg font-bold text-slate-900">{title}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-500">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured section */}
+      <section id="news" className="mx-auto max-w-6xl px-6 py-20">
+        <div className="mb-10 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-500">
+              Featured
+            </p>
+            <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900">
+              FDA News & Market Topics
+            </h2>
+          </div>
+          <a href="#" className="text-sm font-semibold text-blue-500">
+            もっと見る
+          </a>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-[32px] bg-gradient-to-br from-blue-500 to-cyan-400 p-8 text-white shadow-lg">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/80">
+              Featured Update
+            </p>
+            <h3 className="mt-4 text-3xl font-black leading-tight">
+              食品・化粧品をアメリカへ輸出する前に
+              <br />
+              押さえたい最新FDA対応
+            </h3>
+            <p className="mt-4 max-w-lg text-sm leading-7 text-white/90">
+              食品施設登録、FCE/SID、MoCRA、ラベル表示、輸入者情報など、
+              実務担当者が最初に把握すべきテーマをまとめて確認できます。
+            </p>
+            <button className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-slate-900 transition hover:scale-[1.03]">
+              記事を読む <ArrowRight size={16} />
+            </button>
+          </div>
+
+          <div className="grid gap-4">
+            {[
+              "食品輸出で確認したいFDA施設登録の流れ",
+              "化粧品輸出で気をつけたいMoCRAの基本",
+              "ラベル英語表記の見落としポイント",
+            ].map((item) => (
+              <div
+                key={item}
+                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <p className="text-sm font-semibold text-blue-500">Update</p>
+                <p className="mt-2 text-base font-bold leading-7 text-slate-900">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Guides */}
+      <section id="guides" className="mx-auto max-w-6xl px-6 py-20">
+        <div className="mb-10">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-500">
+            Guides
+          </p>
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900">
+            実務で使えるナレッジ
+          </h2>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {[
+            {
+              title: "食品輸出ガイド",
+              desc: "FDA施設登録、加工区分、輸出前の基本フローを整理",
+              color: "bg-pink-50",
+            },
+            {
+              title: "化粧品輸出ガイド",
+              desc: "MoCRA対応、成分表示、責任者情報の考え方を解説",
+              color: "bg-yellow-50",
+            },
+            {
+              title: "ラベル表示ガイド",
+              desc: "英語表記、輸入者表示、見落としやすい文言を確認",
+              color: "bg-blue-50",
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className={`rounded-[28px] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg ${item.color}`}
+            >
+              <p className="text-sm font-semibold text-slate-500">Guide</p>
+              <h3 className="mt-3 text-xl font-black tracking-tight text-slate-900">
+                {item.title}
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Tools */}
+      <section id="tools" className="mx-auto max-w-6xl px-6 py-20">
+        <div className="mb-10 flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-600">
+              Tools
+            </p>
+            <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900">
+              出荷前チェックツール
+            </h2>
+          </div>
+
+          <img
+            src="/mnt/data/段落テキスト.gif"
+            alt="Social reaction illustration"
+            className="hidden h-20 w-20 object-contain md:block"
+          />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {[
+            "食品輸出チェックリスト",
+            "化粧品輸出チェックリスト",
+            "ラベル・英語表記の確認リスト",
+          ].map((item, idx) => (
+            <div
+              key={item}
+              className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-sm font-bold text-emerald-600">
+                0{idx + 1}
+              </div>
+              <p className="mt-4 text-lg font-black tracking-tight text-slate-900">
+                {item}
+              </p>
+              <p className="mt-2 text-sm leading-7 text-slate-500">
+                要件確認や社内共有に使いやすい形で整理された実務用ツール
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Services CTA */}
+      <section id="services" className="mx-auto max-w-6xl px-6 py-24">
+        <div className="relative overflow-hidden rounded-[36px] bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-400 px-8 py-14 text-center text-white shadow-[0_20px_60px_rgba(59,130,246,0.25)] md:px-12">
+          <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/20 blur-2xl" />
+          <div className="pointer-events-none absolute -left-10 bottom-0 h-32 w-32 rounded-full bg-pink-300/30 blur-2xl" />
+
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">
+            Services
+          </p>
+          <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+            FDA対応を、情報収集だけで終わらせない
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/90 md:text-base">
+            登録支援、ラベル確認、個別コンサルティングまで、
+            必要なタイミングで次のアクションにつなげられます。
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <button className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-slate-900 transition hover:scale-[1.03]">
+              Get Started <ArrowRight size={16} />
+            </button>
+            <button className="rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur transition hover:bg-white/20">
+              相談する
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
-
-  <!-- 下部指標 -->
-  <div class="grid-top">
-    <div class="item"><div class="label">セラー数</div><div class="num">—</div></div>
-    <div class="item"><div class="label">サイズ度</div><div class="num">0</div></div>
-    <div class="item"><div class="label">在庫数</div><div class="num">40</div></div>
-    <div class="item"><div class="label">返品率</div><div class="num">1.6%</div></div>
-    <div class="item"><div class="label">FBA最安値</div><div class="num">—</div></div>
-  </div>
-
-  <div class="grid-bottom">
-    <div class="item"><div class="label">販売価格</div><div class="num">—</div></div>
-    <div class="item">
-      <div class="label">粗利益</div>
-      <div class="num">—</div>
-      <div class="note">
-        ※ 粗利益 ＝ 入金額 −（仕入れ額 × 販売個数）<br>
-        ※ FBA手数料・送料・関税等は別途考慮
-      </div>
-    </div>
-  </div>
-
-</div>
-</body>
-</html>
+  );
+}
