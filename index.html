@@ -6,22 +6,19 @@
     <title>FDA Export Hub</title>
     <style>
       :root {
-        --bg: #fcfcff;
+        --bg: #fbfcff;
         --text: #0f172a;
         --muted: #64748b;
-        --line: #e2e8f0;
+        --line: rgba(226, 232, 240, 0.9);
         --white: #ffffff;
         --blue: #38bdf8;
         --cyan: #67e8f9;
         --violet: #8b5cf6;
         --pink: #f9a8d4;
-        --yellow-soft: #fef9c3;
-        --green-soft: #dcfce7;
-        --blue-soft: #e0f2fe;
-        --pink-soft: #fce7f3;
+        --yellow: #fde68a;
+        --green: #86efac;
         --shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
         --shadow-lg: 0 30px 80px rgba(15, 23, 42, 0.12);
-        --radius: 28px;
       }
 
       * { box-sizing: border-box; }
@@ -29,729 +26,243 @@
       body {
         margin: 0;
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: var(--bg);
         color: var(--text);
+        background:
+          radial-gradient(circle at 0% 0%, rgba(125, 211, 252, 0.25), transparent 18%),
+          radial-gradient(circle at 100% 10%, rgba(249, 168, 212, 0.18), transparent 20%),
+          radial-gradient(circle at 15% 70%, rgba(196, 181, 253, 0.18), transparent 18%),
+          radial-gradient(circle at 85% 85%, rgba(134, 239, 172, 0.14), transparent 18%),
+          linear-gradient(180deg, #fbfcff 0%, #ffffff 100%);
         overflow-x: hidden;
       }
-
       a { color: inherit; text-decoration: none; }
       img { display: block; max-width: 100%; }
 
       .page {
         position: relative;
         min-height: 100vh;
-        background:
-          radial-gradient(circle at top left, rgba(125, 211, 252, 0.35), transparent 20%),
-          radial-gradient(circle at top right, rgba(249, 168, 212, 0.25), transparent 18%),
-          radial-gradient(circle at 20% 55%, rgba(196, 181, 253, 0.2), transparent 16%),
-          linear-gradient(180deg, #fcfcff 0%, #ffffff 100%);
-      }
-
-      .container {
-        width: min(1180px, calc(100% - 48px));
-        margin: 0 auto;
-      }
-
-      .header {
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        backdrop-filter: blur(14px);
-        background: rgba(255, 255, 255, 0.78);
-        border-bottom: 1px solid rgba(226, 232, 240, 0.85);
-      }
-
-      .header-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        padding: 18px 0;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-      }
-
-      .brand-logo {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-        background: white;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-        border: 1px solid var(--line);
-        display: grid;
-        place-items: center;
         overflow: hidden;
       }
-
-      .eyebrow {
-        margin: 0;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: #0ea5e9;
+      .page::before,
+      .page::after {
+        content: "";
+        position: fixed;
+        inset: auto;
+        pointer-events: none;
+        z-index: -1;
+      }
+      .page::before {
+        top: 120px;
+        left: -120px;
+        width: 380px;
+        height: 380px;
+        border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+        background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(139,92,246,0.12));
+        filter: blur(28px);
+      }
+      .page::after {
+        right: -110px;
+        top: 760px;
+        width: 360px;
+        height: 360px;
+        border-radius: 61% 39% 44% 56% / 41% 56% 44% 59%;
+        background: linear-gradient(135deg, rgba(249,168,212,0.2), rgba(250,204,21,0.12));
+        filter: blur(30px);
+      }
+      .mesh {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -2;
+        background-image:
+          linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px);
+        background-size: 44px 44px;
+        mask-image: linear-gradient(180deg, rgba(0,0,0,0.45), transparent 95%);
       }
 
-      .brand-title {
-        margin: 2px 0 0;
-        font-size: 14px;
-        font-weight: 800;
-      }
+      .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
 
-      .nav {
-        display: flex;
-        align-items: center;
-        gap: 28px;
-        color: var(--muted);
-        font-size: 14px;
-        font-weight: 600;
+      .header {
+        position: sticky; top: 0; z-index: 50;
+        background: rgba(255,255,255,0.78);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(14px);
       }
-
+      .header-inner {
+        display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 0;
+      }
+      .brand { display: flex; align-items: center; gap: 14px; }
+      .brand-logo {
+        width: 48px; height: 48px; border-radius: 16px; background: white; border: 1px solid var(--line);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08); display: grid; place-items: center;
+      }
+      .eyebrow { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: .22em; color: #0ea5e9; text-transform: uppercase; }
+      .brand-title { margin: 2px 0 0; font-size: 14px; font-weight: 900; }
+      .nav { display: flex; gap: 28px; font-size: 14px; font-weight: 700; color: var(--muted); }
       .nav a:hover { color: var(--text); }
-
       .btn {
-        border: 0;
-        cursor: pointer;
-        border-radius: 999px;
-        padding: 13px 22px;
-        font-size: 14px;
-        font-weight: 800;
-        transition: 0.22s ease;
+        border: 0; cursor: pointer; border-radius: 999px; padding: 13px 22px; font-size: 14px; font-weight: 800;
+        transition: .22s ease;
       }
-
       .btn:hover { transform: translateY(-1px); }
-      .btn-dark {
-        background: #020617;
-        color: white;
-        box-shadow: 0 12px 24px rgba(2, 6, 23, 0.18);
-      }
-      .btn-primary {
-        background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 50%, #8b5cf6 100%);
-        color: white;
-        box-shadow: 0 16px 30px rgba(56, 189, 248, 0.3);
-      }
-      .btn-light {
-        background: white;
-        color: var(--text);
-        border: 1px solid var(--line);
-      }
+      .btn-dark { background: #020617; color: white; box-shadow: 0 12px 24px rgba(2,6,23,.18); }
+      .btn-primary { background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 50%, #8b5cf6 100%); color: white; box-shadow: 0 16px 30px rgba(56,189,248,.3); }
+      .btn-light { background: white; color: var(--text); border: 1px solid var(--line); }
 
-      .hero {
-        padding: 56px 0 32px;
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: 1.05fr 0.95fr;
-        gap: 56px;
-        align-items: center;
-      }
-
+      .hero { padding: 54px 0 26px; }
+      .hero-grid { display: grid; grid-template-columns: 1.03fr 0.97fr; gap: 56px; align-items: center; }
       .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 16px;
-        border-radius: 999px;
-        border: 1px solid #bae6fd;
-        background: #f0f9ff;
-        color: #0284c7;
-        font-size: 14px;
-        font-weight: 800;
+        display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px;
+        border: 1px solid #bae6fd; background: #f0f9ff; color: #0284c7; font-size: 14px; font-weight: 800;
       }
-
       .hero-title {
-        margin: 20px 0 0;
-        font-size: clamp(44px, 7vw, 78px);
-        line-height: 0.98;
-        letter-spacing: -0.05em;
-        font-weight: 900;
+        margin: 18px 0 0; font-size: clamp(44px, 7vw, 78px); line-height: .98; letter-spacing: -.05em; font-weight: 900;
       }
-
       .gradient-text {
         background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 35%, #8b5cf6 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        -webkit-background-clip: text; background-clip: text; color: transparent;
       }
+      .hero-copy { margin-top: 22px; max-width: 640px; color: var(--muted); font-size: 18px; line-height: 1.9; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
 
-      .hero-copy {
-        margin-top: 22px;
-        max-width: 640px;
-        color: var(--muted);
-        font-size: 18px;
-        line-height: 1.9;
-      }
-
-      .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 14px;
-        margin-top: 32px;
-      }
-
-      .mini-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 34px;
-      }
-
-      .mini-card, .card, .soft-card, .tool-card, .news-side-card {
-        background: rgba(255,255,255,0.92);
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow);
-      }
-
-      .mini-card {
-        border-radius: 22px;
-        padding: 18px;
-      }
-      .mini-card h4 {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 800;
-      }
-      .mini-card p {
-        margin: 6px 0 0;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .visual-wrap {
-        position: relative;
-      }
-
+      .visual-wrap { position: relative; }
       .visual-bg {
-        position: absolute;
-        inset: -16px 12px 16px -16px;
-        border-radius: 34px;
-        transform: rotate(2deg);
-        background: linear-gradient(135deg, rgba(186,230,253,0.95) 0%, rgba(224,231,255,0.96) 46%, rgba(251,207,232,0.9) 100%);
+        position: absolute; inset: -16px 12px 16px -16px; border-radius: 34px; transform: rotate(2deg);
+        background: linear-gradient(135deg, rgba(186,230,253,.95) 0%, rgba(224,231,255,.96) 46%, rgba(251,207,232,.9) 100%);
       }
-
       .visual-card {
-        position: relative;
-        border-radius: 34px;
-        background: rgba(255,255,255,0.94);
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow-lg);
-        padding: 28px;
+        position: relative; border-radius: 34px; background: rgba(255,255,255,.94); border: 1px solid var(--line);
+        box-shadow: var(--shadow-lg); padding: 28px;
       }
-
-      .visual-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 18px;
-      }
-
-      .visual-kicker {
-        margin: 0;
-        color: var(--muted);
-        font-size: 14px;
-        font-weight: 700;
-      }
-
-      .visual-title {
-        margin: 6px 0 0;
-        font-size: 31px;
-        line-height: 1.05;
-        letter-spacing: -0.04em;
-        font-weight: 900;
-      }
-
-      .hero-illustration {
-        width: 104px;
-        height: 104px;
-        object-fit: contain;
-      }
-
-      .stack {
-        display: grid;
-        gap: 14px;
-        margin-top: 24px;
-      }
-
-      .dashboard-row {
-        border-radius: 22px;
-        padding: 18px 18px 16px;
-      }
-
-      .dashboard-row small {
-        display: block;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        margin-bottom: 8px;
-      }
-
-      .dashboard-row h4 {
-        margin: 0;
-        font-size: 17px;
-        line-height: 1.4;
-        font-weight: 900;
-      }
-
-      .dashboard-row p {
-        margin: 6px 0 0;
-        font-size: 14px;
-        line-height: 1.7;
-        color: var(--muted);
-      }
-
-      .bg-blue { background: var(--blue-soft); }
+      .visual-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+      .visual-kicker { margin: 0; color: var(--muted); font-size: 14px; font-weight: 700; }
+      .visual-title { margin: 6px 0 0; font-size: 31px; line-height: 1.05; letter-spacing: -.04em; font-weight: 900; }
+      .hero-illustration { width: 104px; height: 104px; object-fit: contain; }
+      .stack { display: grid; gap: 14px; margin-top: 24px; }
+      .dashboard-row { border-radius: 22px; padding: 18px 18px 16px; }
+      .dashboard-row small { display: block; font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 8px; }
+      .dashboard-row h4 { margin: 0; font-size: 17px; line-height: 1.4; font-weight: 900; }
+      .dashboard-row p { margin: 6px 0 0; font-size: 14px; line-height: 1.7; color: var(--muted); }
+      .bg-blue { background: #e0f2fe; }
       .bg-yellow { background: #fef9e7; }
       .bg-green { background: #eafaf1; }
 
-      .section {
-        padding: 28px 0 0;
-      }
+      .section-space { padding: 72px 0 0; }
+      .section-header small { display: block; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; font-weight: 800; color: #0ea5e9; }
+      .section-header h2 { margin: 10px 0 0; font-size: clamp(32px, 4vw, 46px); line-height: 1.02; letter-spacing: -.04em; font-weight: 900; }
 
-      .section-space {
-        padding: 72px 0 0;
-      }
-
-      .section-header small {
-        display: block;
-        color: #0ea5e9;
-        font-weight: 800;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        font-size: 13px;
-      }
-
-      .section-header h2 {
-        margin: 10px 0 0;
-        font-size: clamp(32px, 4vw, 46px);
-        line-height: 1.02;
-        letter-spacing: -0.04em;
-        font-weight: 900;
-      }
-
-      .categories {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 20px;
-      }
-
-      .category-card {
-        position: relative;
-        border-radius: 28px;
-        overflow: hidden;
-      }
-
-      .category-glow {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        transition: 0.25s ease;
-        filter: blur(18px);
-        border-radius: 28px;
-      }
-
+      .categories { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+      .category-card { position: relative; border-radius: 28px; overflow: hidden; }
+      .category-glow { position: absolute; inset: 0; opacity: 0; transition: .25s ease; filter: blur(18px); border-radius: 28px; }
       .category-card:hover .category-glow { opacity: 1; }
       .category-card:hover .card { transform: translateY(-4px); }
-
       .card {
-        position: relative;
-        border-radius: 28px;
-        padding: 24px;
-        transition: 0.25s ease;
+        position: relative; border-radius: 28px; padding: 24px; transition: .25s ease; background: rgba(255,255,255,.92);
+        border: 1px solid var(--line); box-shadow: var(--shadow);
       }
+      .icon-chip { width: 48px; height: 48px; border-radius: 16px; background: #f8fafc; display: grid; place-items: center; font-size: 20px; }
+      .card h3 { margin: 18px 0 0; font-size: 20px; line-height: 1.1; letter-spacing: -.03em; font-weight: 900; }
+      .card p { margin: 10px 0 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
 
-      .icon-chip {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-        background: #f8fafc;
-        display: grid;
-        place-items: center;
-        font-size: 20px;
+      .board {
+        display: grid; gap: 16px; margin-top: 24px;
       }
+      .board-item {
+        display: grid; grid-template-columns: 120px 1fr 110px; align-items: center; gap: 18px;
+        border-radius: 24px; padding: 18px 22px; background: rgba(255,255,255,.9); border: 1px solid var(--line); box-shadow: var(--shadow);
+        transition: .22s ease;
+      }
+      .board-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+      .board-tag {
+        display: inline-flex; justify-content: center; align-items: center; padding: 10px 14px; border-radius: 999px;
+        font-size: 12px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase;
+      }
+      .tag-food { background: #e0f2fe; color: #0284c7; }
+      .tag-cosmetics { background: #fdf2f8; color: #db2777; }
+      .tag-label { background: #ecfdf5; color: #059669; }
+      .board-main h3 { margin: 0; font-size: 19px; letter-spacing: -.03em; line-height: 1.35; font-weight: 900; }
+      .board-main p { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+      .board-date { justify-self: end; color: var(--muted); font-size: 13px; font-weight: 700; }
 
-      .card h3 {
-        margin: 18px 0 0;
-        font-size: 20px;
-        line-height: 1.1;
-        letter-spacing: -0.03em;
-        font-weight: 900;
+      .guide-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 24px; }
+      .guide-column {
+        background: rgba(255,255,255,.9); border: 1px solid var(--line); border-radius: 32px; box-shadow: var(--shadow); overflow: hidden;
       }
+      .guide-head {
+        padding: 24px 24px 18px; background: linear-gradient(135deg, rgba(224,242,254,.8), rgba(249,250,251,.7)); border-bottom: 1px solid var(--line);
+      }
+      .guide-head.cosmetics { background: linear-gradient(135deg, rgba(252,231,243,.8), rgba(249,250,251,.7)); }
+      .guide-head h3 { margin: 0; font-size: 28px; letter-spacing: -.04em; font-weight: 900; }
+      .guide-head p { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+      .guide-links { padding: 16px; display: grid; gap: 12px; }
+      .guide-link {
+        display: block; padding: 18px 18px; border-radius: 22px; background: white; border: 1px solid var(--line); transition: .22s ease;
+      }
+      .guide-link:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+      .guide-link small { display: block; font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+      .guide-link h4 { margin: 8px 0 0; font-size: 18px; line-height: 1.4; letter-spacing: -.03em; font-weight: 900; }
+      .guide-link p { margin: 7px 0 0; font-size: 14px; line-height: 1.75; color: var(--muted); }
 
-      .card p {
-        margin: 10px 0 0;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.8;
+      .checklist-wrap { margin-top: 24px; }
+      .checklist-hero {
+        position: relative; overflow: hidden; border-radius: 36px; background: white; border: 1px solid var(--line); box-shadow: var(--shadow-lg);
       }
+      .checklist-hero::before {
+        content: ""; position: absolute; inset: 0; background:
+        linear-gradient(135deg, rgba(56,189,248,.08), transparent 40%),
+        linear-gradient(315deg, rgba(251,191,36,.10), transparent 46%),
+        linear-gradient(90deg, rgba(139,92,246,.06), transparent 70%);
+        pointer-events: none;
+      }
+      .checklist-grid { position: relative; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 24px; padding: 28px; }
+      .checklist-copy h3 { margin: 0; font-size: clamp(30px, 4vw, 48px); line-height: 1.02; letter-spacing: -.05em; font-weight: 900; }
+      .checklist-copy p { margin: 14px 0 0; color: var(--muted); font-size: 15px; line-height: 1.9; max-width: 560px; }
+      .checklist-actions { margin-top: 22px; display: flex; gap: 14px; flex-wrap: wrap; }
+      .checklist-art {
+        display: flex; justify-content: center; align-items: center; min-height: 260px; border-radius: 28px;
+        background: linear-gradient(135deg, rgba(248,250,252,.88), rgba(255,255,255,.98)); border: 1px solid var(--line);
+      }
+      .checklist-art img { width: min(260px, 100%); height: auto; object-fit: contain; }
 
-      .feature-grid {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 22px;
+      .services-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 20px; margin-top: 24px; }
+      .service-cell {
+        position: relative; overflow: hidden; border-radius: 28px; padding: 24px; background: rgba(255,255,255,.92); border: 1px solid var(--line); box-shadow: var(--shadow);
+        transition: .22s ease;
       }
-
-      .feature-main {
-        position: relative;
-        overflow: hidden;
-        border-radius: 38px;
-        padding: 34px;
-        color: white;
-        background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 42%, #8b5cf6 100%);
-        box-shadow: 0 22px 70px rgba(56, 189, 248, 0.24);
+      .service-cell:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+      .service-cell::after {
+        content: ""; position: absolute; right: -18px; top: -18px; width: 110px; height: 110px; border-radius: 999px; filter: blur(20px); opacity: .65;
       }
-
-      .feature-main::after {
-        content: "";
-        position: absolute;
-        right: -24px;
-        top: -18px;
-        width: 180px;
-        height: 180px;
-        border-radius: 999px;
-        background: rgba(255,255,255,0.18);
-        filter: blur(18px);
-      }
-
-      .feature-main small {
-        position: relative;
-        font-size: 12px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        font-weight: 800;
-        color: rgba(255,255,255,0.84);
-      }
-
-      .feature-main h3 {
-        position: relative;
-        margin: 18px 0 0;
-        font-size: clamp(30px, 4vw, 48px);
-        line-height: 1.02;
-        letter-spacing: -0.05em;
-        font-weight: 900;
-      }
-
-      .feature-main p {
-        position: relative;
-        max-width: 600px;
-        margin: 18px 0 0;
-        font-size: 15px;
-        line-height: 1.85;
-        color: rgba(255,255,255,0.92);
-      }
-
-      .feature-side {
-        display: grid;
-        gap: 14px;
-      }
-
-      .news-side-card {
-        border-radius: 28px;
-        padding: 22px;
-        transition: 0.22s ease;
-      }
-      .news-side-card:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-      }
-      .news-side-card small {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.16em;
-        font-weight: 800;
-        color: var(--muted);
-      }
-      .news-side-card h4 {
-        margin: 10px 0 0;
-        font-size: 20px;
-        line-height: 1.35;
-        letter-spacing: -0.03em;
-        font-weight: 900;
-      }
-      .news-side-card p {
-        margin: 8px 0 0;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.75;
-      }
-
-      .guides-grid,
-      .tools-grid,
-      .service-list {
-        display: grid;
-        gap: 20px;
-      }
-
-      .guides-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .tools-layout {
-        display: grid;
-        grid-template-columns: 1fr 0.85fr;
-        gap: 28px;
-        align-items: center;
-      }
-      .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-      .soft-card {
-        position: relative;
-        overflow: hidden;
-        border-radius: 32px;
-        padding: 24px;
-        transition: 0.24s ease;
-      }
-      .soft-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-lg);
-      }
-      .soft-card::after {
-        content: "";
-        position: absolute;
-        right: -16px;
-        top: -16px;
-        width: 110px;
-        height: 110px;
-        border-radius: 999px;
-        filter: blur(18px);
-        opacity: 0.65;
-      }
-      .soft-blue::after { background: #bae6fd; }
-      .soft-pink::after { background: #fbcfe8; }
-      .soft-yellow::after { background: #fde68a; }
-      .soft-card small {
-        position: relative;
-        font-size: 13px;
-        font-weight: 800;
-        color: var(--muted);
-      }
-      .soft-card h3 {
-        position: relative;
-        margin: 12px 0 0;
-        font-size: 24px;
-        line-height: 1.12;
-        letter-spacing: -0.04em;
-        font-weight: 900;
-      }
-      .soft-card p {
-        position: relative;
-        margin: 12px 0 0;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.85;
-      }
-      .soft-blue { background: white; }
-      .soft-pink { background: white; }
-      .soft-yellow { background: white; }
-
-      .tool-card {
-        border-radius: 26px;
-        padding: 22px;
-        transition: 0.22s ease;
-      }
-      .tool-card:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-lg);
-      }
-      .tool-badge {
-        width: 42px;
-        height: 42px;
-        border-radius: 999px;
-        display: grid;
-        place-items: center;
-        background: #ecfdf5;
-        color: #059669;
-        font-size: 14px;
-        font-weight: 900;
-      }
-      .tool-card h4 {
-        margin: 14px 0 0;
-        font-size: 18px;
-        line-height: 1.35;
-        letter-spacing: -0.03em;
-        font-weight: 900;
-      }
-      .tool-card p {
-        margin: 8px 0 0;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.8;
-      }
-
-      .tools-visual {
-        position: relative;
-        display: flex;
-        justify-content: center;
-      }
-      .tools-visual-glow {
-        position: absolute;
-        inset: 0;
-        border-radius: 36px;
-        background: linear-gradient(135deg, rgba(253,224,71,0.22), rgba(244,114,182,0.18), rgba(56,189,248,0.22));
-        filter: blur(18px);
-      }
-      .tools-visual-card {
-        position: relative;
-        width: min(420px, 100%);
-        border-radius: 36px;
-        background: rgba(255,255,255,0.94);
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow-lg);
-        padding: 30px;
-        text-align: center;
-      }
-      .tools-visual-card img {
-        width: 160px;
-        height: 160px;
-        object-fit: contain;
-        margin: 0 auto;
-      }
-      .tools-visual-card h3 {
-        margin: 18px 0 0;
-        font-size: 28px;
-        letter-spacing: -0.04em;
-        font-weight: 900;
-      }
-      .tools-visual-card p {
-        margin: 8px 0 0;
-        color: var(--muted);
-        line-height: 1.8;
-        font-size: 14px;
-      }
-
-      .cta {
-        position: relative;
-        overflow: hidden;
-        border-radius: 42px;
-        background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 40%, #8b5cf6 100%);
-        color: white;
-        box-shadow: 0 28px 80px rgba(56, 189, 248, 0.22);
-        padding: 46px;
-      }
-      .cta::before,
-      .cta::after {
-        content: "";
-        position: absolute;
-        border-radius: 999px;
-        filter: blur(18px);
-      }
-      .cta::before {
-        width: 160px;
-        height: 160px;
-        left: -30px;
-        bottom: -24px;
-        background: rgba(251, 207, 232, 0.28);
-      }
-      .cta::after {
-        width: 180px;
-        height: 180px;
-        right: -28px;
-        top: -18px;
-        background: rgba(255,255,255,0.18);
-      }
-      .cta-layout {
-        position: relative;
-        display: grid;
-        grid-template-columns: 1fr 0.92fr;
-        gap: 28px;
-        align-items: center;
-      }
-      .cta small {
-        display: block;
-        font-size: 12px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        font-weight: 800;
-        color: rgba(255,255,255,0.82);
-      }
-      .cta h2 {
-        margin: 12px 0 0;
-        font-size: clamp(32px, 4.5vw, 54px);
-        line-height: 1.02;
-        letter-spacing: -0.05em;
-        font-weight: 900;
-      }
-      .cta p {
-        margin: 16px 0 0;
-        max-width: 680px;
-        font-size: 15px;
-        line-height: 1.9;
-        color: rgba(255,255,255,0.92);
-      }
-      .cta-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 14px;
-        margin-top: 26px;
-      }
-      .btn-white {
-        background: white;
-        color: var(--text);
-      }
-      .btn-ghost {
-        background: rgba(255,255,255,0.12);
-        color: white;
-        border: 1px solid rgba(255,255,255,0.35);
-        backdrop-filter: blur(10px);
-      }
-      .service-list { grid-template-columns: 1fr; }
-      .service-card {
-        border-radius: 24px;
-        background: rgba(255,255,255,0.16);
-        border: 1px solid rgba(255,255,255,0.24);
-        backdrop-filter: blur(10px);
-        padding: 18px 20px;
-      }
-      .service-card h4 {
-        margin: 0;
-        font-size: 20px;
-        font-weight: 900;
-        letter-spacing: -0.03em;
-      }
-      .service-card p {
-        margin: 6px 0 0;
-        font-size: 14px;
-        line-height: 1.75;
-        color: rgba(255,255,255,0.86);
-      }
+      .service-cell:nth-child(1)::after { background: #bae6fd; }
+      .service-cell:nth-child(2)::after { background: #fde68a; }
+      .service-cell:nth-child(3)::after { background: #fbcfe8; }
+      .service-cell:nth-child(4)::after { background: #c4b5fd; }
+      .service-cell small { position: relative; display: block; font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+      .service-cell h3 { position: relative; margin: 10px 0 0; font-size: 22px; line-height: 1.2; letter-spacing: -.04em; font-weight: 900; }
+      .service-cell p { position: relative; margin: 10px 0 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
 
       @media (max-width: 1080px) {
-        .hero-grid,
-        .feature-grid,
-        .tools-layout,
-        .cta-layout {
-          grid-template-columns: 1fr;
-        }
-
-        .categories,
-        .guides-grid,
-        .tools-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
+        .hero-grid, .guide-layout, .checklist-grid { grid-template-columns: 1fr; }
+        .categories, .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .board-item { grid-template-columns: 110px 1fr; }
+        .board-date { justify-self: start; }
       }
-
       @media (max-width: 760px) {
         .container { width: min(100% - 28px, 1180px); }
         .nav { display: none; }
-        .mini-grid,
-        .categories,
-        .guides-grid,
-        .tools-grid {
-          grid-template-columns: 1fr;
-        }
+        .categories, .services-grid { grid-template-columns: 1fr; }
+        .board-item { grid-template-columns: 1fr; }
         .header-inner { padding: 14px 0; }
         .hero { padding-top: 28px; }
         .hero-copy { font-size: 16px; }
-        .visual-card,
-        .feature-main,
-        .cta { padding: 22px; }
+        .visual-card, .checklist-grid { padding: 22px; }
         .visual-title { font-size: 26px; }
       }
     </style>
   </head>
   <body>
+    <div class="mesh"></div>
     <div class="page">
       <header class="header">
         <div class="container header-inner">
@@ -764,20 +275,17 @@
               <p class="brand-title">Export Playground</p>
             </div>
           </div>
-
           <nav class="nav">
-            <a href="#overview">Overview</a>
-            <a href="#news">News</a>
-            <a href="#guides">Guides</a>
+            <a href="#news">NEWS</a>
+            <a href="#guidebook">Guide Book</a>
             <a href="#checklist">Checklist</a>
             <a href="#services">Services</a>
           </nav>
-
           <button class="btn btn-dark">Contact</button>
         </div>
       </header>
 
-      <section class="hero" id="overview">
+      <section class="hero">
         <div class="container hero-grid">
           <div>
             <div class="pill">✨ For Food &amp; Cosmetics Exporters</div>
@@ -787,28 +295,12 @@
               もっと分かりやすく。
             </h1>
             <p class="hero-copy">
-              食品や化粧品をアメリカに輸出する企業向けに、FDAニュース、実務ガイド、
-              チェックリスト、支援サービスをひとつにまとめた情報ハブ。
-              迷子になりやすい情報を、見やすく整理して届けます。
+              食品や化粧品をアメリカに輸出する企業向けに、FDAニュース、外部ブログへの導線、
+              チェックリスト、支援サービスをひとつにまとめた情報ハブ。カテゴリーごとにすっきり整理して見つけやすくしました。
             </p>
             <div class="hero-actions">
-              <button class="btn btn-primary">チェックを始める</button>
-              <button class="btn btn-light">サービスを見る</button>
-            </div>
-
-            <div class="mini-grid">
-              <div class="mini-card">
-                <h4>Food Export</h4>
-                <p>食品のFDA対応</p>
-              </div>
-              <div class="mini-card">
-                <h4>Cosmetics</h4>
-                <p>MoCRA・成分表示</p>
-              </div>
-              <div class="mini-card">
-                <h4>Label Check</h4>
-                <p>出荷前の最終確認</p>
-              </div>
+              <button class="btn btn-primary">NEWSを見る</button>
+              <button class="btn btn-light">Guide Bookへ</button>
             </div>
           </div>
 
@@ -822,7 +314,6 @@
                 </div>
                 <img class="hero-illustration" src="/mnt/data/段落テキスト (1).gif" alt="illustration" />
               </div>
-
               <div class="stack">
                 <div class="dashboard-row bg-blue">
                   <small style="color:#0ea5e9;">Food Export</small>
@@ -845,39 +336,23 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section-space" style="padding-top: 18px;">
         <div class="container categories">
           <div class="category-card">
             <div class="category-glow" style="background:linear-gradient(135deg,#dbeafe,#cffafe)"></div>
-            <div class="card">
-              <div class="icon-chip">📢</div>
-              <h3>News</h3>
-              <p>FDAニュースや制度更新をすばやく確認</p>
-            </div>
+            <div class="card"><div class="icon-chip">📢</div><h3>NEWS</h3><p>掲示板のように最新情報を一覧で確認</p></div>
           </div>
           <div class="category-card">
             <div class="category-glow" style="background:linear-gradient(135deg,#fce7f3,#ffe4e6)"></div>
-            <div class="card">
-              <div class="icon-chip">📘</div>
-              <h3>Guides</h3>
-              <p>食品・化粧品の実務ガイドを読む</p>
-            </div>
+            <div class="card"><div class="icon-chip">📘</div><h3>Guide Book</h3><p>食品・化粧品別に外部ブログへ導線</p></div>
           </div>
           <div class="category-card">
             <div class="category-glow" style="background:linear-gradient(135deg,#dcfce7,#ecfccb)"></div>
-            <div class="card">
-              <div class="icon-chip">🛠</div>
-              <h3>Checklist</h3>
-              <p>出荷前の確認事項をまとめてチェック</p>
-            </div>
+            <div class="card"><div class="icon-chip">🧾</div><h3>Checklist</h3><p>大きなビジュアルから外部チェックへ</p></div>
           </div>
           <div class="category-card">
             <div class="category-glow" style="background:linear-gradient(135deg,#ede9fe,#fae8ff)"></div>
-            <div class="card">
-              <div class="icon-chip">🚀</div>
-              <h3>Services</h3>
-              <p>登録支援やラベル確認サービスへ進む</p>
-            </div>
+            <div class="card"><div class="icon-chip">🚚</div><h3>Services</h3><p>認証取得や物流などの支援をセル表示</p></div>
           </div>
         </div>
       </section>
@@ -885,149 +360,150 @@
       <section class="section-space" id="news">
         <div class="container">
           <div class="section-header">
-            <small>Featured</small>
-            <h2>FDA News &amp; Market Topics</h2>
+            <small>News</small>
+            <h2>最新情報ボード</h2>
           </div>
-
-          <div class="feature-grid" style="margin-top:24px;">
-            <div class="feature-main">
-              <small>Featured Update</small>
-              <h3>食品・化粧品をアメリカへ輸出する前に押さえたい最新FDA対応</h3>
-              <p>
-                食品施設登録、FCE/SID、MoCRA、ラベル表示、輸入者情報など、
-                実務担当者が最初に把握したいテーマをまとめて確認できます。
-              </p>
-              <div class="hero-actions" style="margin-top:28px;">
-                <button class="btn btn-white">記事を読む</button>
+          <div class="board">
+            <div class="board-item">
+              <div class="board-tag tag-food">Food</div>
+              <div class="board-main">
+                <h3>食品輸出に関するFDA登録要件のアップデート</h3>
+                <p>施設登録、加工食品、FCE/SIDの確認に関するトピックを一覧で把握。</p>
               </div>
+              <div class="board-date">2026.04.09</div>
             </div>
-
-            <div class="feature-side">
-              <div class="news-side-card" style="background:#eff6ff;">
-                <small>Food</small>
-                <h4>FDA施設登録で押さえたい基本フロー</h4>
-                <p>食品輸出を始める企業向けに、施設登録から確認の流れまでを整理。</p>
+            <div class="board-item">
+              <div class="board-tag tag-cosmetics">Cosmetics</div>
+              <div class="board-main">
+                <h3>化粧品輸出で押さえたいMoCRA関連情報</h3>
+                <p>責任者情報、成分表示、パッケージ表記の見直しポイントを掲示板形式で整理。</p>
               </div>
-              <div class="news-side-card" style="background:#fefce8;">
-                <small>Cosmetics</small>
-                <h4>MoCRA対応で見落としやすい実務ポイント</h4>
-                <p>責任者情報、成分表示、運用面で注意したい点を解説。</p>
+              <div class="board-date">2026.04.08</div>
+            </div>
+            <div class="board-item">
+              <div class="board-tag tag-label">Label</div>
+              <div class="board-main">
+                <h3>出荷前に確認したいラベル・英語表記の注意点</h3>
+                <p>輸入者情報、英語表記、注意文言など見落としやすい項目をまとめて表示。</p>
               </div>
-              <div class="news-side-card" style="background:#fdf2f8;">
-                <small>Label</small>
-                <h4>ラベル英語表記のよくある抜け漏れ</h4>
-                <p>出荷前に確認したい表示ルールと輸入者情報の基本。</p>
-              </div>
+              <div class="board-date">2026.04.06</div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section-space" id="guides">
+      <section class="section-space" id="guidebook">
         <div class="container">
           <div class="section-header">
-            <small style="color:#8b5cf6;">Guides</small>
-            <h2>実務で使えるナレッジ</h2>
+            <small style="color:#8b5cf6;">Guide Book</small>
+            <h2>食品関連・化粧品関連のブログ導線</h2>
           </div>
+          <div class="guide-layout">
+            <div class="guide-column">
+              <div class="guide-head">
+                <h3>食品関連</h3>
+                <p>食品をアメリカへ輸出する方向けの外部ブログ導線。登録や表示などの実務テーマをカテゴリ化。</p>
+              </div>
+              <div class="guide-links">
+                <a href="#" class="guide-link">
+                  <small>External Blog</small>
+                  <h4>食品施設登録の基本</h4>
+                  <p>FDA施設登録の流れ、対象、準備しておきたい情報を確認。</p>
+                </a>
+                <a href="#" class="guide-link">
+                  <small>External Blog</small>
+                  <h4>FCE/SIDが必要になるケース</h4>
+                  <p>低酸性食品や缶詰食品など、追加登録が必要なパターンを整理。</p>
+                </a>
+                <a href="#" class="guide-link">
+                  <small>External Blog</small>
+                  <h4>食品ラベル表示のポイント</h4>
+                  <p>英語表記や必須表示項目など出荷前に見直したい内容を解説。</p>
+                </a>
+              </div>
+            </div>
 
-          <div class="guides-grid" style="margin-top:24px;">
-            <div class="soft-card soft-blue">
-              <small>Guide</small>
-              <h3>食品輸出ガイド</h3>
-              <p>FDA施設登録、加工区分、FCE/SIDなど食品輸出の基本を整理。</p>
-            </div>
-            <div class="soft-card soft-pink">
-              <small>Guide</small>
-              <h3>化粧品輸出ガイド</h3>
-              <p>MoCRA、成分表示、責任者情報など化粧品輸出の要点を解説。</p>
-            </div>
-            <div class="soft-card soft-yellow">
-              <small>Guide</small>
-              <h3>輸出前ラベルガイド</h3>
-              <p>英語表記、注意文言、輸入者表記など出荷前の見直しに便利。</p>
+            <div class="guide-column">
+              <div class="guide-head cosmetics">
+                <h3>化粧品関連</h3>
+                <p>化粧品をアメリカへ輸出する方向けの外部ブログ導線。MoCRAや成分表示などを分かりやすく整理。</p>
+              </div>
+              <div class="guide-links">
+                <a href="#" class="guide-link">
+                  <small>External Blog</small>
+                  <h4>MoCRA対応の基本</h4>
+                  <p>化粧品輸出で押さえたい制度の全体像と、まず確認したいポイント。</p>
+                </a>
+                <a href="#" class="guide-link">
+                  <small>External Blog</small>
+                  <h4>成分表示と責任者情報の考え方</h4>
+                  <p>ラベル作成時に見落としやすい表示ルールを分かりやすく解説。</p>
+                </a>
+                <a href="#" class="guide-link">
+                  <small>External Blog</small>
+                  <h4>パッケージ表現の注意点</h4>
+                  <p>広告表現やパッケージ上の文言で気をつけたい点を確認。</p>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section class="section-space" id="checklist">
-        <div class="container tools-layout">
-          <div>
-            <div class="section-header">
-              <small style="color:#059669;">Checklist</small>
-              <h2>出荷前に確認したいこと</h2>
-            </div>
-            <p class="hero-copy" style="margin-top:16px; font-size:16px; max-width:620px;">
-              食品も化粧品も、輸出前の確認漏れが後から効いてきます。よくある見落としを、
-              カテゴリーごとに分かりやすく整理しました。
-            </p>
-
-            <div class="tools-grid" style="margin-top:24px;">
-              <div class="tool-card">
-                <div class="tool-badge">01</div>
-                <h4>食品輸出チェックリスト</h4>
-                <p>施設登録や必要書類など、食品輸出前の基本確認を整理。</p>
-              </div>
-              <div class="tool-card">
-                <div class="tool-badge">02</div>
-                <h4>化粧品輸出チェックリスト</h4>
-                <p>MoCRA、責任者、成分表示などの確認項目をまとめて把握。</p>
-              </div>
-              <div class="tool-card">
-                <div class="tool-badge">03</div>
-                <h4>ラベル・英語表記チェック</h4>
-                <p>出荷前に見直したい表示ルールや表現のポイントを確認。</p>
-              </div>
-              <div class="tool-card">
-                <div class="tool-badge">04</div>
-                <h4>輸入者情報の確認</h4>
-                <p>輸入者名、住所、責任表示など、表示で抜けやすい項目を整理。</p>
-              </div>
-            </div>
+        <div class="container">
+          <div class="section-header">
+            <small style="color:#059669;">Checklist</small>
+            <h2>外部チェックリストへ</h2>
           </div>
-
-          <div class="tools-visual">
-            <div class="tools-visual-glow"></div>
-            <div class="tools-visual-card">
-              <img src="/mnt/data/段落テキスト.gif" alt="illustration" />
-              <h3>Quick Export Check</h3>
-              <p>必要情報を先に整理すると、社内確認も問い合わせもスムーズになります。</p>
-            </div>
+          <div class="checklist-wrap">
+            <a href="#" class="checklist-hero">
+              <div class="checklist-grid">
+                <div class="checklist-copy">
+                  <h3>出荷前チェックリストを一枚で確認</h3>
+                  <p>
+                    食品・化粧品のアメリカ輸出で確認したい項目をまとめた外部ページへリンク。
+                    大きなビジュアルからそのまま遷移できる構成にしています。
+                  </p>
+                  <div class="checklist-actions">
+                    <span class="btn btn-primary">Checklistへ移動</span>
+                  </div>
+                </div>
+                <div class="checklist-art">
+                  <img src="/mnt/data/段落テキスト.gif" alt="checklist visual" />
+                </div>
+              </div>
+            </a>
           </div>
         </div>
       </section>
 
       <section class="section-space" id="services" style="padding-bottom:72px;">
         <div class="container">
-          <div class="cta">
-            <div class="cta-layout">
-              <div>
-                <small>Services</small>
-                <h2>情報収集だけで終わらせず、次のアクションへ。</h2>
-                <p>
-                  FDA登録支援、ラベル確認、個別コンサルティングなど、
-                  必要なフェーズに合わせて実務支援へつなげられます。
-                </p>
-                <div class="cta-actions">
-                  <button class="btn btn-white">Get Started</button>
-                  <button class="btn btn-ghost">相談する</button>
-                </div>
-              </div>
-
-              <div class="service-list">
-                <div class="service-card">
-                  <h4>FDA登録支援</h4>
-                  <p>施設登録や関連要件の整理をサポート</p>
-                </div>
-                <div class="service-card">
-                  <h4>ラベル・表示レビュー</h4>
-                  <p>英語表記や輸入者情報の実務確認に対応</p>
-                </div>
-                <div class="service-card">
-                  <h4>化粧品MoCRA相談</h4>
-                  <p>化粧品輸出時の要件整理や運用面の相談に対応</p>
-                </div>
-              </div>
+          <div class="section-header">
+            <small style="color:#ec4899;">Services</small>
+            <h2>サポートサービス</h2>
+          </div>
+          <div class="services-grid">
+            <div class="service-cell">
+              <small>Service 01</small>
+              <h3>FDA認証取得サービス</h3>
+              <p>必要登録や認証取得に向けた要件整理から申請サポートまで対応。</p>
+            </div>
+            <div class="service-cell">
+              <small>Service 02</small>
+              <h3>物流サポート</h3>
+              <p>輸出スキームや配送、輸入者との連携など物流面の支援を提供。</p>
+            </div>
+            <div class="service-cell">
+              <small>Service 03</small>
+              <h3>ラベル・表示確認</h3>
+              <p>英語表記や輸入者情報、パッケージ表現の実務チェックを実施。</p>
+            </div>
+            <div class="service-cell">
+              <small>Service 04</small>
+              <h3>個別コンサルティング</h3>
+              <p>食品・化粧品それぞれの輸出課題に合わせた個別相談に対応。</p>
             </div>
           </div>
         </div>
