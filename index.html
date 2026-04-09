@@ -1,229 +1,843 @@
-import { ArrowRight, ChevronRight, Sparkles, FileText, ShieldCheck, Boxes, Megaphone } from "lucide-react";
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FDA Export Hub</title>
+    <style>
+      :root {
+        --bg: #fcfcff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --line: #e2e8f0;
+        --white: #ffffff;
+        --blue: #38bdf8;
+        --cyan: #67e8f9;
+        --violet: #8b5cf6;
+        --pink: #f9a8d4;
+        --yellow-soft: #fef9c3;
+        --green-soft: #dcfce7;
+        --blue-soft: #e0f2fe;
+        --pink-soft: #fce7f3;
+        --shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+        --shadow-lg: 0 30px 80px rgba(15, 23, 42, 0.12);
+        --radius: 28px;
+      }
 
-export default function FDAExportHubPage() {
-  const categories = [
-    {
-      icon: <Megaphone className="h-5 w-5" />,
-      title: "News",
-      desc: "FDAニュースや制度更新をすばやく確認",
-      color: "from-blue-100 to-cyan-100",
-    },
-    {
-      icon: <FileText className="h-5 w-5" />,
-      title: "Guides",
-      desc: "食品・化粧品の実務ガイドを読む",
-      color: "from-pink-100 to-rose-100",
-    },
-    {
-      icon: <ShieldCheck className="h-5 w-5" />,
-      title: "Checklist",
-      desc: "出荷前の確認事項をまとめてチェック",
-      color: "from-emerald-100 to-lime-100",
-    },
-    {
-      icon: <Boxes className="h-5 w-5" />,
-      title: "Services",
-      desc: "登録支援やラベル確認サービスへ進む",
-      color: "from-violet-100 to-fuchsia-100",
-    },
-  ];
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
 
-  const newsCards = [
-    {
-      tag: "Food",
-      title: "FDA施設登録で押さえたい基本フロー",
-      desc: "食品輸出を始める企業向けに、施設登録から確認の流れまでを整理。",
-      bg: "bg-blue-50",
-    },
-    {
-      tag: "Cosmetics",
-      title: "MoCRA対応で見落としやすい実務ポイント",
-      desc: "責任者情報、成分表示、運用面で注意したい点を解説。",
-      bg: "bg-yellow-50",
-    },
-    {
-      tag: "Label",
-      title: "ラベル英語表記のよくある抜け漏れ",
-      desc: "出荷前に確認したい表示ルールと輸入者情報の基本。",
-      bg: "bg-pink-50",
-    },
-  ];
+      a { color: inherit; text-decoration: none; }
+      img { display: block; max-width: 100%; }
 
-  const guides = [
-    {
-      title: "食品輸出ガイド",
-      desc: "FDA施設登録、加工区分、FCE/SIDなど食品輸出の基本を整理。",
-      tone: "bg-white",
-    },
-    {
-      title: "化粧品輸出ガイド",
-      desc: "MoCRA、成分表示、責任者情報など化粧品輸出の要点を解説。",
-      tone: "bg-white",
-    },
-    {
-      title: "輸出前ラベルガイド",
-      desc: "英語表記、注意文言、輸入者表記など出荷前の見直しに便利。",
-      tone: "bg-white",
-    },
-  ];
+      .page {
+        position: relative;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(125, 211, 252, 0.35), transparent 20%),
+          radial-gradient(circle at top right, rgba(249, 168, 212, 0.25), transparent 18%),
+          radial-gradient(circle at 20% 55%, rgba(196, 181, 253, 0.2), transparent 16%),
+          linear-gradient(180deg, #fcfcff 0%, #ffffff 100%);
+      }
 
-  const checklistItems = [
-    "食品輸出チェックリスト",
-    "化粧品輸出チェックリスト",
-    "ラベル・英語表記チェック",
-    "輸入者情報の確認",
-  ];
+      .container {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+      }
 
-  const services = [
-    "FDA登録支援",
-    "ラベル・表示レビュー",
-    "化粧品MoCRA相談",
-  ];
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(14px);
+        background: rgba(255, 255, 255, 0.78);
+        border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+      }
 
-  return (
-    <div className="min-h-screen overflow-x-hidden bg-[#fcfcff] text-slate-900">
-      {/* background decoration */}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-[-120px] top-[-80px] h-[320px] w-[320px] rounded-full bg-sky-200/50 blur-3xl" />
-        <div className="absolute right-[-80px] top-[140px] h-[280px] w-[280px] rounded-full bg-pink-200/40 blur-3xl" />
-        <div className="absolute left-[20%] top-[780px] h-[220px] w-[220px] rounded-full bg-yellow-100/60 blur-3xl" />
-        <div className="absolute right-[15%] top-[1200px] h-[260px] w-[260px] rounded-full bg-violet-200/30 blur-3xl" />
-      </div>
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 18px 0;
+      }
 
-      {/* header */}
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/75 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
-              <img
-                src="/mnt/data/段落テキスト (3).png"
-                alt="logo"
-                className="h-8 w-8 object-contain"
-              />
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: white;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        border: 1px solid var(--line);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      .eyebrow {
+        margin: 0;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #0ea5e9;
+      }
+
+      .brand-title {
+        margin: 2px 0 0;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .nav a:hover { color: var(--text); }
+
+      .btn {
+        border: 0;
+        cursor: pointer;
+        border-radius: 999px;
+        padding: 13px 22px;
+        font-size: 14px;
+        font-weight: 800;
+        transition: 0.22s ease;
+      }
+
+      .btn:hover { transform: translateY(-1px); }
+      .btn-dark {
+        background: #020617;
+        color: white;
+        box-shadow: 0 12px 24px rgba(2, 6, 23, 0.18);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 50%, #8b5cf6 100%);
+        color: white;
+        box-shadow: 0 16px 30px rgba(56, 189, 248, 0.3);
+      }
+      .btn-light {
+        background: white;
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+
+      .hero {
+        padding: 56px 0 32px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 56px;
+        align-items: center;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        border: 1px solid #bae6fd;
+        background: #f0f9ff;
+        color: #0284c7;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .hero-title {
+        margin: 20px 0 0;
+        font-size: clamp(44px, 7vw, 78px);
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+        font-weight: 900;
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 35%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero-copy {
+        margin-top: 22px;
+        max-width: 640px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.9;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 32px;
+      }
+
+      .mini-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .mini-card, .card, .soft-card, .tool-card, .news-side-card {
+        background: rgba(255,255,255,0.92);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+
+      .mini-card {
+        border-radius: 22px;
+        padding: 18px;
+      }
+      .mini-card h4 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 800;
+      }
+      .mini-card p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .visual-wrap {
+        position: relative;
+      }
+
+      .visual-bg {
+        position: absolute;
+        inset: -16px 12px 16px -16px;
+        border-radius: 34px;
+        transform: rotate(2deg);
+        background: linear-gradient(135deg, rgba(186,230,253,0.95) 0%, rgba(224,231,255,0.96) 46%, rgba(251,207,232,0.9) 100%);
+      }
+
+      .visual-card {
+        position: relative;
+        border-radius: 34px;
+        background: rgba(255,255,255,0.94);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-lg);
+        padding: 28px;
+      }
+
+      .visual-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .visual-kicker {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .visual-title {
+        margin: 6px 0 0;
+        font-size: 31px;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+      }
+
+      .hero-illustration {
+        width: 104px;
+        height: 104px;
+        object-fit: contain;
+      }
+
+      .stack {
+        display: grid;
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .dashboard-row {
+        border-radius: 22px;
+        padding: 18px 18px 16px;
+      }
+
+      .dashboard-row small {
+        display: block;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .dashboard-row h4 {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.4;
+        font-weight: 900;
+      }
+
+      .dashboard-row p {
+        margin: 6px 0 0;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .bg-blue { background: var(--blue-soft); }
+      .bg-yellow { background: #fef9e7; }
+      .bg-green { background: #eafaf1; }
+
+      .section {
+        padding: 28px 0 0;
+      }
+
+      .section-space {
+        padding: 72px 0 0;
+      }
+
+      .section-header small {
+        display: block;
+        color: #0ea5e9;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-size: 13px;
+      }
+
+      .section-header h2 {
+        margin: 10px 0 0;
+        font-size: clamp(32px, 4vw, 46px);
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+      }
+
+      .categories {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .category-card {
+        position: relative;
+        border-radius: 28px;
+        overflow: hidden;
+      }
+
+      .category-glow {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: 0.25s ease;
+        filter: blur(18px);
+        border-radius: 28px;
+      }
+
+      .category-card:hover .category-glow { opacity: 1; }
+      .category-card:hover .card { transform: translateY(-4px); }
+
+      .card {
+        position: relative;
+        border-radius: 28px;
+        padding: 24px;
+        transition: 0.25s ease;
+      }
+
+      .icon-chip {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: #f8fafc;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+      }
+
+      .card h3 {
+        margin: 18px 0 0;
+        font-size: 20px;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        font-weight: 900;
+      }
+
+      .card p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 22px;
+      }
+
+      .feature-main {
+        position: relative;
+        overflow: hidden;
+        border-radius: 38px;
+        padding: 34px;
+        color: white;
+        background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 42%, #8b5cf6 100%);
+        box-shadow: 0 22px 70px rgba(56, 189, 248, 0.24);
+      }
+
+      .feature-main::after {
+        content: "";
+        position: absolute;
+        right: -24px;
+        top: -18px;
+        width: 180px;
+        height: 180px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.18);
+        filter: blur(18px);
+      }
+
+      .feature-main small {
+        position: relative;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: rgba(255,255,255,0.84);
+      }
+
+      .feature-main h3 {
+        position: relative;
+        margin: 18px 0 0;
+        font-size: clamp(30px, 4vw, 48px);
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+        font-weight: 900;
+      }
+
+      .feature-main p {
+        position: relative;
+        max-width: 600px;
+        margin: 18px 0 0;
+        font-size: 15px;
+        line-height: 1.85;
+        color: rgba(255,255,255,0.92);
+      }
+
+      .feature-side {
+        display: grid;
+        gap: 14px;
+      }
+
+      .news-side-card {
+        border-radius: 28px;
+        padding: 22px;
+        transition: 0.22s ease;
+      }
+      .news-side-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+      .news-side-card small {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-weight: 800;
+        color: var(--muted);
+      }
+      .news-side-card h4 {
+        margin: 10px 0 0;
+        font-size: 20px;
+        line-height: 1.35;
+        letter-spacing: -0.03em;
+        font-weight: 900;
+      }
+      .news-side-card p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .guides-grid,
+      .tools-grid,
+      .service-list {
+        display: grid;
+        gap: 20px;
+      }
+
+      .guides-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .tools-layout {
+        display: grid;
+        grid-template-columns: 1fr 0.85fr;
+        gap: 28px;
+        align-items: center;
+      }
+      .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      .soft-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 32px;
+        padding: 24px;
+        transition: 0.24s ease;
+      }
+      .soft-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+      .soft-card::after {
+        content: "";
+        position: absolute;
+        right: -16px;
+        top: -16px;
+        width: 110px;
+        height: 110px;
+        border-radius: 999px;
+        filter: blur(18px);
+        opacity: 0.65;
+      }
+      .soft-blue::after { background: #bae6fd; }
+      .soft-pink::after { background: #fbcfe8; }
+      .soft-yellow::after { background: #fde68a; }
+      .soft-card small {
+        position: relative;
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+      .soft-card h3 {
+        position: relative;
+        margin: 12px 0 0;
+        font-size: 24px;
+        line-height: 1.12;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+      }
+      .soft-card p {
+        position: relative;
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.85;
+      }
+      .soft-blue { background: white; }
+      .soft-pink { background: white; }
+      .soft-yellow { background: white; }
+
+      .tool-card {
+        border-radius: 26px;
+        padding: 22px;
+        transition: 0.22s ease;
+      }
+      .tool-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+      }
+      .tool-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: #ecfdf5;
+        color: #059669;
+        font-size: 14px;
+        font-weight: 900;
+      }
+      .tool-card h4 {
+        margin: 14px 0 0;
+        font-size: 18px;
+        line-height: 1.35;
+        letter-spacing: -0.03em;
+        font-weight: 900;
+      }
+      .tool-card p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .tools-visual {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+      .tools-visual-glow {
+        position: absolute;
+        inset: 0;
+        border-radius: 36px;
+        background: linear-gradient(135deg, rgba(253,224,71,0.22), rgba(244,114,182,0.18), rgba(56,189,248,0.22));
+        filter: blur(18px);
+      }
+      .tools-visual-card {
+        position: relative;
+        width: min(420px, 100%);
+        border-radius: 36px;
+        background: rgba(255,255,255,0.94);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-lg);
+        padding: 30px;
+        text-align: center;
+      }
+      .tools-visual-card img {
+        width: 160px;
+        height: 160px;
+        object-fit: contain;
+        margin: 0 auto;
+      }
+      .tools-visual-card h3 {
+        margin: 18px 0 0;
+        font-size: 28px;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+      }
+      .tools-visual-card p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 14px;
+      }
+
+      .cta {
+        position: relative;
+        overflow: hidden;
+        border-radius: 42px;
+        background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 40%, #8b5cf6 100%);
+        color: white;
+        box-shadow: 0 28px 80px rgba(56, 189, 248, 0.22);
+        padding: 46px;
+      }
+      .cta::before,
+      .cta::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(18px);
+      }
+      .cta::before {
+        width: 160px;
+        height: 160px;
+        left: -30px;
+        bottom: -24px;
+        background: rgba(251, 207, 232, 0.28);
+      }
+      .cta::after {
+        width: 180px;
+        height: 180px;
+        right: -28px;
+        top: -18px;
+        background: rgba(255,255,255,0.18);
+      }
+      .cta-layout {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 0.92fr;
+        gap: 28px;
+        align-items: center;
+      }
+      .cta small {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: rgba(255,255,255,0.82);
+      }
+      .cta h2 {
+        margin: 12px 0 0;
+        font-size: clamp(32px, 4.5vw, 54px);
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+        font-weight: 900;
+      }
+      .cta p {
+        margin: 16px 0 0;
+        max-width: 680px;
+        font-size: 15px;
+        line-height: 1.9;
+        color: rgba(255,255,255,0.92);
+      }
+      .cta-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 26px;
+      }
+      .btn-white {
+        background: white;
+        color: var(--text);
+      }
+      .btn-ghost {
+        background: rgba(255,255,255,0.12);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.35);
+        backdrop-filter: blur(10px);
+      }
+      .service-list { grid-template-columns: 1fr; }
+      .service-card {
+        border-radius: 24px;
+        background: rgba(255,255,255,0.16);
+        border: 1px solid rgba(255,255,255,0.24);
+        backdrop-filter: blur(10px);
+        padding: 18px 20px;
+      }
+      .service-card h4 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+      }
+      .service-card p {
+        margin: 6px 0 0;
+        font-size: 14px;
+        line-height: 1.75;
+        color: rgba(255,255,255,0.86);
+      }
+
+      @media (max-width: 1080px) {
+        .hero-grid,
+        .feature-grid,
+        .tools-layout,
+        .cta-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .categories,
+        .guides-grid,
+        .tools-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .container { width: min(100% - 28px, 1180px); }
+        .nav { display: none; }
+        .mini-grid,
+        .categories,
+        .guides-grid,
+        .tools-grid {
+          grid-template-columns: 1fr;
+        }
+        .header-inner { padding: 14px 0; }
+        .hero { padding-top: 28px; }
+        .hero-copy { font-size: 16px; }
+        .visual-card,
+        .feature-main,
+        .cta { padding: 22px; }
+        .visual-title { font-size: 26px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="container header-inner">
+          <div class="brand">
+            <div class="brand-logo">
+              <img src="/mnt/data/段落テキスト (3).png" alt="logo" style="width:32px;height:32px;object-fit:contain;" />
             </div>
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-sky-500">
-                FDA HUB
-              </p>
-              <p className="text-sm font-bold text-slate-900">Export Playground</p>
+              <p class="eyebrow">FDA HUB</p>
+              <p class="brand-title">Export Playground</p>
             </div>
           </div>
 
-          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
-            <a href="#overview" className="transition hover:text-slate-950">Overview</a>
-            <a href="#news" className="transition hover:text-slate-950">News</a>
-            <a href="#guides" className="transition hover:text-slate-950">Guides</a>
-            <a href="#checklist" className="transition hover:text-slate-950">Checklist</a>
-            <a href="#services" className="transition hover:text-slate-950">Services</a>
+          <nav class="nav">
+            <a href="#overview">Overview</a>
+            <a href="#news">News</a>
+            <a href="#guides">Guides</a>
+            <a href="#checklist">Checklist</a>
+            <a href="#services">Services</a>
           </nav>
 
-          <button className="rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:scale-[1.02]">
-            Contact
-          </button>
+          <button class="btn btn-dark">Contact</button>
         </div>
       </header>
 
-      {/* hero */}
-      <section id="overview" className="mx-auto max-w-7xl px-6 pb-16 pt-16 lg:px-8 lg:pb-24 lg:pt-20">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+      <section class="hero" id="overview">
+        <div class="container hero-grid">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-600">
-              <Sparkles className="h-4 w-4" />
-              For Food & Cosmetics Exporters
-            </div>
-
-            <h1 className="mt-6 text-5xl font-black leading-[1.02] tracking-[-0.04em] text-slate-950 md:text-6xl xl:text-7xl">
-              アメリカ輸出を
-              <br />
-              <span className="bg-gradient-to-r from-sky-500 via-cyan-400 to-violet-500 bg-clip-text text-transparent">
-                もっとPOPに、
-              </span>
-              <br />
+            <div class="pill">✨ For Food &amp; Cosmetics Exporters</div>
+            <h1 class="hero-title">
+              アメリカ輸出を<br />
+              <span class="gradient-text">もっとPOPに、</span><br />
               もっと分かりやすく。
             </h1>
-
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+            <p class="hero-copy">
               食品や化粧品をアメリカに輸出する企業向けに、FDAニュース、実務ガイド、
               チェックリスト、支援サービスをひとつにまとめた情報ハブ。
               迷子になりやすい情報を、見やすく整理して届けます。
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <button className="rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(14,165,233,0.25)] transition hover:scale-[1.03]">
-                チェックを始める
-              </button>
-              <button className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
-                サービスを見る
-              </button>
+            <div class="hero-actions">
+              <button class="btn btn-primary">チェックを始める</button>
+              <button class="btn btn-light">サービスを見る</button>
             </div>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
-              {[
-                ["Food Export", "食品のFDA対応"],
-                ["Cosmetics", "MoCRA・成分表示"],
-                ["Label Check", "出荷前の最終確認"],
-              ].map(([title, desc]) => (
-                <div key={title} className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
-                  <p className="text-sm font-bold text-slate-900">{title}</p>
-                  <p className="mt-1 text-sm text-slate-500">{desc}</p>
-                </div>
-              ))}
+            <div class="mini-grid">
+              <div class="mini-card">
+                <h4>Food Export</h4>
+                <p>食品のFDA対応</p>
+              </div>
+              <div class="mini-card">
+                <h4>Cosmetics</h4>
+                <p>MoCRA・成分表示</p>
+              </div>
+              <div class="mini-card">
+                <h4>Label Check</h4>
+                <p>出荷前の最終確認</p>
+              </div>
             </div>
           </div>
 
-          {/* hero visual */}
-          <div className="relative">
-            <div className="absolute -left-5 -top-5 h-full w-full rounded-[34px] bg-gradient-to-br from-sky-100 via-violet-100 to-pink-100 rotate-[2deg]" />
-            <div className="relative overflow-hidden rounded-[34px] bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.12)] ring-1 ring-slate-200">
-              <div className="flex items-start justify-between gap-4">
+          <div class="visual-wrap">
+            <div class="visual-bg"></div>
+            <div class="visual-card">
+              <div class="visual-header">
                 <div>
-                  <p className="text-sm font-semibold text-slate-500">Export Dashboard</p>
-                  <h2 className="mt-1 text-2xl font-black tracking-tight text-slate-950">
-                    US Compliance Preview
-                  </h2>
+                  <p class="visual-kicker">Export Dashboard</p>
+                  <h2 class="visual-title">US Compliance Preview</h2>
                 </div>
-                <img
-                  src="/mnt/data/段落テキスト (1).gif"
-                  alt="working illustration"
-                  className="h-24 w-24 object-contain"
-                />
+                <img class="hero-illustration" src="/mnt/data/段落テキスト (1).gif" alt="illustration" />
               </div>
 
-              <div className="mt-6 space-y-4">
-                <div className="rounded-2xl bg-blue-50 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-500">
-                    Food Export
-                  </p>
-                  <p className="mt-2 text-base font-bold text-slate-900">
-                    🇺🇸 FDA施設登録とFCE/SIDの確認
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
-                    加工食品や低酸性食品など、輸出前に押さえたい登録要件を整理
-                  </p>
+              <div class="stack">
+                <div class="dashboard-row bg-blue">
+                  <small style="color:#0ea5e9;">Food Export</small>
+                  <h4>🇺🇸 FDA施設登録とFCE/SIDの確認</h4>
+                  <p>加工食品や低酸性食品など、輸出前に押さえたい登録要件を整理</p>
                 </div>
-
-                <div className="rounded-2xl bg-yellow-50 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-500">
-                    Cosmetics
-                  </p>
-                  <p className="mt-2 text-base font-bold text-slate-900">
-                    💄 MoCRA対応・成分表示チェック
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
-                    化粧品責任者、成分表示、ラベル表現の確認ポイントを把握
-                  </p>
+                <div class="dashboard-row bg-yellow">
+                  <small style="color:#f59e0b;">Cosmetics</small>
+                  <h4>💄 MoCRA対応・成分表示チェック</h4>
+                  <p>化粧品責任者、成分表示、ラベル表現の確認ポイントを把握</p>
                 </div>
-
-                <div className="rounded-2xl bg-emerald-50 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-600">
-                    Pre-shipment
-                  </p>
-                  <p className="mt-2 text-base font-bold text-slate-900">
-                    📋 ラベル・英語表記・輸入者情報の最終確認
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
-                    出荷前に見落としやすい表示や書類をひとまとめでチェック
-                  </p>
+                <div class="dashboard-row bg-green">
+                  <small style="color:#059669;">Pre-shipment</small>
+                  <h4>📋 ラベル・英語表記・輸入者情報の最終確認</h4>
+                  <p>出荷前に見落としやすい表示や書類をひとまとめでチェック</p>
                 </div>
               </div>
             </div>
@@ -231,210 +845,193 @@ export default function FDAExportHubPage() {
         </div>
       </section>
 
-      {/* categories */}
-      <section className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {categories.map((item) => (
-            <div key={item.title} className="group relative">
-              <div className={`absolute inset-0 rounded-[28px] bg-gradient-to-br ${item.color} opacity-0 blur transition duration-300 group-hover:opacity-100`} />
-              <div className="relative rounded-[28px] bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-50 text-slate-800">
-                  {item.icon}
-                </div>
-                <h3 className="mt-4 text-lg font-black tracking-tight text-slate-950">{item.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-500">{item.desc}</p>
-              </div>
+      <section class="section">
+        <div class="container categories">
+          <div class="category-card">
+            <div class="category-glow" style="background:linear-gradient(135deg,#dbeafe,#cffafe)"></div>
+            <div class="card">
+              <div class="icon-chip">📢</div>
+              <h3>News</h3>
+              <p>FDAニュースや制度更新をすばやく確認</p>
             </div>
-          ))}
+          </div>
+          <div class="category-card">
+            <div class="category-glow" style="background:linear-gradient(135deg,#fce7f3,#ffe4e6)"></div>
+            <div class="card">
+              <div class="icon-chip">📘</div>
+              <h3>Guides</h3>
+              <p>食品・化粧品の実務ガイドを読む</p>
+            </div>
+          </div>
+          <div class="category-card">
+            <div class="category-glow" style="background:linear-gradient(135deg,#dcfce7,#ecfccb)"></div>
+            <div class="card">
+              <div class="icon-chip">🛠</div>
+              <h3>Checklist</h3>
+              <p>出荷前の確認事項をまとめてチェック</p>
+            </div>
+          </div>
+          <div class="category-card">
+            <div class="category-glow" style="background:linear-gradient(135deg,#ede9fe,#fae8ff)"></div>
+            <div class="card">
+              <div class="icon-chip">🚀</div>
+              <h3>Services</h3>
+              <p>登録支援やラベル確認サービスへ進む</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* featured/news */}
-      <section id="news" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <div className="mb-10 flex items-end justify-between gap-4">
+      <section class="section-space" id="news">
+        <div class="container">
+          <div class="section-header">
+            <small>Featured</small>
+            <h2>FDA News &amp; Market Topics</h2>
+          </div>
+
+          <div class="feature-grid" style="margin-top:24px;">
+            <div class="feature-main">
+              <small>Featured Update</small>
+              <h3>食品・化粧品をアメリカへ輸出する前に押さえたい最新FDA対応</h3>
+              <p>
+                食品施設登録、FCE/SID、MoCRA、ラベル表示、輸入者情報など、
+                実務担当者が最初に把握したいテーマをまとめて確認できます。
+              </p>
+              <div class="hero-actions" style="margin-top:28px;">
+                <button class="btn btn-white">記事を読む</button>
+              </div>
+            </div>
+
+            <div class="feature-side">
+              <div class="news-side-card" style="background:#eff6ff;">
+                <small>Food</small>
+                <h4>FDA施設登録で押さえたい基本フロー</h4>
+                <p>食品輸出を始める企業向けに、施設登録から確認の流れまでを整理。</p>
+              </div>
+              <div class="news-side-card" style="background:#fefce8;">
+                <small>Cosmetics</small>
+                <h4>MoCRA対応で見落としやすい実務ポイント</h4>
+                <p>責任者情報、成分表示、運用面で注意したい点を解説。</p>
+              </div>
+              <div class="news-side-card" style="background:#fdf2f8;">
+                <small>Label</small>
+                <h4>ラベル英語表記のよくある抜け漏れ</h4>
+                <p>出荷前に確認したい表示ルールと輸入者情報の基本。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-space" id="guides">
+        <div class="container">
+          <div class="section-header">
+            <small style="color:#8b5cf6;">Guides</small>
+            <h2>実務で使えるナレッジ</h2>
+          </div>
+
+          <div class="guides-grid" style="margin-top:24px;">
+            <div class="soft-card soft-blue">
+              <small>Guide</small>
+              <h3>食品輸出ガイド</h3>
+              <p>FDA施設登録、加工区分、FCE/SIDなど食品輸出の基本を整理。</p>
+            </div>
+            <div class="soft-card soft-pink">
+              <small>Guide</small>
+              <h3>化粧品輸出ガイド</h3>
+              <p>MoCRA、成分表示、責任者情報など化粧品輸出の要点を解説。</p>
+            </div>
+            <div class="soft-card soft-yellow">
+              <small>Guide</small>
+              <h3>輸出前ラベルガイド</h3>
+              <p>英語表記、注意文言、輸入者表記など出荷前の見直しに便利。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-space" id="checklist">
+        <div class="container tools-layout">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-500">
-              Featured
+            <div class="section-header">
+              <small style="color:#059669;">Checklist</small>
+              <h2>出荷前に確認したいこと</h2>
+            </div>
+            <p class="hero-copy" style="margin-top:16px; font-size:16px; max-width:620px;">
+              食品も化粧品も、輸出前の確認漏れが後から効いてきます。よくある見落としを、
+              カテゴリーごとに分かりやすく整理しました。
             </p>
-            <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 md:text-4xl">
-              FDA News & Market Topics
-            </h2>
+
+            <div class="tools-grid" style="margin-top:24px;">
+              <div class="tool-card">
+                <div class="tool-badge">01</div>
+                <h4>食品輸出チェックリスト</h4>
+                <p>施設登録や必要書類など、食品輸出前の基本確認を整理。</p>
+              </div>
+              <div class="tool-card">
+                <div class="tool-badge">02</div>
+                <h4>化粧品輸出チェックリスト</h4>
+                <p>MoCRA、責任者、成分表示などの確認項目をまとめて把握。</p>
+              </div>
+              <div class="tool-card">
+                <div class="tool-badge">03</div>
+                <h4>ラベル・英語表記チェック</h4>
+                <p>出荷前に見直したい表示ルールや表現のポイントを確認。</p>
+              </div>
+              <div class="tool-card">
+                <div class="tool-badge">04</div>
+                <h4>輸入者情報の確認</h4>
+                <p>輸入者名、住所、責任表示など、表示で抜けやすい項目を整理。</p>
+              </div>
+            </div>
           </div>
-          <a href="#" className="hidden text-sm font-semibold text-sky-500 md:block">
-            もっと見る
-          </a>
+
+          <div class="tools-visual">
+            <div class="tools-visual-glow"></div>
+            <div class="tools-visual-card">
+              <img src="/mnt/data/段落テキスト.gif" alt="illustration" />
+              <h3>Quick Export Check</h3>
+              <p>必要情報を先に整理すると、社内確認も問い合わせもスムーズになります。</p>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="relative overflow-hidden rounded-[36px] bg-gradient-to-br from-sky-500 via-cyan-400 to-violet-500 p-8 text-white shadow-[0_20px_60px_rgba(59,130,246,0.25)]">
-            <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">
-              Featured Update
-            </p>
-            <h3 className="mt-4 text-3xl font-black leading-tight md:text-4xl">
-              食品・化粧品をアメリカへ輸出する前に
-              <br />
-              押さえたい最新FDA対応
-            </h3>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-white/90">
-              食品施設登録、FCE/SID、MoCRA、ラベル表示、輸入者情報など、
-              実務担当者が最初に把握したいテーマをまとめて確認できます。
-            </p>
-            <button className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:scale-[1.03]">
-              記事を読む <ArrowRight size={16} />
-            </button>
-          </div>
-
-          <div className="grid gap-4">
-            {newsCards.map((item) => (
-              <div
-                key={item.title}
-                className={`rounded-[28px] p-6 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md ${item.bg}`}
-              >
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                  {item.tag}
+      <section class="section-space" id="services" style="padding-bottom:72px;">
+        <div class="container">
+          <div class="cta">
+            <div class="cta-layout">
+              <div>
+                <small>Services</small>
+                <h2>情報収集だけで終わらせず、次のアクションへ。</h2>
+                <p>
+                  FDA登録支援、ラベル確認、個別コンサルティングなど、
+                  必要なフェーズに合わせて実務支援へつなげられます。
                 </p>
-                <h3 className="mt-2 text-lg font-black leading-7 tracking-tight text-slate-950">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* guides */}
-      <section id="guides" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <div className="mb-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-violet-500">
-            Guides
-          </p>
-          <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 md:text-4xl">
-            実務で使えるナレッジ
-          </h2>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {guides.map((item, index) => (
-            <div
-              key={item.title}
-              className={`relative overflow-hidden rounded-[32px] ${item.tone} p-6 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-lg`}
-            >
-              <div className={`absolute right-[-20px] top-[-20px] h-24 w-24 rounded-full blur-2xl ${
-                index === 0 ? "bg-sky-100" : index === 1 ? "bg-pink-100" : "bg-yellow-100"
-              }`} />
-              <p className="relative text-sm font-semibold text-slate-500">Guide</p>
-              <h3 className="relative mt-3 text-xl font-black tracking-tight text-slate-950">
-                {item.title}
-              </h3>
-              <p className="relative mt-3 text-sm leading-7 text-slate-600">
-                {item.desc}
-              </p>
-              <button className="relative mt-5 inline-flex items-center gap-2 text-sm font-semibold text-sky-500">
-                詳しく見る <ChevronRight size={16} />
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* checklist */}
-      <section id="checklist" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.85fr]">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-600">
-              Checklist
-            </p>
-            <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 md:text-4xl">
-              出荷前に確認したいこと
-            </h2>
-            <p className="mt-4 max-w-xl text-base leading-8 text-slate-600">
-              食品も化粧品も、輸出前の確認漏れが後から効いてきます。
-              よくある見落としを、カテゴリーごとに分かりやすく整理。
-            </p>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {checklistItems.map((item, idx) => (
-                <div
-                  key={item}
-                  className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-sm font-bold text-emerald-600">
-                    0{idx + 1}
-                  </div>
-                  <p className="mt-3 text-base font-bold text-slate-950">{item}</p>
+                <div class="cta-actions">
+                  <button class="btn btn-white">Get Started</button>
+                  <button class="btn btn-ghost">相談する</button>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative flex justify-center">
-            <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-yellow-100 via-pink-100 to-sky-100 blur-2xl" />
-            <div className="relative rounded-[32px] bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.10)] ring-1 ring-slate-200">
-              <img
-                src="/mnt/data/段落テキスト.gif"
-                alt="social illustration"
-                className="mx-auto h-40 w-40 object-contain"
-              />
-              <p className="mt-5 text-center text-lg font-black tracking-tight text-slate-950">
-                Quick Export Check
-              </p>
-              <p className="mt-2 text-center text-sm leading-6 text-slate-500">
-                必要情報を先に整理すると、社内確認も問い合わせもスムーズになります。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* services */}
-      <section id="services" className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
-        <div className="relative overflow-hidden rounded-[40px] bg-gradient-to-r from-sky-500 via-cyan-400 to-violet-500 px-8 py-14 text-white shadow-[0_24px_80px_rgba(59,130,246,0.25)] md:px-12">
-          <div className="absolute -left-6 bottom-0 h-32 w-32 rounded-full bg-pink-300/30 blur-2xl" />
-          <div className="absolute -right-4 top-0 h-40 w-40 rounded-full bg-white/20 blur-2xl" />
-
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">
-                Services
-              </p>
-              <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
-                情報収集だけで終わらせず、
-                <br />
-                次のアクションへ。
-              </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/90 md:text-base">
-                FDA登録支援、ラベル確認、個別コンサルティングなど、
-                必要なフェーズに合わせて実務支援へつなげられます。
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-4">
-                <button className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-slate-950 transition hover:scale-[1.03]">
-                  Get Started <ArrowRight size={16} />
-                </button>
-                <button className="rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur transition hover:bg-white/20">
-                  相談する
-                </button>
               </div>
-            </div>
 
-            <div className="grid gap-4">
-              {services.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-[24px] bg-white/20 p-5 backdrop-blur-md ring-1 ring-white/20 transition hover:bg-white/25"
-                >
-                  <p className="text-lg font-black tracking-tight text-white">{item}</p>
-                  <p className="mt-1 text-sm text-white/85">
-                    実務に合わせて必要な支援へ接続
-                  </p>
+              <div class="service-list">
+                <div class="service-card">
+                  <h4>FDA登録支援</h4>
+                  <p>施設登録や関連要件の整理をサポート</p>
                 </div>
-              ))}
+                <div class="service-card">
+                  <h4>ラベル・表示レビュー</h4>
+                  <p>英語表記や輸入者情報の実務確認に対応</p>
+                </div>
+                <div class="service-card">
+                  <h4>化粧品MoCRA相談</h4>
+                  <p>化粧品輸出時の要件整理や運用面の相談に対応</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
     </div>
-  );
-}
+  </body>
+</html>
