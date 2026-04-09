@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guide Book | FDA Export Hub</title>
+    <style>
+      :root {
+        --bg: #fbfcff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --line: rgba(226, 232, 240, 0.95);
+        --white: #ffffff;
+        --blue: #0ea5e9;
+        --blue-soft: #e0f2fe;
+        --pink: #ec4899;
+        --pink-soft: #fce7f3;
+        --violet-soft: #ede9fe;
+        --yellow-soft: #fef9c3;
+        --green-soft: #dcfce7;
+        --shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+        --shadow-lg: 0 32px 80px rgba(15, 23, 42, 0.12);
+        --radius: 28px;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 0% 0%, rgba(125, 211, 252, 0.24), transparent 18%),
+          radial-gradient(circle at 100% 12%, rgba(249, 168, 212, 0.18), transparent 22%),
+          radial-gradient(circle at 12% 78%, rgba(196, 181, 253, 0.16), transparent 20%),
+          linear-gradient(180deg, #fbfcff 0%, #ffffff 100%);
+        overflow-x: hidden;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; max-width: 100%; }
+
+      .page {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      .mesh {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -2;
+        background-image:
+          linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+        background-size: 44px 44px;
+        mask-image: linear-gradient(180deg, rgba(0,0,0,0.45), transparent 96%);
+      }
+      .blob, .blob2 {
+        position: fixed;
+        pointer-events: none;
+        z-index: -1;
+        filter: blur(34px);
+      }
+      .blob {
+        top: 120px;
+        left: -110px;
+        width: 360px;
+        height: 360px;
+        border-radius: 45% 55% 58% 42% / 43% 37% 63% 57%;
+        background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(139,92,246,0.12));
+      }
+      .blob2 {
+        right: -120px;
+        top: 480px;
+        width: 340px;
+        height: 340px;
+        border-radius: 62% 38% 40% 60% / 50% 58% 42% 50%;
+        background: linear-gradient(135deg, rgba(249,168,212,0.18), rgba(250,204,21,0.10));
+      }
+
+      .container {
+        width: min(1200px, calc(100% - 48px));
+        margin: 0 auto;
+      }
+
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(14px);
+        background: rgba(255,255,255,0.78);
+        border-bottom: 1px solid var(--line);
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 16px 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .brand-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: white;
+        border: 1px solid var(--line);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        display: grid;
+        place-items: center;
+      }
+      .eyebrow {
+        margin: 0;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+        color: var(--blue);
+      }
+      .brand-title {
+        margin: 2px 0 0;
+        font-size: 14px;
+        font-weight: 900;
+      }
+      .nav {
+        display: flex;
+        gap: 26px;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+      .nav a:hover { color: var(--text); }
+      .btn {
+        border: 0;
+        cursor: pointer;
+        border-radius: 999px;
+        padding: 13px 22px;
+        font-size: 14px;
+        font-weight: 800;
+        transition: .22s ease;
+      }
+      .btn:hover { transform: translateY(-1px); }
+      .btn-dark {
+        background: #020617;
+        color: white;
+        box-shadow: 0 12px 24px rgba(2,6,23,.18);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 55%, #8b5cf6 100%);
+        color: white;
+        box-shadow: 0 16px 30px rgba(56,189,248,.28);
+      }
+      .btn-light {
+        background: white;
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+
+      .hero {
+        padding: 56px 0 18px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr .95fr;
+        gap: 42px;
+        align-items: center;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 999px;
+        padding: 10px 16px;
+        border: 1px solid #bae6fd;
+        background: #f0f9ff;
+        color: #0284c7;
+        font-size: 14px;
+        font-weight: 800;
+      }
+      .hero-title {
+        margin: 18px 0 0;
+        font-size: clamp(42px, 7vw, 76px);
+        line-height: .98;
+        letter-spacing: -.05em;
+        font-weight: 900;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 35%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero-copy {
+        margin-top: 20px;
+        max-width: 660px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.9;
+      }
+      .hero-actions {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .hero-card-wrap {
+        position: relative;
+      }
+      .hero-card-bg {
+        position: absolute;
+        inset: -16px 10px 14px -14px;
+        border-radius: 34px;
+        transform: rotate(2deg);
+        background: linear-gradient(135deg, rgba(186,230,253,.95) 0%, rgba(224,231,255,.96) 48%, rgba(251,207,232,.90) 100%);
+      }
+      .hero-card {
+        position: relative;
+        border-radius: 34px;
+        background: rgba(255,255,255,.95);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-lg);
+        padding: 28px;
+      }
+      .hero-card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .hero-kicker {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+      .hero-card h2 {
+        margin: 6px 0 0;
+        font-size: 30px;
+        line-height: 1.02;
+        letter-spacing: -.04em;
+        font-weight: 900;
+      }
+      .hero-icon {
+        width: 94px;
+        height: 94px;
+        object-fit: contain;
+      }
+      .hero-points {
+        margin-top: 22px;
+        display: grid;
+        gap: 14px;
+      }
+      .hero-point {
+        border-radius: 22px;
+        padding: 16px 18px;
+      }
+      .hero-point small {
+        display: block;
+        font-size: 11px;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        font-weight: 800;
+        margin-bottom: 7px;
+      }
+      .hero-point h4 {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.35;
+        font-weight: 900;
+      }
+      .hero-point p {
+        margin: 6px 0 0;
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--muted);
+      }
+      .food-bg { background: var(--blue-soft); }
+      .cosmetics-bg { background: var(--pink-soft); }
+      .other-bg { background: var(--green-soft); }
+
+      .section {
+        padding: 70px 0 0;
+      }
+      .section-header {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+      }
+      .section-header small {
+        display: block;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+        color: var(--blue);
+      }
+      .section-header h2 {
+        margin: 10px 0 0;
+        font-size: clamp(30px, 4vw, 46px);
+        line-height: 1.02;
+        letter-spacing: -.04em;
+        font-weight: 900;
+      }
+      .section-header p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.8;
+        max-width: 760px;
+      }
+
+      .filter-bar {
+        margin-top: 26px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .filter-chip {
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,.88);
+        color: var(--muted);
+        border-radius: 999px;
+        padding: 12px 16px;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: .22s ease;
+        box-shadow: 0 8px 20px rgba(15,23,42,.04);
+      }
+      .filter-chip:hover {
+        transform: translateY(-1px);
+        color: var(--text);
+      }
+      .filter-chip.active {
+        color: white;
+        border-color: transparent;
+        background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 55%, #8b5cf6 100%);
+        box-shadow: 0 16px 30px rgba(56,189,248,.22);
+      }
+
+      .info-strip {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: 16px;
+      }
+      .info-card {
+        border-radius: 22px;
+        background: rgba(255,255,255,.92);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        padding: 18px;
+      }
+      .info-card small {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .info-card strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 22px;
+        letter-spacing: -.03em;
+      }
+      .info-card span {
+        display: block;
+        margin-top: 6px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .content-grid {
+        margin-top: 28px;
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .guide-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 30px;
+        background: rgba(255,255,255,.95);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        transition: .24s ease;
+      }
+      .guide-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+      .guide-card::before {
+        content: "";
+        position: absolute;
+        right: -18px;
+        top: -18px;
+        width: 120px;
+        height: 120px;
+        border-radius: 999px;
+        opacity: .65;
+        filter: blur(24px);
+      }
+      .guide-card.food::before { background: rgba(56,189,248,.28); }
+      .guide-card.cosmetics::before { background: rgba(236,72,153,.22); }
+      .guide-card.other::before { background: rgba(139,92,246,.20); }
+      .guide-card-inner {
+        position: relative;
+        padding: 24px;
+      }
+      .guide-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .guide-type {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .guide-type.food { background: var(--blue-soft); color: #0284c7; }
+      .guide-type.cosmetics { background: var(--pink-soft); color: var(--pink); }
+      .guide-type.other { background: var(--violet-soft); color: #7c3aed; }
+      .guide-time {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .guide-card h3 {
+        margin: 16px 0 0;
+        font-size: 24px;
+        line-height: 1.16;
+        letter-spacing: -.04em;
+        font-weight: 900;
+      }
+      .guide-card p {
+        margin: 12px 0 0;
+        font-size: 14px;
+        line-height: 1.85;
+        color: var(--muted);
+      }
+      .guide-tags {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .guide-tags span {
+        border-radius: 999px;
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+      .guide-card-footer {
+        margin-top: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .guide-source {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+      .guide-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 900;
+        color: var(--blue);
+      }
+
+      .empty {
+        display: none;
+        margin-top: 24px;
+        border-radius: 28px;
+        background: rgba(255,255,255,.94);
+        border: 1px dashed var(--line);
+        padding: 28px;
+        text-align: center;
+        color: var(--muted);
+        box-shadow: var(--shadow);
+      }
+      .empty.show { display: block; }
+
+      @media (max-width: 1080px) {
+        .hero-grid,
+        .content-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .info-strip {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 760px) {
+        .container { width: min(100% - 28px, 1200px); }
+        .nav { display: none; }
+        .content-grid { grid-template-columns: 1fr; }
+        .section { padding-top: 54px; }
+        .hero { padding-top: 30px; }
+        .hero-copy { font-size: 16px; }
+        .hero-card { padding: 22px; }
+        .hero-card h2 { font-size: 26px; }
+        .guide-card-footer {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mesh"></div>
+    <div class="blob"></div>
+    <div class="blob2"></div>
+
+    <div class="page">
+      <header class="header">
+        <div class="container header-inner">
+          <div class="brand">
+            <div class="brand-logo">
+              <img src="/mnt/data/段落テキスト (3).png" alt="logo" style="width:32px;height:32px;object-fit:contain;" />
+            </div>
+            <div>
+              <p class="eyebrow">FDA HUB</p>
+              <p class="brand-title">Guide Book Library</p>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <a href="#top">Top</a>
+            <a href="#library">Guide Book</a>
+            <a href="#food">Food</a>
+            <a href="#cosmetics">Cosmetics</a>
+            <a href="#other">Other</a>
+          </nav>
+
+          <button class="btn btn-dark">Contact</button>
+        </div>
+      </header>
+
+      <section style="height:24px"></section>
+
+      <section class="section" id="library">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <small>Guide Book</small>
+              <h2>カテゴリを選んで、必要な記事だけをすぐ見る</h2>
+              <p>
+                すべてのコンテンツを表示した状態から、食品、化粧品、その他で絞り込みできます。
+                下のカードは外部ブログへ飛ぶ想定のレイアウトです。
+              </p>
+            </div>
+          </div>
+
+          <div class="filter-bar" role="tablist" aria-label="Guide book filter">
+            <button class="filter-chip active" data-filter="all">All</button>
+            <button class="filter-chip" data-filter="food">食品関連</button>
+            <button class="filter-chip" data-filter="cosmetics">化粧品関連</button>
+            <button class="filter-chip" data-filter="other">その他</button>
+          </div>
+
+          
+            <div class="info-card">
+              <small>Current Category</small>
+              <strong id="current-category">All</strong>
+              <span>選択中のカテゴリに応じてカードを絞り込み</span>
+            </div>
+            <div class="info-card">
+              <small>External Links</small>
+              <strong>Blog Ready</strong>
+              <span>各カードから外部のブログ記事へ遷移する想定</span>
+            </div>
+          </div>
+
+          <div class="content-grid" id="guide-grid">
+            <article class="guide-card food" data-category="food" id="food">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type food">Food</span>
+                  <span class="guide-time">5 min read</span>
+                </div>
+                <h3>食品施設登録の基本</h3>
+                <p>アメリカへ食品を輸出する際にまず確認したい施設登録の流れ、対象範囲、必要情報を整理。</p>
+                <div class="guide-tags"><span>FDA</span><span>施設登録</span><span>基本</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-card food" data-category="food">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type food">Food</span>
+                  <span class="guide-time">6 min read</span>
+                </div>
+                <h3>FCE / SIDが必要になるケース</h3>
+                <p>低酸性食品や缶詰食品など、追加登録が必要になるパターンと確認ポイントを解説。</p>
+                <div class="guide-tags"><span>FCE</span><span>SID</span><span>加工食品</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-card food" data-category="food">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type food">Food</span>
+                  <span class="guide-time">4 min read</span>
+                </div>
+                <h3>食品ラベル表示のチェックポイント</h3>
+                <p>英語表記、原材料、輸入者情報など、出荷前に見落としやすい表示項目を確認。</p>
+                <div class="guide-tags"><span>ラベル</span><span>英語表記</span><span>表示</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-card cosmetics" data-category="cosmetics" id="cosmetics">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type cosmetics">Cosmetics</span>
+                  <span class="guide-time">5 min read</span>
+                </div>
+                <h3>MoCRA対応の基本</h3>
+                <p>化粧品輸出で最初に押さえたい制度の全体像と、最低限確認したい実務ポイントを整理。</p>
+                <div class="guide-tags"><span>MoCRA</span><span>制度</span><span>化粧品</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-card cosmetics" data-category="cosmetics">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type cosmetics">Cosmetics</span>
+                  <span class="guide-time">7 min read</span>
+                </div>
+                <h3>成分表示と責任者情報の考え方</h3>
+                <p>INCI表記、責任者情報、ラベル設計で見落としやすい項目を実務ベースで確認。</p>
+                <div class="guide-tags"><span>成分表示</span><span>責任者</span><span>INCI</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-card cosmetics" data-category="cosmetics">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type cosmetics">Cosmetics</span>
+                  <span class="guide-time">4 min read</span>
+                </div>
+                <h3>パッケージ表現の注意点</h3>
+                <p>広告的な表現や効能訴求など、化粧品パッケージで気をつけたい文言を解説。</p>
+                <div class="guide-tags"><span>パッケージ</span><span>表現</span><span>広告</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-card other" data-category="other" id="other">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type other">Other</span>
+                  <span class="guide-time">5 min read</span>
+                </div>
+                <h3>物流と輸送設計の考え方</h3>
+                <p>食品・化粧品の輸出時に考えたい配送、保管、スケジュール設計の基本を整理。</p>
+                <div class="guide-tags"><span>物流</span><span>配送</span><span>輸送</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-card other" data-category="other">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type other">Other</span>
+                  <span class="guide-time">4 min read</span>
+                </div>
+                <h3>輸入者情報の整理方法</h3>
+                <p>表示・書類・申告で必要になる輸入者情報の整理方法と確認のコツを紹介。</p>
+                <div class="guide-tags"><span>輸入者</span><span>書類</span><span>表示</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-card other" data-category="other">
+              <div class="guide-card-inner">
+                <div class="guide-meta">
+                  <span class="guide-type other">Other</span>
+                  <span class="guide-time">6 min read</span>
+                </div>
+                <h3>はじめてのアメリカ輸出Q&A</h3>
+                <p>食品・化粧品を問わず、最初に相談されやすいポイントをQ&A形式でまとめた入門記事。</p>
+                <div class="guide-tags"><span>入門</span><span>Q&A</span><span>全般</span></div>
+                <div class="guide-card-footer">
+                  <span class="guide-source">External Blog</span>
+                  <a href="#" class="guide-link">記事を見る →</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="empty" id="empty-state">
+            選択したカテゴリのコンテンツはまだありません。
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const chips = document.querySelectorAll('.filter-chip');
+      const cards = document.querySelectorAll('.guide-card');
+      const currentCategory = document.getElementById('current-category');
+      const countAll = document.getElementById('count-all');
+      const emptyState = document.getElementById('empty-state');
+      const targetButtons = document.querySelectorAll('[data-filter-target]');
+
+      countAll.textContent = cards.length;
+
+      function labelFor(category) {
+        if (category === 'food') return 'Food';
+        if (category === 'cosmetics') return 'Cosmetics';
+        if (category === 'other') return 'Other';
+        return 'All';
+      }
+
+      function applyFilter(category) {
+        let visible = 0;
+
+        chips.forEach((chip) => {
+          chip.classList.toggle('active', chip.dataset.filter === category);
+        });
+
+        cards.forEach((card) => {
+          const match = category === 'all' || card.dataset.category === category;
+          card.style.display = match ? '' : 'none';
+          if (match) visible += 1;
+        });
+
+        currentCategory.textContent = labelFor(category);
+        emptyState.classList.toggle('show', visible === 0);
+      }
+
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => applyFilter(chip.dataset.filter));
+      });
+
+      targetButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = button.dataset.filterTarget;
+          applyFilter(target);
+          document.getElementById('library').scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      applyFilter('all');
+    </script>
+  </body>
+</html>
