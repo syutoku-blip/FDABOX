@@ -7,15 +7,15 @@
    ========================================================================= */
 
 const CUSTOMER_PAGES = [
-  { key: "top",        label: "TOPページ",          file: "top/top.html" },
-  { key: "dashboard",  label: "ダッシュボード",      file: "top/dashboard.html" },
-  { key: "profinder",  label: "PROFiNDER",          file: "top/profinder.html" },
-  { key: "inventory",  label: "在庫管理",            file: "top/inventory.html" },
-  { key: "cashflow",   label: "キャッシュフロー管理", file: "top/cashflow.html" },
-  { key: "resources",  label: "その他SLC関連",       file: "top/resources.html" },
-  { key: "settings",   label: "設定",                file: "top/settings.html" }
+  { key: "top",        label: "TOPページ",          file: "top.html" },
+  { key: "dashboard",  label: "ダッシュボード",      file: "dashboard.html" },
+  { key: "profinder",  label: "PROFiNDER",          file: "profinder.html" },
+  { key: "inventory",  label: "在庫管理",            file: "inventory.html" },
+  { key: "cashflow",   label: "キャッシュフロー管理", file: "cashflow.html" },
+  { key: "resources",  label: "その他SLC関連",       file: "resources.html" },
+  { key: "settings",   label: "設定",                file: "settings.html" }
 ];
-const ADMIN_CONTENT_PAGE = "admin/admin-content.html";
+const ADMIN_CONTENT_PAGE = "admin-content.html";
 
 let mode = "customer";       // "customer" | "admin"
 let adminTab = "admin";      // "admin" | "demo" | "lookup"
@@ -116,7 +116,7 @@ function renderPagePicker(){
 
 function updateFrame(){
   if(mode === "customer"){
-    els.frame.src = "top/top.html";
+    els.frame.src = "top.html";
     return;
   }
   // mode === "admin"
