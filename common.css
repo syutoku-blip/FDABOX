@@ -1,0 +1,9 @@
+/* 共通スタイルの置き場（正式なデザイントークンは秀徳さんのトップページ移行後に確定） */
+:root {
+  --font-body: "Noto Sans JP", sans-serif;
+  --color-text: #1a1a1a;
+  --color-bg: #ffffff;
+  --color-accent: #0a5cb8; /* 仮。トップページ移行時に実色へ差し替え */
+  --width-max: 100%;
+}
+body { font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); margin: 0; }

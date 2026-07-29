@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理者画面</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../top/style.css">
+<link rel="stylesheet" href="admin.css">
+<style>
+  /* このページはiframe埋め込み専用。app-shell(サイドバー)は使わずシンプルな1カラムにする */
+  body{background:var(--bg)}
+  .admin-content-page{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+  .admin-content-head{margin-bottom:22px}
+  .admin-content-head .kicker{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+  .admin-content-head h1{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--navy);margin:4px 0 0}
+</style>
+</head>
+<body>
+
+<div class="admin-content-page">
+
+  <div class="admin-content-head">
+    <div class="kicker">ADMIN</div>
+    <h1>管理者画面</h1>
+  </div>
+
+  <div class="top-grid">
+
+    <div class="span-12 section-card">
+      <div class="section-head">
+        <div class="section-title"><span class="section-icon" style="background:var(--accent)"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg></span>問い合わせ一覧</div>
+      </div>
+      <div class="card" style="padding:0">
+        <div class="list-wrap">
+          <table id="inquiryTable">
+            <thead><tr><th>受信日時</th><th>会員番号</th><th>件名</th><th>ステータス</th><th>対応</th></tr></thead>
+            <tbody id="inquiryTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="span-12 section-card">
+      <div class="section-head">
+        <div class="section-title"><span class="section-icon" style="background:var(--amber)"><svg viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 001 1h2l4 4V6L6 10H4a1 1 0 00-1 1z"></path><path d="M15 8a4 4 0 010 8"></path><path d="M18 5a8 8 0 010 14"></path></svg></span>お知らせ投稿</div>
+      </div>
+
+      <form class="admin-form" id="announceForm">
+        <div class="admin-field">
+          <label for="announceTitle">タイトル</label>
+          <input type="text" id="announceTitle" placeholder="例）12月のメンテナンスについて" required>
+        </div>
+        <div class="admin-field">
+          <label for="announceBody">本文</label>
+          <textarea id="announceBody" placeholder="お知らせの本文を入力してください" required></textarea>
+        </div>
+        <div class="admin-field">
+          <label>公開範囲</label>
+          <div class="pill-group" id="announceScopeGroup">
+            <button type="button" class="pill-btn active" data-scope="全員">全員</button>
+            <button type="button" class="pill-btn" data-scope="一部会員">一部会員</button>
+          </div>
+        </div>
+        <div class="admin-form-actions">
+          <span class="admin-form-note">※現在はデモ表示のみ。投稿には別途バックエンド連携が必要です</span>
+          <button type="submit" class="copy-btn copy-btn-primary">投稿する</button>
+        </div>
+      </form>
+
+      <div class="section-row-title" style="margin-top:10px">
+        <h2><span class="dot"></span>投稿済みのお知らせ</h2>
+      </div>
+      <div class="admin-announce-list" id="announceList"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+/* ---- 問い合わせ一覧(ダミーデータ) ---- */
+const SAMPLE_INQUIRIES = [
+  { date:"2026-07-28 14:22", member:"WS-10234", subject:"PROFiNDERのリサーチ結果が表示されない", status:"wait" },
+  { date:"2026-07-28 10:05", member:"WS-10088", subject:"請求書の再発行について", status:"progress" },
+  { date:"2026-07-27 19:40", member:"WS-10391", subject:"パスワードを再設定したい", status:"done" },
+  { date:"2026-07-27 09:12", member:"WS-10012", subject:"在庫管理の仕入データが反映されない", status:"progress" },
+  { date:"2026-07-26 16:50", member:"WS-10450", subject:"解約方法について", status:"done" }
+];
+const STATUS_LABEL = { wait:"未対応", progress:"対応中", done:"対応済み" };
+const STATUS_TONE = { wait:"tone-wait", progress:"tone-progress", done:"tone-done" };
+
+function renderInquiries(){
+  const tbody = document.getElementById("inquiryTableBody");
+  if(!SAMPLE_INQUIRIES.length){
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">問い合わせはありません。</td></tr>';
+    return;
+  }
+  tbody.innerHTML = SAMPLE_INQUIRIES.map(function(row){
+    return '<tr>'
+      + '<td>' + row.date + '</td>'
+      + '<td>' + row.member + '</td>'
+      + '<td>' + row.subject + '</td>'
+      + '<td><span class="status-badge ' + STATUS_TONE[row.status] + '">' + STATUS_LABEL[row.status] + '</span></td>'
+      + '<td><span class="copy-btn" style="display:inline-flex;cursor:default">会員指定画面で確認</span></td>'
+      + '</tr>';
+  }).join("");
+}
+renderInquiries();
+
+/* ---- お知らせ投稿(クライアント側のみのデモ動作) ---- */
+const SAMPLE_ANNOUNCEMENTS = [
+  { date:"2026-07-20", title:"夏季休業のお知らせ", desc:"8/13〜8/16は休業とさせていただきます。" },
+  { date:"2026-07-01", title:"PROFiNDER機能アップデート", desc:"リサーチ結果のCSV出力に対応しました。" }
+];
+let announceScope = "全員";
+
+function renderAnnouncements(){
+  const list = document.getElementById("announceList");
+  list.innerHTML = SAMPLE_ANNOUNCEMENTS.map(function(a){
+    return '<div class="admin-announce-item"><div class="date">' + a.date + '</div>'
+      + '<div class="body"><div class="title">' + a.title + '</div><div class="desc">' + a.desc + '</div></div></div>';
+  }).join("");
+}
+renderAnnouncements();
+
+document.getElementById("announceScopeGroup").addEventListener("click", function(e){
+  const btn = e.target.closest(".pill-btn");
+  if(!btn) return;
+  Array.from(this.children).forEach(function(c){ c.classList.remove("active"); });
+  btn.classList.add("active");
+  announceScope = btn.dataset.scope;
+});
+
+document.getElementById("announceForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const title = document.getElementById("announceTitle").value.trim();
+  const body = document.getElementById("announceBody").value.trim();
+  if(!title || !body) return;
+  const today = new Date();
+  const dateStr = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,"0") + "-" + String(today.getDate()).padStart(2,"0");
+  SAMPLE_ANNOUNCEMENTS.unshift({ date: dateStr, title: title + "（" + announceScope + "）", desc: body });
+  renderAnnouncements();
+  this.reset();
+  document.querySelectorAll("#announceScopeGroup .pill-btn").forEach(function(b,i){ b.classList.toggle("active", i===0); });
+  announceScope = "全員";
+});
+</script>
+</body>
+</html>

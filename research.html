@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>特殊リサーチ | worldSHiFT Member Central</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&amp;family=Noto+Sans+JP:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div aria-live="polite" class="copy-toast" id="copyToast" role="status"></div>
+<div class="help-tip-bubble" id="globalTooltip" role="tooltip"></div>
+<button aria-label="表を左にスクロール" class="nav-btn nav-side nav-left-btn" type="button"><svg viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<button aria-label="表を右にスクロール" class="nav-btn nav-side nav-right-btn" type="button"><svg viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+<button aria-label="ページ上部へ戻る" class="nav-btn nav-top" id="tableNav" type="button"><svg viewbox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></button>
+<header class="app-header">
+<div class="container app-header-inner has-subnav">
+<div class="topbar-title site-title-box">
+<div class="title-text">
+<div class="site-kicker"><span class="kicker-dot"></span>SHiFT MEMBERS ONLY</div>
+<h1>worldSH<span class="brand-i">i</span>FT Member Central</h1>
+</div>
+</div>
+<nav class="primary-nav">
+<a class="primary-nav-link" href="top.html">TOPページ</a>
+<a class="primary-nav-link" href="profinder.html">PROFiNDER</a>
+<a class="primary-nav-link active" href="research.html">特殊リサーチ</a>
+<a class="primary-nav-link" href="dashboard.html">在庫・利益ダッシュボード</a>
+<a class="primary-nav-link" href="cashflow.html">キャッシュフロー管理</a>
+<a class="primary-nav-link" href="resources.html">その他SLC関連</a>
+<a class="primary-nav-link" href="https://master.worldshift-slc-las.com/login" rel="noopener" target="_blank">LAS<svg class="ext-icon" viewbox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"></path></svg></a>
+</nav>
+<div class="member-menu">
+<span class="user-chip">会員番号<strong id="currentUserChip">-</strong></span>
+<div class="member-divider"></div>
+<button class="logout-btn" type="button">ログアウト</button>
+</div>
+</div>
+<div class="nav-connector" id="navConnector"></div>
+<div class="container sub-nav-shell">
+<div class="tabs-row">
+<div aria-label="リサーチ切り替え" class="research-tabs" role="tablist">
+<button aria-controls="relationPanel" aria-selected="true" class="tab-btn active" id="relationTab" role="tab" type="button">リレーションリサーチ</button>
+<button aria-controls="overlayPanel" aria-selected="false" class="tab-btn" id="overlayTab" role="tab" type="button">オーバーレイリサーチ</button>
+</div>
+<div aria-label="表示形式切り替え" class="view-switch" role="group">
+<button class="view-switch-btn active" data-mode="table" type="button"><svg viewbox="0 0 24 24"><rect height="4" width="18" x="3" y="4"></rect><rect height="4" width="18" x="3" y="10"></rect><rect height="4" width="18" x="3" y="16"></rect></svg>テーブル</button>
+<button class="view-switch-btn" data-mode="card" type="button"><svg viewbox="0 0 24 24"><rect height="8" width="8" x="3" y="3"></rect><rect height="8" width="8" x="13" y="3"></rect><rect height="8" width="8" x="3" y="13"></rect><rect height="8" width="8" x="13" y="13"></rect></svg>カード</button>
+</div>
+</div>
+</div>
+</header>
+<div class="container page-body" data-view="table" id="dashboard">
+<section aria-labelledby="relationTab" class="research-panel" id="relationPanel" role="tabpanel">
+<div class="panel-toolbar">
+<div class="toolbar-group"><div class="updated">更新日<span id="updatedDate">-</span></div></div>
+<div class="toolbar-divider"></div>
+<div class="toolbar-group toolbar-group-end">
+<div class="copy-toolbar">
+<label class="select-all-label"><input class="select-all-check" type="checkbox"/> 全選択</label>
+<button class="copy-btn" type="button">ASINを一括コピー</button>
+<button class="copy-btn copy-btn-primary" type="button">選択したASINをコピー</button>
+</div>
+</div>
+</div>
+<div class="card list-card view-table" id="relationTableView">
+<div class="scroll-progress"><div class="scroll-progress-thumb" id="relationScrollThumb"></div></div>
+<div class="list-wrap" id="relationListWrap"><table><thead><tr><th class="check-col"></th><th>ASIN</th><th>ブランド</th><th>カテゴリ</th><th>30日販売数</th><th>出品セラー数</th><th>推奨仕入れ数</th><th>日本仕入JPY</th><th>売値USD</th><th>TWAPグラフ<span class="help-tip" data-tip="損益分岐点ラインがTWAPラインより下にある場合、現在価格が過去の平均価格（TWAP）まで回復すれば利益が見込めるため、黒字化の期待値が高い商品と判断できます。" tabindex="0">?</span></th><th>TWAP</th><th>想定送料JPY</th><th>想定関税JPY</th><th>AMZ想定手数料JPY</th><th>入金額予想JPY</th><th>利益期待値JPY</th></tr></thead><tbody id="itemTable"></tbody></table></div>
+<div class="scroll-edge-fade" id="relationEdgeFade"></div>
+</div>
+<div class="item-grid view-card" id="itemGrid"></div>
+<div class="empty hidden" id="emptyMessage">表示できるデータがありません。</div>
+</section>
+<section aria-labelledby="overlayTab" class="research-panel hidden" id="overlayPanel" role="tabpanel">
+<div class="panel-toolbar">
+<div class="toolbar-group"><div class="updated">更新日<span id="overlayUpdatedDate">-</span></div></div>
+<div class="toolbar-divider"></div>
+<div class="toolbar-group toolbar-group-end">
+<div class="copy-toolbar">
+<label class="select-all-label"><input class="select-all-check" type="checkbox"/> 全選択</label>
+<button class="copy-btn" type="button">ASINを一括コピー</button>
+<button class="copy-btn copy-btn-primary" type="button">選択したASINをコピー</button>
+</div>
+</div>
+</div>
+<div class="card list-card view-table" id="overlayTableView">
+<div class="scroll-progress"><div class="scroll-progress-thumb" id="overlayScrollThumb"></div></div>
+<div class="list-wrap" id="overlayListWrap"><table><thead><tr><th class="check-col"></th><th>ASIN</th><th>ブランド</th><th>カテゴリ</th><th>黒字化％</th><th>赤字化％</th><th>ボラティリティ指数<span class="help-tip" data-tip="価格の標準偏差 ÷ 平均価格 × 100" tabindex="0">?</span></th><th>バンド指数<span class="help-tip" data-tip="(現在の価格 − 90日最安) ÷ (90日最高 − 90日最安) × 100" tabindex="0">?</span></th><th>30日販売数</th><th>出品セラー数</th><th>推奨仕入れ数</th><th>日本仕入JPY</th><th>売値USD</th><th>想定送料JPY</th><th>想定関税JPY</th><th>AMZ手数料JPY</th><th>入金額予想JPY</th><th>利益期待値JPY</th></tr></thead><tbody id="overlayItemTable"></tbody></table></div>
+<div class="scroll-edge-fade" id="overlayEdgeFade"></div>
+</div>
+<div class="item-grid item-grid-compact view-card" id="overlayItemGrid"></div>
+<div class="empty hidden" id="overlayEmptyMessage">表示できるデータがありません。</div>
+</section>
+<div class="dashboard-footer"><div class="powered">Powered by</div><img alt="PROFiNDER" class="logo" src="profinderlogo.png"/></div>
+</div>
+
+
+</body>
+</html>
