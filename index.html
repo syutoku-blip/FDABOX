@@ -1,241 +1,50 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WorldShift Visual Editor</title>
-<style>
-:root{--navy:#0b2f63;--blue:#1f65b5;--bg:#f4f7fb;--line:#dfe7f0;--ink:#17243a;--muted:#6d7a8f;--radius:18px;--shadow:0 14px 36px rgba(13,48,94,.09);--space:34px;--page:1440px}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink)}button,input,select{font:inherit}img{display:block;max-width:100%}.shell{display:grid;grid-template-columns:310px 1fr;min-height:100vh}.panel{position:sticky;top:0;height:100vh;overflow:auto;background:#071a38;color:#fff;padding:18px;z-index:99}.panel h1{font-size:18px;margin:0 0 10px}.panel h2{font-size:13px;color:#b9d4f5;margin:18px 0 8px}.panel label{display:block;font-size:12px;margin:9px 0 4px;color:#d8e5f4}.panel input,.panel select{width:100%;padding:9px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:#0d2a57;color:#fff}.panel input[type=color]{height:38px;padding:2px}.panel input[type=range]{padding:0}.panel button,.filebtn{width:100%;padding:10px;border:0;border-radius:8px;background:#fff;color:#0b2f63;font-weight:800;margin-top:8px;cursor:pointer;text-align:center}.panel .danger{background:#ffe9e9;color:#a01818}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tip{font-size:11px;line-height:1.55;color:#9fb4ce}.canvas{padding:18px}.site{width:min(var(--page),100%);margin:auto;background:#fff;box-shadow:0 20px 60px rgba(18,48,83,.12)}
-.utility{padding:8px 28px;border-bottom:1px solid var(--line);font-size:12px;color:#54637a}.header{display:grid;grid-template-columns:280px 1fr 320px;gap:20px;align-items:center;padding:18px 28px;border-bottom:1px solid var(--line)}.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;display:grid;place-items:center;font-weight:900;font-size:23px}.brandname{font-weight:900;color:var(--navy);font-size:22px;line-height:1.05}.sub{font-size:11px;color:var(--muted);margin-top:5px}.search{padding:12px 14px;border:1px solid var(--line);border-radius:10px;color:#8a95a6}.actions{display:flex;gap:10px;justify-content:flex-end}.btn{padding:10px 15px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--navy);font-weight:800}.primary{background:var(--navy);color:#fff;border-color:var(--navy)}.nav{display:flex;gap:24px;align-items:center;overflow:auto;white-space:nowrap;padding:0 28px;height:54px;border-bottom:1px solid var(--line);font-size:13px;font-weight:800}.hero{display:grid;grid-template-columns:1.55fr .85fr;color:#fff;background:var(--navy)}.hero-main{min-height:420px;padding:58px 48px;background:linear-gradient(90deg,rgba(6,31,70,.95),rgba(6,31,70,.28)),url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1800&q=85') center/cover}.kicker{font-size:12px;font-weight:900;letter-spacing:.14em;color:#a6d5ff}.hero h1{font-size:42px;line-height:1.32;margin:14px 0}.hero p{font-size:17px;line-height:1.8;color:#eef5ff}.hero-side{padding:26px;background:linear-gradient(180deg,#082554,#0d3977)}.breaking{padding:15px 0;border-top:1px solid rgba(255,255,255,.18)}.breaking:first-of-type{border-top:0}.meta{font-size:11px;color:#b8cae0}
-.section{padding:var(--space) 28px}.alt{background:#f7f9fc}.title{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:18px}.title h2{font-size:25px;margin:0;color:var(--navy)}.title p{font-size:13px;color:var(--muted);margin:6px 0 0}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.grid3{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.card img{width:100%;height:180px;object-fit:cover}.body{padding:19px}.card h3{font-size:18px;line-height:1.5;margin:8px 0}.card p{font-size:13px;line-height:1.7;color:var(--muted)}.value{padding:18px}.value strong{display:block;color:var(--navy);margin-bottom:7px}.value span{font-size:12px;line-height:1.65;color:var(--muted)}.pickmain{display:grid;grid-template-columns:1fr 1fr}.pickmain img{height:100%;min-height:300px}.pickmain h3{font-size:23px}.eyebrow{font-size:11px;font-weight:900;color:#d1505e}.note{padding:13px;background:#edf5ff;border-left:4px solid var(--blue);font-size:12px;line-height:1.65;border-radius:8px}.topichead{padding:17px;color:#fff;font-weight:900}.topic:nth-child(1) .topichead{background:#2098aa}.topic:nth-child(2) .topichead{background:#ed9631}.topic:nth-child(3) .topichead{background:#8d5bb2}.topic:nth-child(4) .topichead{background:#d85d6a}.topic .body ul{padding-left:18px;font-size:13px;line-height:1.8}.academy{display:grid;grid-template-columns:1.15fr repeat(3,1fr);gap:16px}.academyintro{padding:26px;border-radius:var(--radius);color:#fff;background:linear-gradient(145deg,var(--navy),var(--blue))}.academyintro p{color:#e5effa}.main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px}.news{padding:20px}.newsitem{display:grid;grid-template-columns:180px 1fr;gap:17px;padding:18px 0;border-top:1px solid var(--line)}.newsitem:first-child{border-top:0}.newsitem img{width:180px;height:108px;object-fit:cover;border-radius:11px}.side{padding:20px;margin-bottom:16px}.newsletter{background:linear-gradient(145deg,var(--navy),var(--blue));color:#fff}.newsletter p{color:#e7f1fb}.newsletter input{width:100%;padding:10px;border:0;border-radius:8px}.researchmain{min-height:250px;color:#fff;padding:26px;background:linear-gradient(rgba(8,38,86,.8),rgba(8,38,86,.8)),url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80') center/cover}.cta{margin:0 28px 34px;border-radius:var(--radius);overflow:hidden;color:#fff;display:grid;grid-template-columns:1.35fr .65fr;background:linear-gradient(120deg,var(--navy),var(--blue))}.cta>div{padding:32px}.footer{padding:38px 28px;background:#071f46;color:#dce8f5}.footergrid{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:24px}.footer p,.footer li{font-size:12px;line-height:1.75}
-.edit-mode [data-editable]{outline:2px dashed rgba(255,153,0,.8);outline-offset:3px}.selected{outline:3px solid #ff9b2f!important;outline-offset:4px!important}.hidden{display:none!important}
-@media(max-width:1100px){.shell{grid-template-columns:1fr}.panel{position:relative;height:auto}.header{grid-template-columns:1fr}.actions{justify-content:flex-start}.grid4,.grid3,.academy{grid-template-columns:repeat(2,1fr)}.main{grid-template-columns:1fr}.pickmain{grid-column:1/-1}}@media(max-width:760px){.canvas{padding:0}.header,.nav,.section{padding-left:16px;padding-right:16px}.hero{grid-template-columns:1fr}.hero-main{padding:42px 20px}.hero h1{font-size:30px}.grid4,.grid3,.academy,.footergrid,.cta{grid-template-columns:1fr}.pickmain{display:block}.newsitem{grid-template-columns:1fr}.newsitem img{width:100%;height:180px}.cta{margin:0 16px 24px}}
-</style>
+<meta charset="utf-8"/>
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ログイン | worldSHiFT Member Central</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-<div class="shell">
-<aside class="panel">
-<h1>WorldShift Visual Editor</h1><div class="tip">編集開始後、文字・カード・セクション・画像をクリックして選択します。</div>
-<button id="toggle">編集を開始</button><button id="save">ブラウザに保存</button><button id="export">HTMLを書き出す</button><button id="reset" class="danger">初期状態に戻す</button>
-<h2>選択中</h2><div id="selname" class="tip">未選択</div>
-<div class="row"><div><label>背景色</label><input type="color" id="bg"></div><div><label>文字色</label><input type="color" id="fg"></div></div>
-<label>内側余白</label><input type="range" min="0" max="80" value="20" id="pad">
-<label>外側余白</label><input type="range" min="0" max="80" value="0" id="mar">
-<label>角丸</label><input type="range" min="0" max="40" value="18" id="rad">
-<label>横幅</label><select id="wid"><option value="">自動</option><option value="25%">25%</option><option value="33.333%">33%</option><option value="50%">50%</option><option value="75%">75%</option><option value="100%">100%</option></select>
-<label>影</label><select id="sh"><option value="">なし</option><option value="0 8px 24px rgba(13,48,94,.08)">弱い</option><option value="0 14px 36px rgba(13,48,94,.14)">標準</option><option value="0 22px 50px rgba(13,48,94,.2)">強い</option></select>
-<label>配置</label><select id="align"><option value="">そのまま</option><option value="left">左</option><option value="center">中央</option><option value="right">右</option></select>
-<div class="row"><button id="up">上へ</button><button id="down">下へ</button></div><div class="row"><button id="dup">複製</button><button id="hide">非表示</button></div>
-<label class="filebtn" for="picker">画像を差し替える</label><input type="file" id="picker" accept="image/*" hidden>
-<h2>サイト全体</h2><div class="row"><div><label>メイン色</label><input type="color" id="maincolor" value="#0b2f63"></div><div><label>背景色</label><input type="color" id="sitebg" value="#f4f7fb"></div></div>
-<label>ページ幅</label><input type="range" min="1000" max="1800" value="1440" id="pagewidth"><label>セクション余白</label><input type="range" min="18" max="70" value="34" id="space">
-</aside>
-<div class="canvas"><main class="site" id="site">
-<div class="utility editable" data-editable>WorldShift Trade Watch｜アメリカで報道される通商・規制情報を日本の輸出者へ</div>
-<header class="header editable"><div class="brand"><div class="logo">W</div><div><div class="brandname" data-editable>WorldShift<br>Trade Watch</div><div class="sub" data-editable>米国輸出のニュースと実務知識</div></div></div><div class="search" data-editable>キーワード・制度名・商品名で検索</div><div class="actions"><button class="btn" data-editable>ニュースレター登録</button><button class="btn primary" data-editable>無料相談</button></div></header>
-<nav class="nav editable"><span data-editable>トップ</span><span data-editable>最新記事</span><span data-editable>市場トレンド</span><span data-editable>関税</span><span data-editable>通関ルール</span><span data-editable>FDA規制</span><span data-editable>物流</span><span data-editable>米Amazon輸出</span><span data-editable>教科書・ガイド</span></nav>
-<section class="hero editable"><div class="hero-main image-edit"><div class="kicker" data-editable>LATEST NEWS × PRACTICAL KNOWLEDGE</div><h1 data-editable>米国輸出の「今」を知り、<br>次に必要な対応までわかる。</h1><p data-editable>通商・FDA・物流・米Amazon輸出の最新情報を、日本企業の実務に置き換えて解説。ニュースを見るだけで終わらず、判断と行動につなげる専門ポータルです。</p><button class="btn" data-editable>最新記事を見る</button></div><aside class="hero-side"><h2 data-editable>本日の重要ニュース</h2><div class="breaking"><div class="meta" data-editable>2026.07.13｜関税</div><h3 data-editable>米国の追加関税をめぐる最新動向</h3></div><div class="breaking"><div class="meta" data-editable>2026.07.13｜FDA</div><h3 data-editable>食品・化粧品の規制変更を実務目線で整理</h3></div><div class="breaking"><div class="meta" data-editable>2026.07.12｜物流</div><h3 data-editable>FBA納品に影響する通関と物流の変化</h3></div></aside></section>
-<section class="section editable"><div class="title"><div><h2 data-editable>WorldShiftだからわかること</h2><p data-editable>速報だけでなく、日本企業の実務に置き換えて整理します。</p></div></div><div class="grid4"><div class="card value editable"><strong data-editable>最新情報</strong><span data-editable>米国発の制度変更・市場動向を継続配信</span></div><div class="card value editable"><strong data-editable>専門家の解説</strong><span data-editable>何が変わり、誰に影響するかを明確化</span></div><div class="card value editable"><strong data-editable>教科書・ガイド</strong><span data-editable>FDA・物流・Amazon輸出を体系的に学習</span></div><div class="card value editable"><strong data-editable>実務支援</strong><span data-editable>必要な対応から相談・代行まで接続</span></div></div></section>
-<section class="section alt editable"><div class="title"><div><h2 data-editable>今週、最初に読むべき記事</h2><p data-editable>編集部が日本の輸出者への影響度で選定</p></div></div><div class="grid3"><article class="card pickmain editable"><img class="image-edit" src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1000&q=80"><div class="body"><div class="eyebrow" data-editable>EDITOR'S PICK｜最重要</div><h3 data-editable>米国の通商政策は今どう動いている？</h3><p data-editable>課税対象、施行時期、通関実務への影響まで整理します。</p><div class="note" data-editable>編集部コメント：対象範囲と輸入者要件を先に確認すべきです。</div></div></article><article class="card editable"><img class="image-edit" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80"><div class="body"><div class="eyebrow" data-editable>FDA UPDATE</div><h3 data-editable>食品・化粧品の最新FDA変更</h3><p data-editable>施行済み・提案段階を分けて解説。</p></div></article><article class="card editable"><img class="image-edit" src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=80"><div class="body"><div class="eyebrow" data-editable>LOGISTICS UPDATE</div><h3 data-editable>物流・通関をどう組み直すか</h3><p data-editable>小口配送、まとめ輸入、FBA納品を比較。</p></div></article></div></section>
-<section class="section editable"><div class="title"><div><h2 data-editable>テーマで読む</h2><p data-editable>最新記事・教科書・実務支援へ</p></div></div><div class="grid4"><article class="card topic editable"><div class="topichead" data-editable>FDA関連</div><div class="body"><ul><li data-editable>食品・化粧品の最新規制</li><li data-editable>施設登録・FSVP・Prior Notice</li></ul><button class="btn" data-editable>FDA情報を見る</button></div></article><article class="card topic editable"><div class="topichead" data-editable>輸出ロジ関連</div><div class="body"><ul><li data-editable>通関・IOR・インボイス</li><li data-editable>海上・航空・小口配送</li></ul><button class="btn" data-editable>物流情報を見る</button></div></article><article class="card topic editable"><div class="topichead" data-editable>米Amazon輸出</div><div class="body"><ul><li data-editable>市場トレンド・売れ筋</li><li data-editable>商品リサーチ・利益計算</li></ul><button class="btn" data-editable>Amazon情報を見る</button></div></article><article class="card topic editable"><div class="topichead" data-editable>通商・関税・政策</div><div class="body"><ul><li data-editable>Section 232・301</li><li data-editable>関税・原産地・HSコード</li></ul><button class="btn" data-editable>通商情報を見る</button></div></article></div></section>
-<section class="section alt editable"><div class="title"><div><h2 data-editable>WorldShift Academy</h2><p data-editable>ニュースの背景を基礎から理解し、実務で使える知識へ</p></div></div><div class="academy"><div class="academyintro editable"><h3 data-editable>調べるたびに迷わない。<br>米国輸出の教科書。</h3><p data-editable>制度の全体像・必要手続き・注意点を章立てで整理。</p></div><article class="card body editable"><h3 data-editable>FDA・食品輸出</h3><p data-editable>施設登録、FSVP、Prior Notice、食品ラベルまで体系化。</p></article><article class="card body editable"><h3 data-editable>輸出ロジ・通関</h3><p data-editable>輸送方法、必要書類、通関、関税、FBA納品まで整理。</p></article><article class="card body editable"><h3 data-editable>米Amazon輸出</h3><p data-editable>商品選定、利益計算、物流、販売運用を解説。</p></article></div></section>
-<section class="section editable"><div class="main"><div><div class="title"><div><h2 data-editable>最新の記事</h2><p data-editable>米国発のニュースを、日本の輸出者向けに随時更新</p></div></div><div class="card news editable"><article class="newsitem editable"><img class="image-edit" src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=600&q=80"><div><div class="meta" data-editable>2026.07.13｜関税</div><h3 data-editable>米国の追加関税に新たな動き</h3><p data-editable>制度の背景、発効時期、確認事項を整理します。</p></div></article><article class="newsitem editable"><img class="image-edit" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80"><div><div class="meta" data-editable>2026.07.12｜FDA規制</div><h3 data-editable>FDA施設登録と更新で見落としやすいポイント</h3><p data-editable>対象施設、米国代理人、更新期限、失効リスクを解説。</p></div></article></div></div><aside><div class="card side editable"><h3 data-editable>よく読まれている記事</h3><p data-editable>FDA施設登録とは？対象と更新方法</p><p data-editable>米国向け食品ラベルの作り方</p><p data-editable>FBA納品と通関の基本</p></div><div class="card side newsletter editable"><h3 data-editable>重要ニュースを見逃さない</h3><p data-editable>編集部の要点解説付きでお届けします。</p><input placeholder="メールアドレス"></div></aside></div></section>
-<section class="section alt editable"><div class="title"><div><h2 data-editable>WorldShift Research</h2><p data-editable>独自調査・分析・実務データを公開</p></div></div><div class="grid3"><div class="card researchmain editable image-edit"><h3 data-editable>日本企業の米国輸出実態レポート 2026</h3><p data-editable>FDA対応、物流コスト、Amazon販売、通関トラブルを独自に整理。</p></div><article class="card body editable"><h3 data-editable>FDA違反・輸入差止の傾向分析</h3><p data-editable>品目・違反理由・対応の傾向を整理。</p></article><article class="card body editable"><h3 data-editable>米Amazonで伸びる日本商品の市場分析</h3><p data-editable>注目カテゴリーと規制・物流条件をまとめます。</p></article></div></section>
-<section class="cta editable"><div><h2 data-editable>情報収集から、実際の輸出対応まで。</h2><p data-editable>FDA・物流・Amazon輸出の専門チームが状況を整理します。</p></div><div><button class="btn" data-editable>無料相談を予約</button></div></section>
-<footer class="footer editable"><div class="footergrid"><div><h3 data-editable>WorldShift Trade Watch</h3><p data-editable>米国輸出の最新情報と実務知識を提供する専門ポータルです。</p></div><div><h4 data-editable>ニュース</h4><ul><li data-editable>最新記事</li><li data-editable>市場トレンド</li></ul></div><div><h4 data-editable>専門情報</h4><ul><li data-editable>FDA規制</li><li data-editable>物流・通関</li></ul></div><div><h4 data-editable>学ぶ</h4><ul><li data-editable>教科書・ガイド</li><li data-editable>調査・レポート</li></ul></div><div><h4 data-editable>サポート</h4><ul><li data-editable>ニュースレター</li><li data-editable>無料相談</li></ul></div></div></footer>
-</main></div></div>
-<script>
-(() => {
-  'use strict';
+<div aria-busy="true" aria-live="polite" class="loading-overlay" id="loadingOverlay"><div class="loading-box"><div class="spinner"></div><div class="loading-text" id="loadingText">処理中です</div></div></div>
+<div class="container" id="authPage">
+<div class="brand">
+<div class="brand-mark">
+<span class="brand-kicker"><span class="kicker-dot"></span>SHiFT MEMBERS ONLY</span>
+<h1 class="brand-title">worldSH<span class="brand-i">i</span>FT Member Central</h1>
+<span class="brand-rule"></span>
+</div>
+</div>
+<div class="card auth-card">
+<div class="input-group">
+<label class="input-label" for="username">会員番号</label>
+<input autocomplete="username" id="username" placeholder="Member ID" type="text"/>
+</div>
+<div class="input-group">
+<label class="input-label" for="password">パスワード</label>
+<div class="password-wrap">
+<input autocomplete="current-password" id="password" placeholder="Password" type="password"/>
+<button aria-label="パスワードを表示" class="eye-btn" id="togglePassword" type="button">
+<svg class="eye-open" viewbox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+<svg class="eye-off" viewbox="0 0 24 24"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a21.6 21.6 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 7 11 7a21.7 21.7 0 01-2.16 3.19M14.12 14.12a3 3 0 11-4.24-4.24"></path><line x1="1" x2="23" y1="1" y2="23"></line></svg>
+</button>
+</div>
+</div>
+<div class="actions">
+<button class="action register-btn" type="button">新規登録</button>
+<button class="action login-btn" type="button">ログイン</button>
+</div>
+<div class="message" id="message"></div>
+</div>
+<div class="powered">Provided by</div>
+<img alt="WorldShift" class="logo logo-sm" src="corp.png"/>
+</div>
 
-  const $ = (id) => document.getElementById(id);
-  const site = $('site');
-  const toggleBtn = $('toggle');
-  const saveBtn = $('save');
-  const exportBtn = $('export');
-  const resetBtn = $('reset');
-  const nameBox = $('selname');
-  const bgInput = $('bg');
-  const fgInput = $('fg');
-  const padInput = $('pad');
-  const marginInput = $('mar');
-  const radiusInput = $('rad');
-  const widthInput = $('wid');
-  const shadowInput = $('sh');
-  const alignInput = $('align');
-  const upBtn = $('up');
-  const downBtn = $('down');
-  const duplicateBtn = $('dup');
-  const hideBtn = $('hide');
-  const picker = $('picker');
-  const mainColorInput = $('maincolor');
-  const siteBgInput = $('sitebg');
-  const pageWidthInput = $('pagewidth');
-  const spaceInput = $('space');
-
-  let editMode = false;
-  let selected = null;
-
-  function rgbToHex(rgb) {
-    if (!rgb || rgb === 'transparent' || rgb.includes('rgba(0, 0, 0, 0)')) return '#ffffff';
-    const match = rgb.match(/\d+/g);
-    if (!match) return '#ffffff';
-    return '#' + match.slice(0, 3).map(v => Number(v).toString(16).padStart(2, '0')).join('');
-  }
-
-  function clearSelection() {
-    document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-  }
-
-  function selectElement(el) {
-    clearSelection();
-    selected = el;
-    if (!selected) {
-      nameBox.textContent = '未選択';
-      return;
-    }
-    selected.classList.add('selected');
-    nameBox.textContent = `${selected.tagName} ${(selected.className || '').toString()}`.slice(0, 90);
-    const cs = getComputedStyle(selected);
-    bgInput.value = rgbToHex(cs.backgroundColor);
-    fgInput.value = rgbToHex(cs.color);
-    padInput.value = parseInt(cs.paddingTop, 10) || 0;
-    marginInput.value = parseInt(cs.marginTop, 10) || 0;
-    radiusInput.value = parseInt(cs.borderRadius, 10) || 0;
-  }
-
-  function setEditMode(enabled) {
-    editMode = enabled;
-    document.body.classList.toggle('edit-mode', enabled);
-    toggleBtn.textContent = enabled ? '編集を終了' : '編集を開始';
-    document.querySelectorAll('[data-editable]').forEach(el => {
-      el.setAttribute('contenteditable', enabled ? 'true' : 'false');
-      el.setAttribute('spellcheck', 'false');
-    });
-    if (!enabled) {
-      clearSelection();
-      selected = null;
-      nameBox.textContent = '未選択';
-    }
-  }
-
-  function applyStyle(property, value) {
-    if (!selected) {
-      nameBox.textContent = '先に編集したい要素をクリックしてください';
-      return;
-    }
-    selected.style[property] = value;
-  }
-
-  toggleBtn.addEventListener('click', () => setEditMode(!editMode));
-
-  document.addEventListener('click', (event) => {
-    if (!editMode || event.target.closest('.panel')) return;
-    const target = event.target.closest('.editable, [data-editable], .image-edit');
-    if (!target) return;
-    if (target.closest('#site')) {
-      selectElement(target);
-      if (!target.hasAttribute('data-editable')) event.preventDefault();
-    }
-  });
-
-  bgInput.addEventListener('input', e => applyStyle('backgroundColor', e.target.value));
-  fgInput.addEventListener('input', e => applyStyle('color', e.target.value));
-  padInput.addEventListener('input', e => applyStyle('padding', `${e.target.value}px`));
-  marginInput.addEventListener('input', e => applyStyle('margin', `${e.target.value}px`));
-  radiusInput.addEventListener('input', e => applyStyle('borderRadius', `${e.target.value}px`));
-  widthInput.addEventListener('change', e => applyStyle('width', e.target.value));
-  shadowInput.addEventListener('change', e => applyStyle('boxShadow', e.target.value));
-  alignInput.addEventListener('change', e => applyStyle('textAlign', e.target.value));
-
-  upBtn.addEventListener('click', () => {
-    if (!selected || !selected.previousElementSibling) return;
-    selected.parentElement.insertBefore(selected, selected.previousElementSibling);
-  });
-
-  downBtn.addEventListener('click', () => {
-    if (!selected || !selected.nextElementSibling) return;
-    selected.parentElement.insertBefore(selected.nextElementSibling, selected);
-  });
-
-  duplicateBtn.addEventListener('click', () => {
-    if (!selected || !selected.parentElement) return;
-    const clone = selected.cloneNode(true);
-    clone.classList.remove('selected');
-    selected.parentElement.insertBefore(clone, selected.nextSibling);
-    selectElement(clone);
-  });
-
-  hideBtn.addEventListener('click', () => {
-    if (!selected) return;
-    selected.classList.add('hidden');
-    selected.classList.remove('selected');
-    selected = null;
-    nameBox.textContent = '非表示にしました';
-  });
-
-  picker.addEventListener('change', () => {
-    const file = picker.files && picker.files[0];
-    if (!file || !selected) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      if (selected.tagName === 'IMG') {
-        selected.src = e.target.result;
-      } else {
-        selected.style.backgroundImage = `url("${e.target.result}")`;
-        selected.style.backgroundSize = 'cover';
-        selected.style.backgroundPosition = 'center';
-      }
-    };
-    reader.readAsDataURL(file);
-    picker.value = '';
-  });
-
-  mainColorInput.addEventListener('input', e => {
-    document.documentElement.style.setProperty('--navy', e.target.value);
-    document.documentElement.style.setProperty('--navy2', e.target.value);
-  });
-  siteBgInput.addEventListener('input', e => document.documentElement.style.setProperty('--bg', e.target.value));
-  pageWidthInput.addEventListener('input', e => document.documentElement.style.setProperty('--page', `${e.target.value}px`));
-  spaceInput.addEventListener('input', e => document.documentElement.style.setProperty('--space', `${e.target.value}px`));
-
-  saveBtn.addEventListener('click', () => {
-    const clone = site.cloneNode(true);
-    clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
-    clone.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-    localStorage.setItem('wsVisual', clone.innerHTML);
-    nameBox.textContent = 'ブラウザに保存しました';
-  });
-
-  resetBtn.addEventListener('click', () => {
-    if (!confirm('保存内容を削除して初期状態に戻しますか？')) return;
-    localStorage.removeItem('wsVisual');
-    location.reload();
-  });
-
-  exportBtn.addEventListener('click', () => {
-    setEditMode(false);
-    const clone = document.documentElement.cloneNode(true);
-    clone.querySelector('.panel')?.remove();
-    const shell = clone.querySelector('.shell');
-    if (shell) shell.style.display = 'block';
-    const canvas = clone.querySelector('.canvas');
-    if (canvas) canvas.style.padding = '0';
-    clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
-    clone.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-    const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'worldshift-edited.html';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-  });
-
-  const saved = localStorage.getItem('wsVisual');
-  if (saved) site.innerHTML = saved;
-  setEditMode(false);
-})();
-</script>
-</body></html>
+</body>
+</html>

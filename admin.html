@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理者画面 | worldSHiFT Member Central</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../top/style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-mark"><img src="../top/worldshift-globe.png" alt="worldSHiFT" width="24" height="19"></div>
+      <div class="sidebar-brand-text">
+        <span class="kicker">SHiFT ADMIN</span>
+        <span class="title">world<span class="brand-shift">SH<span class="brand-i">i</span>FT</span><br>Admin Central</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="admin.html" class="sidebar-link active" data-tip="管理者画面">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6l7-3z"></path></svg></span>
+        <span class="sidebar-link-label">管理者画面</span>
+      </a>
+      <a href="member-demo.html" class="sidebar-link" data-tip="会員デモ画面">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+        <span class="sidebar-link-label">会員デモ画面</span>
+      </a>
+      <a href="member-lookup.html" class="sidebar-link" data-tip="会員指定画面">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" y1="20" x2="15.5" y2="15.5"></line></svg></span>
+        <span class="sidebar-link-label">会員指定画面</span>
+      </a>
+      <a href="../top/top.html" class="sidebar-link" target="_blank" rel="noopener" data-tip="顧客ページ(①)を開く">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"></path></svg></span>
+        <span class="sidebar-link-label">顧客ページを開く</span><svg class="ext-icon" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"></path></svg>
+      </a>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg></div>
+        <div class="sidebar-user-text">
+          <span class="label">ログイン中</span>
+          <span class="value">管理者</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="main-topbar">
+      <div class="main-topbar-heading">
+        <div class="kicker">ADMIN</div>
+        <h1>管理者画面</h1>
+      </div>
+    </div>
+
+    <div class="container page-body">
+
+      <div class="top-grid">
+
+        <div class="span-12 section-card">
+          <div class="section-head">
+            <div class="section-title"><span class="section-icon" style="background:var(--accent)"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg></span>問い合わせ一覧</div>
+          </div>
+          <div class="card" style="padding:0">
+            <div class="list-wrap">
+              <table id="inquiryTable">
+                <thead><tr><th>受信日時</th><th>会員番号</th><th>件名</th><th>ステータス</th><th>対応</th></tr></thead>
+                <tbody id="inquiryTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="span-12 section-card">
+          <div class="section-head">
+            <div class="section-title"><span class="section-icon" style="background:var(--amber)"><svg viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 001 1h2l4 4V6L6 10H4a1 1 0 00-1 1z"></path><path d="M15 8a4 4 0 010 8"></path><path d="M18 5a8 8 0 010 14"></path></svg></span>お知らせ投稿</div>
+          </div>
+
+          <form class="admin-form" id="announceForm">
+            <div class="admin-field">
+              <label for="announceTitle">タイトル</label>
+              <input type="text" id="announceTitle" placeholder="例）12月のメンテナンスについて" required>
+            </div>
+            <div class="admin-field">
+              <label for="announceBody">本文</label>
+              <textarea id="announceBody" placeholder="お知らせの本文を入力してください" required></textarea>
+            </div>
+            <div class="admin-field">
+              <label>公開範囲</label>
+              <div class="pill-group" id="announceScopeGroup">
+                <button type="button" class="pill-btn active" data-scope="全員">全員</button>
+                <button type="button" class="pill-btn" data-scope="一部会員">一部会員</button>
+              </div>
+            </div>
+            <div class="admin-form-actions">
+              <span class="admin-form-note">※現在はデモ表示のみ。投稿には別途バックエンド連携が必要です</span>
+              <button type="submit" class="copy-btn copy-btn-primary">投稿する</button>
+            </div>
+          </form>
+
+          <div class="section-row-title" style="margin-top:10px">
+            <h2><span class="dot"></span>投稿済みのお知らせ</h2>
+          </div>
+          <div class="admin-announce-list" id="announceList"></div>
+        </div>
+
+      </div>
+
+      <div class="dashboard-footer logo-only"><img class="logo logo-sm" src="../top/corp.png" alt="WorldShift"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ---- 問い合わせ一覧(ダミーデータ) ---- */
+const SAMPLE_INQUIRIES = [
+  { date:"2026-07-28 14:22", member:"WS-10234", subject:"PROFiNDERのリサーチ結果が表示されない", status:"wait" },
+  { date:"2026-07-28 10:05", member:"WS-10088", subject:"請求書の再発行について", status:"progress" },
+  { date:"2026-07-27 19:40", member:"WS-10391", subject:"パスワードを再設定したい", status:"done" },
+  { date:"2026-07-27 09:12", member:"WS-10012", subject:"在庫管理の仕入データが反映されない", status:"progress" },
+  { date:"2026-07-26 16:50", member:"WS-10450", subject:"解約方法について", status:"done" }
+];
+const STATUS_LABEL = { wait:"未対応", progress:"対応中", done:"対応済み" };
+const STATUS_TONE = { wait:"tone-wait", progress:"tone-progress", done:"tone-done" };
+
+function renderInquiries(){
+  const tbody = document.getElementById("inquiryTableBody");
+  if(!SAMPLE_INQUIRIES.length){
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">問い合わせはありません。</td></tr>';
+    return;
+  }
+  tbody.innerHTML = SAMPLE_INQUIRIES.map(function(row){
+    return '<tr>'
+      + '<td>' + row.date + '</td>'
+      + '<td>' + row.member + '</td>'
+      + '<td>' + row.subject + '</td>'
+      + '<td><span class="status-badge ' + STATUS_TONE[row.status] + '">' + STATUS_LABEL[row.status] + '</span></td>'
+      + '<td><a href="member-lookup.html" class="copy-btn" style="text-decoration:none;display:inline-flex">この会員を確認</a></td>'
+      + '</tr>';
+  }).join("");
+}
+renderInquiries();
+
+/* ---- お知らせ投稿(クライアント側のみのデモ動作) ---- */
+const SAMPLE_ANNOUNCEMENTS = [
+  { date:"2026-07-20", title:"夏季休業のお知らせ", desc:"8/13〜8/16は休業とさせていただきます。" },
+  { date:"2026-07-01", title:"PROFiNDER機能アップデート", desc:"リサーチ結果のCSV出力に対応しました。" }
+];
+let announceScope = "全員";
+
+function renderAnnouncements(){
+  const list = document.getElementById("announceList");
+  list.innerHTML = SAMPLE_ANNOUNCEMENTS.map(function(a){
+    return '<div class="admin-announce-item"><div class="date">' + a.date + '</div>'
+      + '<div class="body"><div class="title">' + a.title + '</div><div class="desc">' + a.desc + '</div></div></div>';
+  }).join("");
+}
+renderAnnouncements();
+
+document.getElementById("announceScopeGroup").addEventListener("click", function(e){
+  const btn = e.target.closest(".pill-btn");
+  if(!btn) return;
+  Array.from(this.children).forEach(function(c){ c.classList.remove("active"); });
+  btn.classList.add("active");
+  announceScope = btn.dataset.scope;
+});
+
+document.getElementById("announceForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const title = document.getElementById("announceTitle").value.trim();
+  const body = document.getElementById("announceBody").value.trim();
+  if(!title || !body) return;
+  const today = new Date();
+  const dateStr = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,"0") + "-" + String(today.getDate()).padStart(2,"0");
+  SAMPLE_ANNOUNCEMENTS.unshift({ date: dateStr, title: title + "（" + announceScope + "）", desc: body });
+  renderAnnouncements();
+  this.reset();
+  document.querySelectorAll("#announceScopeGroup .pill-btn").forEach(function(b,i){ b.classList.toggle("active", i===0); });
+  announceScope = "全員";
+});
+</script>
+</body>
+</html>

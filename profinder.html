@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PROFiNDER | worldSHiFT Member Central</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div aria-live="polite" class="copy-toast" id="copyToast" role="status"></div>
+<div class="sidebar-context-popup hidden" id="sidebarContextPopup">
+<div class="sidebar-context-popup-title" id="sidebarContextTitle"></div>
+<div class="sidebar-context-popup-desc" id="sidebarContextDesc"></div>
+</div>
+<div class="modal-overlay" id="helpModal">
+<div class="modal-box" style="width:min(480px,100%)">
+<div class="modal-head">
+<h3>使い方ガイド</h3>
+<button aria-label="閉じる" class="modal-close" type="button"><svg viewbox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+</div>
+<div class="modal-body" style="padding:0">
+<div class="help-modal-intro">右クリックできる項目には、ホバーすると「ⓘ」マークが表示されます。その項目の上で右クリックすると、絞り込み・設定・説明などが表示される場合があります。</div>
+<div class="help-demo">
+<div class="help-demo-page">
+<div class="help-demo-titlebar"></div>
+<div class="help-demo-row">
+<span class="help-demo-row-dot"></span><span class="help-demo-row-bar"></span><span class="help-demo-row-info">ⓘ</span>
+</div>
+<div class="help-demo-row"><span class="help-demo-row-dot"></span><span class="help-demo-row-bar" style="max-width:60px"></span></div>
+<div class="help-demo-row"><span class="help-demo-row-dot"></span><span class="help-demo-row-bar" style="max-width:90px"></span></div>
+</div>
+<div class="help-cursor"><svg viewbox="0 0 24 24"><path d="M4 2l14 8-6 2-2 6z"></path></svg></div>
+<div class="help-click-ripple"></div>
+<div class="help-info-popup">
+<div class="help-info-popup-title"><span class="help-info-popup-dot"></span>販売額$</div>
+<div class="help-info-popup-desc">buybox価格</div>
+</div>
+</div>
+<div class="help-demo-caption">項目の上で右クリックしてみてください</div>
+</div>
+</div>
+</div>
+<div class="help-tip-bubble" id="globalTooltip" role="tooltip"></div>
+<div class="modal-overlay" id="pfAsinModal">
+<div class="modal-box" style="width:min(920px,100%);max-height:90vh">
+<div class="modal-head">
+<h3>ASIN詳細</h3>
+<button aria-label="閉じる" class="modal-close" type="button"><svg viewbox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+</div>
+<div class="modal-body" id="pfAsinModalBody"></div>
+</div>
+</div>
+<div class="modal-overlay" id="pfSellerMiningModal">
+<div class="modal-box" style="width:min(440px,100%)">
+<div class="modal-head">
+<h3>セラーマイニング</h3>
+<button aria-label="閉じる" class="modal-close" type="button"><svg viewbox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+</div>
+<div class="modal-body" style="text-align:center;padding:8px 24px 28px">
+<div class="pf-mining-icon"><svg viewbox="0 0 24 24"><path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z"></path></svg></div>
+<h4 style="margin:16px 0 6px;font-family:var(--font-head);font-size:17px">新規セラーを発掘します</h4>
+<p style="color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:22px">セラーマイニングは有料プランの機能です。<br/>アップグレードすると、条件に合った新規セラーを自動で探索できます。</p>
+<button class="copy-btn copy-btn-primary" style="width:100%" type="button">プランをアップグレード</button>
+</div>
+</div>
+</div>
+<div class="app-shell">
+<aside class="sidebar">
+<div class="sidebar-brand">
+<div class="sidebar-brand-mark"><img alt="worldSHiFT" height="19" src="worldshift-globe.png" width="24"/></div>
+<div class="sidebar-brand-text">
+<span class="kicker">SHiFT MEMBERS</span>
+<span class="title">world<span class="brand-shift">SH<span class="brand-i">i</span>FT</span><br/>Member Central</span>
+</div>
+<button aria-label="メニューの表示切り替え" class="sidebar-toggle-btn" type="button">
+<svg viewbox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>
+</button>
+</div>
+<nav class="sidebar-nav">
+<a class="sidebar-link" data-tip="TOPページ" href="top.html">
+<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"></path></svg></span>
+<span class="sidebar-link-label">TOPページ</span>
+</a>
+<a class="sidebar-link" data-tip="ダッシュボード" href="dashboard.html">
+<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><rect height="7" rx="1" width="4" x="4" y="13"></rect><rect height="11" rx="1" width="4" x="10" y="9"></rect><rect height="15" rx="1" width="4" x="16" y="5"></rect></svg></span>
+<span class="sidebar-link-label">ダッシュボード</span>
+</a>
+<a class="sidebar-link active" data-tip="PROFiNDER" href="profinder.html">
+<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" x2="15.5" y1="20" y2="15.5"></line></svg></span>
+<span class="sidebar-link-label">PROFiNDER</span>
+</a>
+<a class="sidebar-link" data-tip="在庫管理" href="inventory.html">
+<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"></path><path d="M3.5 8.2L12 13l8.5-4.8"></path><line x1="12" x2="12" y1="22" y2="13"></line></svg></span>
+<span class="sidebar-link-label">在庫管理</span>
+</a>
+<a class="sidebar-link" data-tip="キャッシュフロー管理" href="cashflow.html">
+<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="6"></rect><path d="M3 10h18"></path><circle cx="17" cy="14.2" r="1.5"></circle></svg></span>
+<span class="sidebar-link-label">キャッシュフロー管理</span>
+</a>
+<a class="sidebar-link" data-tip="その他SLC関連" href="resources.html">
+<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"></path></svg></span>
+<span class="sidebar-link-label">その他SLC関連</span>
+</a>
+<a class="sidebar-link" data-tip="LAS" href="https://master.worldshift-slc-las.com/login" rel="noopener" target="_blank">
+<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="4"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg></span>
+<span class="sidebar-link-label">LAS</span><svg class="ext-icon" viewbox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"></path></svg>
+</a>
+<a class="sidebar-link" data-tip="設定" href="settings.html">
+<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 00-.14-1.4l1.8-1.5-1.7-2.9-2.2.6a7 7 0 00-2.4-1.4L14 3h-4l-.36 2.4a7 7 0 00-2.4 1.4l-2.2-.6-1.7 2.9 1.8 1.5A7 7 0 005 12c0 .48.05.94.14 1.4l-1.8 1.5 1.7 2.9 2.2-.6a7 7 0 002.4 1.4L10 21h4l.36-2.4a7 7 0 002.4-1.4l2.2.6 1.7-2.9-1.8-1.5c.09-.46.14-.92.14-1.4z"></path></svg></span>
+<span class="sidebar-link-label">設定</span>
+</a>
+</nav>
+<div class="sidebar-foot">
+<div class="sidebar-user">
+<div class="sidebar-user-avatar"><svg viewbox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg></div>
+<div class="sidebar-user-text">
+<span class="label">会員番号</span>
+<span class="value" id="currentUserChip">-</span>
+</div>
+</div>
+<button class="sidebar-logout" type="button">
+<svg viewbox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg><span class="sidebar-logout-label">ログアウト</span>
+</button>
+</div>
+</aside>
+<main class="main-content">
+<div class="main-topbar">
+<div class="main-topbar-heading">
+<div class="kicker">RESEARCH TOOL</div>
+<h1>PROFiNDER</h1>
+</div>
+<div class="main-topbar-actions">
+<div class="topbar-search"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" x2="15.5" y1="20" y2="15.5"></line></svg>ASIN・商品を検索</div>
+<button aria-label="使い方ガイド" class="topbar-icon-btn" type="button"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.2 9a2.8 2.8 0 015.4 1c0 1.8-2.6 2.2-2.6 4"></path><circle cx="12" cy="16.6" fill="currentColor" r="0.1" stroke-width="1.6"></circle></svg></button>
+<div class="topbar-notify-wrap">
+<button aria-label="通知" class="topbar-icon-btn" type="button"><svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg><span class="badge-dot" id="topbarNotifyDot"></span></button>
+<div class="topbar-notify-panel hidden" id="topbarNotifyPanel">
+<div class="topbar-notify-panel-head">通知</div>
+<div class="topbar-notify-panel-list" id="topbarNotifyList"><div class="notify-text" style="padding:10px 14px">読み込み中です...</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="container sub-nav-shell">
+<div class="tabs-row">
+<div aria-label="PROFiNDER切り替え" class="research-tabs" role="tablist">
+<button aria-selected="true" class="tab-btn active" id="pfNewresearchTab" role="tab" type="button">リサーチ</button>
+<button aria-selected="false" class="tab-btn" id="pfCartTab" role="tab" type="button">カート</button>
+<button aria-selected="false" class="tab-btn" id="pfPurchasedTab" role="tab" type="button">仕入れ済み／LAS登録</button>
+<button aria-selected="false" class="tab-btn" id="pfAppasinTab" role="tab" type="button">アプリ探索ASIN</button>
+<button aria-selected="false" class="tab-btn" id="pfFavoritesTab" role="tab" type="button">お気に入り</button>
+</div>
+</div>
+</div>
+<div class="container page-body" data-view="card" id="dashboard">
+<section class="research-panel" id="pfNewresearchPanel">
+<div class="tabs-row pf-nested-tabs" style="margin-bottom:16px">
+<div aria-label="リサーチ切り替え" class="research-tabs" role="tablist">
+<button aria-selected="true" class="tab-btn active" id="pfNrAsinListTab" role="tab" type="button">ASINリスト</button>
+<button aria-selected="false" class="tab-btn" id="pfNrSellerListTab" role="tab" type="button">セラーリスト</button>
+<button aria-selected="false" class="tab-btn" id="pfNrSearchTab" role="tab" type="button">検索</button>
+</div>
+</div>
+
+<section class="research-panel" id="pfAsinListPanel">
+<div class="pf-asinlist-toolbar">
+<div class="pf-icon-btn-group">
+<button class="pf-icon-btn" type="button">
+<span class="pf-icon-btn-icon">
+<span class="pf-icon-btn-ring"></span>
+<svg viewbox="0 0 24 24"><circle cx="12" cy="5" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="12" cy="19" r="1.6"></circle></svg>
+</span>
+<span class="pf-icon-btn-label">アクションボタン</span>
+</button>
+<button class="pf-icon-btn pf-eye-btn" type="button">
+<span class="pf-icon-btn-icon">
+<svg viewbox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+</span>
+<span class="pf-icon-btn-label">PROFiNDER eye</span>
+</button>
+<button aria-label="フィルター" class="pf-icon-btn pf-icon-btn-sm" title="フィルター" type="button">
+<span class="pf-icon-btn-icon">
+<svg viewbox="0 0 24 24"><path d="M4 5h16"></path><path d="M7 12h10"></path><path d="M10 19h4"></path></svg>
+</span>
+</button>
+</div>
+<div class="pf-cart-summary pf-cart-summary-half" id="pfCartSummary">
+<div class="pf-cart-summary-head">
+<div class="section-title" style="margin-right:auto"><span class="dot"></span>カート状況</div>
+<div class="stat-item" style="padding:0"><span class="stat-label">件数</span><span class="stat-value" id="pfCartCount">0件</span></div>
+<div class="stat-item" style="padding:0"><span class="stat-label">仕入れ価格合計</span><span class="stat-value" id="pfCartCost">¥0</span></div>
+<div class="stat-item" style="padding:0"><span class="stat-label">利益合計見込み</span><span class="stat-value" id="pfCartProfit">¥0</span></div>
+<svg class="pf-cart-chevron" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
+</div>
+<div class="pf-cart-detail" id="pfCartDetail"></div>
+</div>
+</div>
+<div class="pf-filter-chips" id="pfAsinListFilterChips"></div>
+<div class="pf-action-menu hidden" id="pfActionMenu">
+<button type="button"><svg viewbox="0 0 24 24"><path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z"></path></svg>新規ASINを取得</button>
+<button class="pf-action-menu-item tone-red" type="button"><svg viewbox="0 0 24 24"><path d="M21 8V21H3V8"></path><path d="M1 3h22v5H1z"></path><path d="M10 12h4"></path></svg><span>即補充が必要</span><span class="pf-action-menu-count">20件</span></button>
+<button class="pf-action-menu-item tone-green" type="button"><svg viewbox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg><span>仕入好機（高TVI・BPI）</span><span class="pf-action-menu-count">8件</span></button>
+<button class="pf-action-menu-item tone-blue" type="button"><svg viewbox="0 0 24 24"><path d="M17 3l4 4-4 4"></path><path d="M3 11V9a4 4 0 014-4h14"></path><path d="M7 21l-4-4 4-4"></path><path d="M21 13v2a4 4 0 01-4 4H3"></path></svg><span>バリエーション開拓</span><span class="pf-action-menu-count">13件</span></button>
+<button class="pf-action-menu-item tone-darkred" type="button"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg><span>完全在庫切れ×売れそう</span><span class="pf-action-menu-count">21件</span></button>
+<button class="pf-action-menu-item tone-gray" type="button"><svg viewbox="0 0 24 24"><path d="M21 8V21H3V8"></path><path d="M1 3h22v5H1z"></path><path d="M12 12v5"></path></svg><span>滞留在庫を処分検討</span><span class="pf-action-menu-count">106件</span></button>
+<button class="pf-action-menu-item tone-purple" type="button"><svg viewbox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"></path></svg><span>知財入り商品</span><span class="pf-action-menu-count">69件</span></button>
+</div>
+<div class="pf-action-menu hidden" id="pfFilterMenu"></div>
+<div class="card list-card" style="padding:0">
+<div class="list-wrap pf-scrollable">
+<table class="pf-research-table pf-asinlist-table" id="pfAsinListTableEl">
+<thead><tr>
+<th>商品</th>
+<th></th>
+<th>利益を増やせる<br/>余地</th>
+<th>推奨仕入</th>
+<th>在庫切れ<br/>まで</th>
+<th>
+<button aria-label="販売額$の詳細を開閉" class="pf-col-expand-btn" data-kind="price" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              販売額$
+            </th>
+<th class="pf-expand-col pf-expand-price">TWAP$</th>
+<th class="pf-expand-col pf-expand-price">乖離率</th>
+<th class="pf-expand-col pf-expand-price">バンド下限</th>
+<th class="pf-expand-col pf-expand-price">バンド上限</th>
+<th class="pf-expand-col pf-expand-price">バンド指数</th>
+<th>
+<button aria-label="想定利益額の詳細を開閉" class="pf-col-expand-btn" data-kind="profit" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              想定利益額
+            </th>
+<th class="pf-expand-col pf-expand-profit">過去仕入利益(計)</th>
+<th class="pf-expand-col pf-expand-profit">TWAP利益(計)</th>
+<th class="pf-expand-col pf-expand-profit">乖離率</th>
+<th class="pf-expand-col pf-expand-profit">利益/個</th>
+<th class="pf-expand-col pf-expand-profit">関税/個</th>
+<th class="pf-expand-col pf-expand-profit">関税率</th>
+<th>
+<button aria-label="想定利益率の詳細を開閉" class="pf-col-expand-btn" data-kind="rate" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              想定利益率
+            </th>
+<th class="pf-expand-col pf-expand-rate">過去仕入率</th>
+<th class="pf-expand-col pf-expand-rate">TWAP率</th>
+<th class="pf-expand-col pf-expand-rate">返品率</th>
+<th>TVI</th>
+<th>BPI</th>
+<th></th>
+</tr></thead>
+<tbody id="pfAsinListTable"></tbody>
+</table>
+</div>
+<button aria-label="左へスクロール" class="pf-scroll-arrow pf-scroll-arrow-left" type="button"><svg viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<button aria-label="右へスクロール" class="pf-scroll-arrow pf-scroll-arrow-right" type="button"><svg viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+</section>
+
+<section class="research-panel hidden" id="pfSellerListPanel">
+<div class="card list-card" style="padding:0">
+<div class="pf-table-toolbar">
+<button class="pf-research-btn" type="button"><svg viewbox="0 0 24 24"><path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z"></path></svg>セラーマイニング</button>
+</div>
+<div class="list-wrap pf-scrollable">
+<table class="pf-research-table">
+<thead><tr>
+<th><div class="pf-seller-name-row"><span style="min-width:136px;display:inline-block">セラー</span><button class="pf-research-btn" type="button"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" x2="15.5" y1="20" y2="15.5"></line></svg>全セラーでリサーチする</button></div></th><th></th><th>発送</th><th>出品できる利益/月</th><th>要申請利益</th><th>未登録</th>
+<th>類似率</th><th>カテゴリ一致率</th><th>出品単価</th><th>総ASIN数</th><th>カテゴリ構成</th>
+</tr></thead>
+<tbody id="pfSellerListTable"></tbody>
+</table>
+</div>
+<button aria-label="左へスクロール" class="pf-scroll-arrow pf-scroll-arrow-left" type="button"><svg viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<button aria-label="右へスクロール" class="pf-scroll-arrow pf-scroll-arrow-right" type="button"><svg viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+</section>
+
+<section class="research-panel hidden" id="pfSearchPanel">
+<div class="pill-group" style="margin-bottom:16px">
+<button class="pill-btn active" id="pfSearchModeSellerSearchBtn" type="button">セラー検索</button>
+<button class="pill-btn" id="pfSearchModeAsinSearchBtn" type="button">ASIN検索</button>
+</div>
+<div id="pfSellerSearchView">
+<div class="card" style="padding:20px;margin-bottom:18px">
+<div class="input-group" style="margin-bottom:0">
+<label class="input-label" for="pfSellerInput">ASIN（関連するセラーIDが表示されます）</label>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<input id="pfSellerInput" placeholder="例）B0EXAMPLE1" style="flex:1;min-width:220px;font-family:var(--font-mono)" type="text"/>
+<button class="copy-btn copy-btn-primary" type="button">検索する</button>
+</div>
+</div>
+</div>
+<div class="card list-card" style="padding:0">
+<div class="empty hidden" id="pfSellerResultsEmpty">ASINを入力して検索してください。</div>
+<div class="pf-table-toolbar">
+<button class="pf-research-btn" type="button"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" x2="15.5" y1="20" y2="15.5"></line></svg>全セラーをリサーチ</button>
+</div>
+<div class="list-wrap pf-scrollable">
+<table class="pf-research-table">
+<thead><tr>
+<th>セラー</th><th></th><th>発送</th><th>出品できる利益/月</th><th>要申請利益</th><th>未登録</th>
+<th>類似率</th><th>カテゴリ一致率</th><th>出品単価</th><th>総ASIN数</th><th>カテゴリ構成</th>
+</tr></thead>
+<tbody id="pfSellerResults"></tbody>
+</table>
+</div>
+<button aria-label="左へスクロール" class="pf-scroll-arrow pf-scroll-arrow-left" type="button"><svg viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<button aria-label="右へスクロール" class="pf-scroll-arrow pf-scroll-arrow-right" type="button"><svg viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+</div>
+<div class="hidden" id="pfAsinSearchView">
+<div class="card" style="padding:20px;margin-bottom:8px">
+<div class="input-group" style="margin-bottom:0">
+<label class="input-label" for="pfUnifiedSearchInput">ASIN または セラーID</label>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<input id="pfUnifiedSearchInput" placeholder="例）B0EXAMPLE1 または A1B2C3D4E5F6G7" style="flex:1;min-width:220px;font-family:var(--font-mono)" type="text"/>
+<button class="copy-btn copy-btn-primary" type="button">検索する</button>
+</div>
+</div>
+</div>
+<div class="pf-page-note" style="margin-bottom:14px">※ ASINかセラーIDかは自動で判定されます（詳しくは右クリック）</div>
+<div id="pfAsinSearchBySellerView">
+<input id="pfAsinBySellerInput" type="hidden"/>
+<div class="card list-card" style="padding:0">
+<div class="empty hidden" id="pfAsinBySellerResultsEmpty">ASINまたはセラーIDを入力して検索してください。</div>
+<div class="list-wrap pf-scrollable">
+<table class="pf-research-table">
+<thead><tr><th></th><th>商品</th><th>売値</th><th>利益期待値</th><th></th></tr></thead>
+<tbody id="pfAsinBySellerResults"></tbody>
+</table>
+</div>
+<button aria-label="左へスクロール" class="pf-scroll-arrow pf-scroll-arrow-left" type="button"><svg viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<button aria-label="右へスクロール" class="pf-scroll-arrow pf-scroll-arrow-right" type="button"><svg viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+</div>
+<div class="hidden" id="pfAsinSearchByAsinView">
+<input id="pfAsinDetailInput" type="hidden"/>
+<div class="card list-card" style="padding:0">
+<div class="empty" id="pfAsinDetailResultsEmpty">ASINまたはセラーIDを入力して検索してください。</div>
+<div class="list-wrap pf-scrollable hidden" id="pfAsinDetailResultsWrap">
+<table class="pf-research-table pf-asinlist-table">
+<thead><tr>
+<th>商品</th>
+<th></th>
+<th>利益を増やせる<br/>余地</th>
+<th>推奨仕入</th>
+<th>在庫切れ<br/>まで</th>
+<th>
+<button aria-label="販売額$の詳細を開閉" class="pf-col-expand-btn" data-kind="price" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                  販売額$
+                </th>
+<th class="pf-expand-col pf-expand-price">TWAP$</th>
+<th class="pf-expand-col pf-expand-price">乖離率</th>
+<th class="pf-expand-col pf-expand-price">バンド下限</th>
+<th class="pf-expand-col pf-expand-price">バンド上限</th>
+<th class="pf-expand-col pf-expand-price">バンド指数</th>
+<th>
+<button aria-label="想定利益額の詳細を開閉" class="pf-col-expand-btn" data-kind="profit" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                  想定利益額
+                </th>
+<th class="pf-expand-col pf-expand-profit">過去仕入利益(計)</th>
+<th class="pf-expand-col pf-expand-profit">TWAP利益(計)</th>
+<th class="pf-expand-col pf-expand-profit">乖離率</th>
+<th class="pf-expand-col pf-expand-profit">利益/個</th>
+<th class="pf-expand-col pf-expand-profit">関税/個</th>
+<th class="pf-expand-col pf-expand-profit">関税率</th>
+<th>
+<button aria-label="想定利益率の詳細を開閉" class="pf-col-expand-btn" data-kind="rate" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                  想定利益率
+                </th>
+<th class="pf-expand-col pf-expand-rate">過去仕入率</th>
+<th class="pf-expand-col pf-expand-rate">TWAP率</th>
+<th class="pf-expand-col pf-expand-rate">返品率</th>
+<th>TVI</th>
+<th>BPI</th>
+<th></th>
+</tr></thead>
+<tbody id="pfAsinDetailResults"></tbody>
+</table>
+</div>
+<button aria-label="左へスクロール" class="pf-scroll-arrow pf-scroll-arrow-left" type="button"><svg viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<button aria-label="右へスクロール" class="pf-scroll-arrow pf-scroll-arrow-right" type="button"><svg viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+<section class="research-panel hidden" id="pfCartPanel">
+<div class="placeholder-note" style="margin-bottom:16px">
+<svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+<div>カートに追加した商品は、追加から24時間が経過すると自動的に削除されます。</div>
+</div>
+<div class="panel-toolbar">
+<div class="toolbar-group"><span class="updated" id="pfCartListSummary">0件</span></div>
+<div class="toolbar-group toolbar-group-end">
+<a class="copy-btn" href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none">
+<svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2" viewbox="0 0 24 24"><rect height="13" rx="4" width="16" x="4" y="7"></rect><circle cx="9" cy="13" fill="currentColor" r="1.4" stroke="none"></circle><circle cx="15" cy="13" fill="currentColor" r="1.4" stroke="none"></circle><path d="M9 17h6"></path><path d="M12 7V3"></path><circle cx="12" cy="2" fill="currentColor" r="1.2" stroke="none"></circle></svg>
+          AI講師に相談
+        </a>
+<button class="copy-btn copy-btn-primary" type="button">この内容で仕入れる</button>
+</div>
+</div>
+<div class="item-grid" id="pfCartList"></div>
+</section>
+
+<section class="research-panel hidden" id="pfPurchasedPanel">
+<div class="panel-toolbar">
+<div class="toolbar-group"><span class="updated" id="pfPurchasedSummary">0件</span></div>
+</div>
+<div class="item-grid" id="pfPurchasedList"></div>
+</section>
+
+<section class="research-panel hidden" id="pfAppAsinPanel">
+<div class="card" style="padding:20px">
+<div id="pfAppAsinList"></div>
+</div>
+</section>
+
+<section class="research-panel hidden" id="pfFavoritesPanel">
+<div class="section-title" style="margin-bottom:12px"><span class="dot"></span>お気に入りASIN</div>
+<div class="card list-card" style="padding:0;margin-bottom:24px">
+<div class="empty hidden" id="pfFavoriteAsinEmpty">お気に入りのASINはまだありません。リストの☆マークで登録できます。</div>
+<div class="list-wrap pf-scrollable">
+<table class="pf-research-table pf-asinlist-table">
+<thead><tr>
+<th>商品</th>
+<th></th>
+<th>利益を増やせる<br/>余地</th>
+<th>推奨仕入</th>
+<th>在庫切れ<br/>まで</th>
+<th>
+<button aria-label="販売額$の詳細を開閉" class="pf-col-expand-btn" data-kind="price" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              販売額$
+            </th>
+<th class="pf-expand-col pf-expand-price">TWAP$</th>
+<th class="pf-expand-col pf-expand-price">乖離率</th>
+<th class="pf-expand-col pf-expand-price">バンド下限</th>
+<th class="pf-expand-col pf-expand-price">バンド上限</th>
+<th class="pf-expand-col pf-expand-price">バンド指数</th>
+<th>
+<button aria-label="想定利益額の詳細を開閉" class="pf-col-expand-btn" data-kind="profit" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              想定利益額
+            </th>
+<th class="pf-expand-col pf-expand-profit">過去仕入利益(計)</th>
+<th class="pf-expand-col pf-expand-profit">TWAP利益(計)</th>
+<th class="pf-expand-col pf-expand-profit">乖離率</th>
+<th class="pf-expand-col pf-expand-profit">利益/個</th>
+<th class="pf-expand-col pf-expand-profit">関税/個</th>
+<th class="pf-expand-col pf-expand-profit">関税率</th>
+<th>
+<button aria-label="想定利益率の詳細を開閉" class="pf-col-expand-btn" data-kind="rate" type="button"><svg viewbox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              想定利益率
+            </th>
+<th class="pf-expand-col pf-expand-rate">過去仕入率</th>
+<th class="pf-expand-col pf-expand-rate">TWAP率</th>
+<th class="pf-expand-col pf-expand-rate">返品率</th>
+<th>TVI</th>
+<th>BPI</th>
+<th></th>
+</tr></thead>
+<tbody id="pfFavoriteAsinList"></tbody>
+</table>
+</div>
+<button aria-label="左へスクロール" class="pf-scroll-arrow pf-scroll-arrow-left" type="button"><svg viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<button aria-label="右へスクロール" class="pf-scroll-arrow pf-scroll-arrow-right" type="button"><svg viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+<div class="section-title" style="margin-bottom:12px"><span class="dot"></span>お気に入りセラー</div>
+<div class="card list-card" style="padding:0">
+<div class="empty hidden" id="pfFavoriteSellerEmpty">お気に入りのセラーはまだありません。リストの☆マークで登録できます。</div>
+<div class="list-wrap pf-scrollable">
+<table class="pf-research-table">
+<thead><tr>
+<th>セラー</th><th></th><th>発送</th><th>出品できる利益/月</th><th>要申請利益</th><th>未登録</th>
+<th>類似率</th><th>カテゴリ一致率</th><th>出品単価</th><th>総ASIN数</th><th>カテゴリ構成</th>
+</tr></thead>
+<tbody id="pfFavoriteSellerList"></tbody>
+</table>
+</div>
+<button aria-label="左へスクロール" class="pf-scroll-arrow pf-scroll-arrow-left" type="button"><svg viewbox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<button aria-label="右へスクロール" class="pf-scroll-arrow pf-scroll-arrow-right" type="button"><svg viewbox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+</section>
+<div class="dashboard-footer"><div class="powered">Powered by</div><img alt="PROFiNDER" class="logo" src="profinderlogo.png"/></div>
+</div>
+</main>
+</div>
+
+
+
+</body>
+</html>
