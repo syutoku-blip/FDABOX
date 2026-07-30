@@ -79,9 +79,14 @@
   <aside class="sidebar">
     <div class="sidebar-brand">
       <img class="sidebar-brand-logo" src="wmc-logo-vertical.png" alt="worldSHiFT Member Central">
-      <button type="button" class="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="メニューの表示切り替え">
-        <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>
-      </button>
+      <div class="sidebar-toggle-group">
+        <button type="button" class="sidebar-hide-btn" onclick="hideSidebarFully()" aria-label="サイドバーを完全に隠す">
+          <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>
+        </button>
+        <button type="button" class="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="メニューの表示切り替え">
+          <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>
+        </button>
+      </div>
     </div>
     <nav class="sidebar-nav">
       <a href="top.html" class="sidebar-link" data-tip="TOPページ" oncontextmenu="showSidebarPageInfo(event,'top.html')">

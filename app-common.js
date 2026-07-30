@@ -784,11 +784,16 @@ document.addEventListener("click",(e)=>{
 /* ---------- サイドバーの折りたたみ ---------- */
 function toggleSidebar(){
   const h = document.documentElement;
-  const cur = h.getAttribute("data-sidebar") || "expanded";
-  // 展開 → アイコンのみ → 完全に隠す → 展開 の3段階でループする
-  const next = cur === "expanded" ? "collapsed" : (cur === "collapsed" ? "hidden" : "expanded");
+  const collapsed = h.getAttribute("data-sidebar") === "collapsed";
+  const next = collapsed ? "expanded" : "collapsed";
   h.setAttribute("data-sidebar", next);
   try{ localStorage.setItem("shift_sidebar_collapsed", next); }catch(e){}
+  updateSidebarReopenTab();
+}
+function hideSidebarFully(){
+  const h = document.documentElement;
+  h.setAttribute("data-sidebar", "hidden");
+  try{ localStorage.setItem("shift_sidebar_collapsed", "hidden"); }catch(e){}
   updateSidebarReopenTab();
 }
 function updateSidebarReopenTab(){
