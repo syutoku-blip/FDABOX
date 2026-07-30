@@ -19,8 +19,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 /* ---------- ヘッダー ---------- */
 .pf-header{
   display:flex;align-items:center;gap:18px;padding:12px 24px;
-  background:linear-gradient(90deg,rgba(var(--accent-rgb),.10),rgba(var(--accent-rgb),.03) 60%,transparent);
-  border-bottom:2px solid rgba(var(--accent-rgb),.35);
+  background:
+    radial-gradient(160% 220% at 6% 0%,rgba(var(--accent-rgb),.55),transparent 60%),
+    linear-gradient(90deg,#243a70 0%,#1c2748 55%,#151d38 100%);
+  border-bottom:1px solid rgba(255,255,255,.1);
   flex-wrap:wrap;
 }
 .pf-menu-btn{
@@ -38,25 +40,32 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
 .pf-tabs{display:flex;align-items:center;gap:4px;flex:none}
 .pf-tab{
-  height:38px;padding:0 16px;border-radius:10px;border:0;background:transparent;color:var(--muted);
+  height:38px;padding:0 16px;border-radius:10px;border:0;background:transparent;color:rgba(255,255,255,.68);
   font-family:var(--font-head);font-weight:700;font-size:14px;cursor:pointer;transition:.15s ease;
 }
-.pf-tab:hover{color:var(--navy)}
-.pf-tab.active{background:rgba(var(--accent-rgb),.14);color:var(--accent-dark)}
+.pf-tab:hover{color:#fff}
+.pf-tab.active{background:#fff;color:var(--accent-dark)}
 
-.pf-header-right{display:flex;align-items:center;gap:12px;margin-left:auto;flex-wrap:wrap}
+.pf-header-right{display:flex;align-items:center;gap:12px;margin-left:auto;flex-wrap:nowrap}
 .pf-inquiry-btn{
-  display:flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:10px;border:1.5px solid var(--navy);
-  background:#fff;font-family:var(--font-head);font-weight:700;font-size:13.5px;color:var(--navy);cursor:pointer;
+  display:flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:10px;border:0;
+  background:#fff;font-family:var(--font-head);font-weight:700;font-size:13.5px;color:var(--navy);cursor:pointer;flex:none;white-space:nowrap;
 }
 .pf-inquiry-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
 .pf-inquiry-dot{width:7px;height:7px;border-radius:50%;background:#e0293f}
+.pf-search-group{display:flex;align-items:center;background:rgba(255,255,255,.94);border-radius:10px;border:1px solid transparent;overflow:hidden}
+.pf-search-group:focus-within{border-color:rgba(var(--accent-rgb),.5)}
 .pf-search{
-  display:flex;align-items:center;height:40px;padding:0 16px;border-radius:10px;background:#f0f1f5;color:var(--text);
-  font-size:13px;min-width:220px;border:1px solid transparent;font-family:var(--font-body);outline:none;
+  display:flex;align-items:center;height:40px;padding:0 14px;background:transparent;color:var(--text);
+  font-size:13px;min-width:200px;border:0;font-family:var(--font-body);outline:none;
 }
 .pf-search::placeholder{color:var(--faint)}
-.pf-search:focus{background:#fff;border-color:rgba(var(--accent-rgb),.4)}
+.pf-search-btn{
+  flex:none;width:40px;height:40px;border:0;background:var(--accent);color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.pf-search-btn:hover{background:var(--accent-dark)}
+.pf-search-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.4}
 
 /* ---------- コンテンツ ---------- */
 .pf-body{padding:24px 24px 120px}
@@ -346,7 +355,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
   <div class="pf-header-right">
     <button type="button" class="pf-inquiry-btn"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg>問い合わせ<span class="pf-inquiry-dot"></span></button>
-    <input type="text" class="pf-search" placeholder="ASIN／セラー">
+    <div class="pf-search-group">
+      <input type="text" class="pf-search" placeholder="ASIN／セラー">
+      <button type="button" class="pf-search-btn" aria-label="検索"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" y1="20" x2="15.5" y2="15.5"></line></svg></button>
+    </div>
   </div>
 </header>
 
