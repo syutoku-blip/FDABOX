@@ -770,10 +770,9 @@ body:before,body:after{display:none}
 .wmc-pf-pill img{
   height:24px;display:block;position:relative;z-index:1;
   filter:
-    drop-shadow(0 0 1px rgba(60,95,160,.9))
-    drop-shadow(0 0 3px rgba(60,95,160,.75))
-    drop-shadow(0 0 5px rgba(60,95,160,.6))
-    drop-shadow(0 0 8px rgba(60,95,160,.4));
+    drop-shadow(0 0 1px rgba(255,255,255,.75))
+    drop-shadow(0 0 2px rgba(255,255,255,.6))
+    drop-shadow(0 0 4px rgba(255,255,255,.4));
 }
 html[data-sidebar="collapsed"] .wmc-pf-pill{display:none!important}
 
