@@ -60,7 +60,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-gear{width:16px;height:16px;stroke:var(--faint);fill:none;stroke-width:2;cursor:pointer}
 
 /* ---------- コンテンツ ---------- */
-.pf-body{padding:24px}
+.pf-body{padding:24px 24px 64px}
 .pf-panel{display:none}
 .pf-panel.active{display:block}
 
@@ -148,7 +148,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-notice-btn.solid{background:#2e5f1e;color:#fff}
 .pf-notice-btn.ghost{background:#fff;color:var(--navy);border-color:var(--line)}
 
-.pf-table-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;overflow-x:auto}
+.pf-table-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;overflow-x:auto;position:relative;cursor:grab}
+.pf-table-wrap.dragging{cursor:grabbing;user-select:none}
 .pf-siire-row{display:grid;grid-template-columns:120px 250px 1fr 100px 90px 100px 110px 60px 130px;gap:16px;align-items:center;padding:18px 16px;border-bottom:1px solid var(--line);min-width:1200px}
 .pf-siire-row.head{background:#fafafd;color:var(--muted);font-size:12.5px;font-weight:700}
 .pf-siire-row:last-child{border-bottom:0}
@@ -665,6 +666,33 @@ if(miningBtn){
   miningBtn.addEventListener("click", function(){ miningPopup.classList.toggle("hidden"); });
   document.getElementById("miningClose").addEventListener("click", function(){ miningPopup.classList.add("hidden"); });
 }
+
+/* ---- 表の横スクロール: クリック&ドラッグでスライド ---- */
+function enableDragScroll(el){
+  if(!el) return;
+  var isDown=false, startX=0, startScroll=0, moved=false;
+  el.addEventListener("mousedown", function(e){
+    if(e.button!==0) return;
+    isDown=true; moved=false;
+    startX=e.pageX; startScroll=el.scrollLeft;
+  });
+  window.addEventListener("mousemove", function(e){
+    if(!isDown) return;
+    var dx=e.pageX-startX;
+    if(Math.abs(dx)>4 && !moved){ moved=true; el.classList.add("dragging"); }
+    if(moved){ el.scrollLeft=startScroll-dx; e.preventDefault(); }
+  });
+  window.addEventListener("mouseup", function(){
+    if(isDown && moved){
+      var suppressClick=function(ev){ ev.stopPropagation(); ev.preventDefault(); };
+      el.addEventListener("click", suppressClick, true);
+      setTimeout(function(){ el.removeEventListener("click", suppressClick, true); }, 0);
+    }
+    isDown=false; moved=false;
+    el.classList.remove("dragging");
+  });
+}
+document.querySelectorAll(".pf-table-wrap").forEach(enableDragScroll);
 </script>
 </body>
 </html>
