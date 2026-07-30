@@ -148,10 +148,26 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-notice-btn.solid{background:#2e5f1e;color:#fff}
 .pf-notice-btn.ghost{background:#fff;color:var(--navy);border-color:var(--line)}
 
-.pf-table-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;overflow-x:auto;position:relative;cursor:grab}
-.pf-table-wrap.dragging{cursor:grabbing;user-select:none}
-.pf-siire-row{display:grid;grid-template-columns:120px 250px 1fr 100px 90px 100px 110px 60px 130px;gap:16px;align-items:center;padding:18px 16px;border-bottom:1px solid var(--line);min-width:1200px}
+.pf-table-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;overflow-x:auto;position:relative}
+.pf-scroll-edge{
+  position:absolute;top:0;bottom:0;width:44px;display:none;align-items:center;justify-content:center;
+  cursor:pointer;z-index:6;color:var(--muted);transition:.15s ease;
+}
+.pf-scroll-edge:hover{color:var(--accent)}
+.pf-scroll-edge svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4}
+.pf-scroll-edge.left{left:0;background:linear-gradient(90deg,rgba(255,255,255,.97),rgba(255,255,255,0));border-radius:18px 0 0 18px}
+.pf-scroll-edge.right{right:0;background:linear-gradient(270deg,rgba(255,255,255,.97),rgba(255,255,255,0));border-radius:0 18px 18px 0}
+.pf-siire-row{display:grid;grid-template-columns:130px 60px 1fr 140px 100px 100px 110px 90px 50px 140px;gap:14px;align-items:center;padding:18px 16px;border-bottom:1px solid var(--line);min-width:1300px}
 .pf-siire-row.head{background:#fafafd;color:var(--muted);font-size:12.5px;font-weight:700}
+.pf-th-main{display:flex;align-items:center;justify-content:center;gap:5px}
+.pf-th-sub{display:flex;flex-direction:column;align-items:center;gap:4px}
+.pf-th-sub .sub-label{font-size:10px;font-weight:400;color:var(--faint)}
+.pf-th-chevron{width:22px;height:22px;border-radius:7px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);display:inline-flex;align-items:center;justify-content:center}
+.pf-th-chevron svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6}
+.pf-th-info{width:14px;height:14px;stroke:var(--faint);fill:none;stroke-width:2}
+.pf-prod-cell{display:flex;gap:10px;text-align:left}
+.pf-prod-thumb{flex:none;width:44px;height:44px;border-radius:8px;background:#f0f1f5;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--faint)}
+.pf-prod-thumb svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6}
 .pf-siire-row:last-child{border-bottom:0}
 .col-gain{font-family:var(--font-head)}
 .col-gain .amt{font-size:18px;font-weight:800;color:#4b7015}
@@ -168,7 +184,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-warn-badge{border-color:var(--accent);color:var(--accent)}
 .pf-call-badge{border-color:#e0793a;color:#e0793a}
 .pf-warn-badge svg,.pf-call-badge svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.4}
-.pf-edit-chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:7px;padding:2px 8px;font-size:11px;color:var(--muted);margin-bottom:6px}
+.pf-edit-chip{display:inline-flex;align-items:center;gap:5px;border:1px solid #d3c2f5;border-radius:7px;padding:2px 8px;font-size:11px;color:#6b4fc4;margin-bottom:6px;background:#f8f5fd}
+.pf-warn-badge.amber{border-color:#c9860a;color:#c9860a}
 .pf-tag-row{display:flex;gap:6px;flex-wrap:wrap}
 .pf-tag{background:#f0f1f5;border-radius:6px;padding:2px 7px;font-size:11px;color:var(--muted);font-family:var(--font-mono)}
 .pf-tag.blue{background:rgba(var(--accent-rgb),.14);color:var(--accent-dark)}
@@ -392,35 +409,42 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
     <div class="pf-table-wrap">
       <div class="pf-siire-row head">
-        <div>利益を増やせる余地</div>
-        <div>仕入</div>
+        <div class="pf-th-main">利益を増やせる余地<svg class="pf-th-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></div>
+        <div class="pf-th-main">仕入<svg class="pf-th-info" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"></path><line x1="3" y1="3" x2="21" y2="21"></line></svg></div>
         <div>商品</div>
-        <div>推奨仕入</div>
-        <div>在庫切れまで</div>
-        <div>販売額$</div>
-        <div>想定利益額</div>
-        <div>想定利益率</div>
-        <div>指数</div>
+        <div class="pf-th-main">推奨仕入<svg class="pf-th-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></div>
+        <div class="pf-th-sub">在庫切れまで<span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub">販売額$<span class="sub-label">現在の米ドル価格 ▾</span></div>
+        <div class="pf-th-sub">想定利益額<span class="sub-label">日本Amazon仕入 ▾</span></div>
+        <div class="pf-th-sub">想定利益率<span class="sub-label">日本Amazon仕入 ▾</span></div>
+        <div class="pf-th-sub">指数<span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div></div>
       </div>
 
       <div class="pf-siire-row">
-        <div class="col-gain"><span class="dash">─</span></div>
+        <div class="col-gain"><div class="amt">+¥74,540</div><div class="sub">増やせる可能性があります（+200%）</div></div>
         <div><input type="checkbox"></div>
-        <div>
-          <span class="pf-badge badge-restock">補充</span>
-          <div class="pf-prod-name">サンプル商品A（デモ）</div>
-          <div class="pf-prod-meta"><span class="pf-prod-asin">B0DEMO0001</span><span class="pf-warn-badge"><svg viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.8L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z"></path></svg></span></div>
-          <div class="pf-edit-chip"><input type="checkbox" style="width:11px;height:11px">✎ 添削</div>
-          <div class="pf-tag-row"><span class="pf-tag blue">2026/07/21</span><span class="pf-tag">2個</span><span class="pf-tag green">27%</span></div>
+        <div class="pf-prod-cell">
+          <div class="pf-prod-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
+          <div>
+            <span class="pf-badge badge-restock">補充</span>
+            <div class="pf-prod-name">サンプル商品A（デモ）</div>
+            <div class="pf-prod-meta"><span class="pf-prod-asin">B0DEMO0001</span><span class="pf-warn-badge"><svg viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.8L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z"></path></svg></span></div>
+            <div class="pf-edit-chip">🗓 添削</div>
+            <div class="pf-tag-row"><span class="pf-tag blue">2026/07/21</span><span class="pf-tag">2個</span><span class="pf-tag green">27%</span></div>
+          </div>
         </div>
         <div class="col-recommend">
-          <div class="ok-circle"><svg viewBox="0 0 24 24"><polyline points="4 12 9 17 20 6"></polyline></svg></div>
+          <div class="pf-day-tabs">
+            <div class="pf-day-tab">15日<b>0</b></div>
+            <div class="pf-day-tab">30日<b>1</b></div>
+            <div class="pf-day-tab rec">60日<b>4</b>推奨</div>
+          </div>
           <a class="stock-link">在庫 2</a>
         </div>
         <div class="col-until">20日</div>
         <div class="col-price">$1020.00</div>
-        <div class="col-profit zero">¥0</div>
+        <div class="col-profit pos">¥74,540</div>
         <div class="col-rate">12.2%</div>
         <div class="col-index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
         <div class="col-buy">
@@ -433,12 +457,15 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       <div class="pf-siire-row">
         <div class="col-gain"><div class="amt">+¥98,838</div><div class="sub">増やせる可能性があります</div></div>
         <div><input type="checkbox"></div>
-        <div>
-          <span class="pf-badge badge-stock">ストック</span>
-          <div class="pf-prod-name">サンプル商品B（デモ）</div>
-          <div class="pf-prod-meta"><span class="pf-prod-asin">B0DEMO0002</span><span class="pf-call-badge"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"></path></svg></span></div>
-          <div class="pf-edit-chip"><input type="checkbox" style="width:11px;height:11px">✎ 添削</div>
-          <div class="pf-tag-row"><span class="pf-tag blue">2026/07/22</span><span class="pf-tag">1個</span></div>
+        <div class="pf-prod-cell">
+          <div class="pf-prod-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
+          <div>
+            <span class="pf-badge badge-stock">ストック</span>
+            <div class="pf-prod-name">サンプル商品B（デモ）</div>
+            <div class="pf-prod-meta"><span class="pf-prod-asin">B0DEMO0002</span><span class="pf-call-badge"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.5 2.1L8 10a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"></path></svg></span></div>
+            <div class="pf-edit-chip">🗓 添削</div>
+            <div class="pf-tag-row"><span class="pf-tag blue">2026/07/18</span><span class="pf-tag">10個</span><span class="pf-tag green">51%</span></div>
+          </div>
         </div>
         <div class="col-recommend">
           <div class="pf-day-tabs">
@@ -452,6 +479,39 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <div class="col-price">$78.99</div>
         <div class="col-profit pos">¥98,838</div>
         <div class="col-rate">43.9%</div>
+        <div class="col-index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
+        <div class="col-buy">
+          <span class="buy-btn buy-jp">🛍 日本で買う</span>
+          <span class="buy-btn buy-rakuten">🛒 楽天で買う</span>
+          <span class="buy-btn buy-yahoo">🏮 Yahooで買う</span>
+        </div>
+      </div>
+
+      <div class="pf-siire-row">
+        <div class="col-gain"><div class="amt">+¥69,977</div><div class="sub">増やせる可能性があります</div></div>
+        <div><input type="checkbox"></div>
+        <div class="pf-prod-cell">
+          <div class="pf-prod-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
+          <div>
+            <span class="pf-badge badge-stock">ストック</span>
+            <div class="pf-prod-name">サンプル商品C（デモ）</div>
+            <div class="pf-prod-meta"><span class="pf-prod-asin">B0DEMO0003</span><span class="pf-warn-badge amber"><svg viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.8L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z"></path></svg></span></div>
+            <div class="pf-edit-chip">🗓 添削</div>
+            <div class="pf-tag-row"><span class="pf-tag blue">2026/07/23</span><span class="pf-tag">10個</span><span class="pf-tag green">46%</span></div>
+          </div>
+        </div>
+        <div class="col-recommend">
+          <div class="pf-day-tabs">
+            <div class="pf-day-tab">15日<b>4</b></div>
+            <div class="pf-day-tab">30日<b>9</b></div>
+            <div class="pf-day-tab rec">60日<b>19</b>推奨</div>
+          </div>
+          <a class="stock-link">在庫 0</a>
+        </div>
+        <div class="col-until">0日</div>
+        <div class="col-price">$64.50</div>
+        <div class="col-profit pos">¥69,977</div>
+        <div class="col-rate">38.1%</div>
         <div class="col-index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
         <div class="col-buy">
           <span class="buy-btn buy-jp">🛍 日本で買う</span>
@@ -667,32 +727,31 @@ if(miningBtn){
   document.getElementById("miningClose").addEventListener("click", function(){ miningPopup.classList.add("hidden"); });
 }
 
-/* ---- 表の横スクロール: クリック&ドラッグでスライド ---- */
-function enableDragScroll(el){
+/* ---- 表の横スクロール: 左右の縦長オーバーレイをクリックでスライド ---- */
+function addEdgeScrollers(el){
   if(!el) return;
-  var isDown=false, startX=0, startScroll=0, moved=false;
-  el.addEventListener("mousedown", function(e){
-    if(e.button!==0) return;
-    isDown=true; moved=false;
-    startX=e.pageX; startScroll=el.scrollLeft;
-  });
-  window.addEventListener("mousemove", function(e){
-    if(!isDown) return;
-    var dx=e.pageX-startX;
-    if(Math.abs(dx)>4 && !moved){ moved=true; el.classList.add("dragging"); }
-    if(moved){ el.scrollLeft=startScroll-dx; e.preventDefault(); }
-  });
-  window.addEventListener("mouseup", function(){
-    if(isDown && moved){
-      var suppressClick=function(ev){ ev.stopPropagation(); ev.preventDefault(); };
-      el.addEventListener("click", suppressClick, true);
-      setTimeout(function(){ el.removeEventListener("click", suppressClick, true); }, 0);
-    }
-    isDown=false; moved=false;
-    el.classList.remove("dragging");
-  });
+  var left=document.createElement("div");
+  left.className="pf-scroll-edge left";
+  left.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>';
+  var right=document.createElement("div");
+  right.className="pf-scroll-edge right";
+  right.innerHTML='<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>';
+  el.appendChild(left);
+  el.appendChild(right);
+  left.addEventListener("click", function(){ el.scrollBy({left:-320,behavior:"smooth"}); });
+  right.addEventListener("click", function(){ el.scrollBy({left:320,behavior:"smooth"}); });
+  function updateEdges(){
+    var scrollable=el.scrollWidth>el.clientWidth+2;
+    var atStart=el.scrollLeft<=2;
+    var atEnd=el.scrollLeft+el.clientWidth>=el.scrollWidth-2;
+    left.style.display=(!scrollable||atStart)?"none":"flex";
+    right.style.display=(!scrollable||atEnd)?"none":"flex";
+  }
+  el.addEventListener("scroll", updateEdges, {passive:true});
+  window.addEventListener("resize", updateEdges);
+  updateEdges();
 }
-document.querySelectorAll(".pf-table-wrap").forEach(enableDragScroll);
+document.querySelectorAll(".pf-table-wrap").forEach(addEdgeScrollers);
 </script>
 </body>
 </html>
