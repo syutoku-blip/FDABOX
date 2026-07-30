@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>worldSHiFT Member Central</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="shell.css">
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- 1段目：顧客向け / 管理者向け 切替 -->
+  <div class="mode-bar">
+    <div class="mode-bar-brand">
+      <img src="worldshift-globe.png" alt="worldSHiFT">
+      <span class="mode-bar-brand-text">world<span class="accent">SH</span>iFT Member Central</span>
+    </div>
+    <div class="mode-tabs">
+      <button type="button" id="modeCustomerBtn" class="mode-tab">【顧客向けページ】</button>
+      <button type="button" id="modeAdminBtn" class="mode-tab">【管理者向けページ】</button>
+    </div>
+  </div>
+
+  <!-- 2段目：管理者向けページ内の3タブ(管理者向け選択時のみ表示) -->
+  <div class="admin-subbar hidden" id="adminSubbar">
+    <div class="admin-subtabs">
+      <button type="button" class="admin-subtab active" data-tab="admin">管理者画面</button>
+      <button type="button" class="admin-subtab" data-tab="demo">会員デモ画面</button>
+      <button type="button" class="admin-subtab" data-tab="lookup">会員指定画面</button>
+    </div>
+  </div>
+
+  <!-- 補足メモ(会員デモ/会員指定タブのみ表示) -->
+  <div class="mode-note hidden" id="demoNote">
+    <span>ⓘ</span><span id="demoNoteText"></span>
+  </div>
+
+  <!-- 3段目：ページ切替タブ + 会員番号入力(会員デモ/会員指定タブのみ表示) -->
+  <div class="tool-row hidden" id="toolRow">
+    <div class="page-picker pill-group" id="pagePicker"></div>
+    <form class="lookup-input-group" id="lookupForm" style="display:none">
+      <input type="text" id="lookupMemberNo" placeholder="会員番号を入力（例：WS-10234）" required>
+      <button type="submit" class="copy-btn copy-btn-primary">表示する</button>
+      <span class="lookup-status" id="lookupStatus"></span>
+    </form>
+  </div>
+
+  <!-- コンテンツ -->
+  <div class="content-frame-wrap">
+    <iframe id="contentFrame" title="コンテンツ"></iframe>
+  </div>
+
+</div>
+
+<script src="shell.js"></script>
+</body>
+</html>

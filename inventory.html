@@ -1,168 +1,200 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 <head>
-<meta charset="utf-8"/>
-
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="UTF-8">
+<script>(function(){try{var p=JSON.parse(localStorage.getItem("shift_display_prefs")||"{}");var h=document.documentElement;h.setAttribute("data-theme",p.theme||"light");h.setAttribute("data-fontsize",p.fontsize||"medium");h.setAttribute("data-tone",p.tone||"default");h.setAttribute("data-sidebar",localStorage.getItem("shift_sidebar_collapsed")==="1"?"collapsed":"expanded");}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>在庫管理 | worldSHiFT Member Central</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@500;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="style.css" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div aria-live="polite" class="copy-toast" id="copyToast" role="status"></div>
+
+<div class="copy-toast" id="copyToast" role="status" aria-live="polite"></div>
 <div class="help-tip-bubble" id="globalTooltip" role="tooltip"></div>
 <div class="sidebar-context-popup hidden" id="sidebarContextPopup">
-<div class="sidebar-context-popup-title" id="sidebarContextTitle"></div>
-<div class="sidebar-context-popup-desc" id="sidebarContextDesc"></div>
+  <div class="sidebar-context-popup-title" id="sidebarContextTitle"></div>
+  <div class="sidebar-context-popup-desc" id="sidebarContextDesc"></div>
 </div>
-<div class="modal-overlay" id="helpModal">
-<div class="modal-box" style="width:min(480px,100%)">
-<div class="modal-head">
-<h3>使い方ガイド</h3>
-<button aria-label="閉じる" class="modal-close" type="button"><svg viewbox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+
+
+<div class="modal-overlay" id="helpModal" onclick="if(event.target===this)closeHelpModal()">
+  <div class="modal-box" style="width:min(480px,100%)">
+    <div class="modal-head">
+      <h3>使い方ガイド</h3>
+      <button type="button" class="modal-close" onclick="closeHelpModal()" aria-label="閉じる"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="modal-body" style="padding:0">
+      <div class="help-modal-intro">右クリックできる項目には、ホバーすると「ⓘ」マークが表示されます。その項目の上で右クリックすると、絞り込み・設定・説明などが表示される場合があります。</div>
+      <div class="help-demo">
+        <div class="help-demo-page">
+          <div class="help-demo-titlebar"></div>
+          <div class="help-demo-row">
+            <span class="help-demo-row-dot"></span><span class="help-demo-row-bar"></span><span class="help-demo-row-info">ⓘ</span>
+          </div>
+          <div class="help-demo-row"><span class="help-demo-row-dot"></span><span class="help-demo-row-bar" style="max-width:60px"></span></div>
+          <div class="help-demo-row"><span class="help-demo-row-dot"></span><span class="help-demo-row-bar" style="max-width:90px"></span></div>
+        </div>
+        <div class="help-cursor"><svg viewBox="0 0 24 24"><path d="M4 2l14 8-6 2-2 6z"></path></svg></div>
+        <div class="help-click-ripple"></div>
+        <div class="help-info-popup">
+          <div class="help-info-popup-title"><span class="help-info-popup-dot"></span>販売額$</div>
+          <div class="help-info-popup-desc">buybox価格</div>
+        </div>
+      </div>
+      <div class="help-demo-caption">項目の上で右クリックしてみてください</div>
+    </div>
+  </div>
 </div>
-<div class="modal-body" style="padding:0">
-<div class="help-modal-intro">右クリックできる項目には、ホバーすると「ⓘ」マークが表示されます。その項目の上で右クリックすると、絞り込み・設定・説明などが表示される場合があります。</div>
-<div class="help-demo">
-<div class="help-demo-page">
-<div class="help-demo-titlebar"></div>
-<div class="help-demo-row">
-<span class="help-demo-row-dot"></span><span class="help-demo-row-bar"></span><span class="help-demo-row-info">ⓘ</span>
-</div>
-<div class="help-demo-row"><span class="help-demo-row-dot"></span><span class="help-demo-row-bar" style="max-width:60px"></span></div>
-<div class="help-demo-row"><span class="help-demo-row-dot"></span><span class="help-demo-row-bar" style="max-width:90px"></span></div>
-</div>
-<div class="help-cursor"><svg viewbox="0 0 24 24"><path d="M4 2l14 8-6 2-2 6z"></path></svg></div>
-<div class="help-click-ripple"></div>
-<div class="help-info-popup">
-<div class="help-info-popup-title"><span class="help-info-popup-dot"></span>販売額$</div>
-<div class="help-info-popup-desc">buybox価格</div>
-</div>
-</div>
-<div class="help-demo-caption">項目の上で右クリックしてみてください</div>
-</div>
-</div>
-</div>
+
+
 <div class="app-shell">
-<aside class="sidebar">
-<div class="sidebar-brand">
-<div class="sidebar-brand-mark"><img alt="worldSHiFT" height="19" src="worldshift-globe.png" width="24"/></div>
-<div class="sidebar-brand-text">
-<span class="kicker">SHiFT MEMBERS</span>
-<span class="title">world<span class="brand-shift">SH<span class="brand-i">i</span>FT</span><br/>Member Central</span>
-</div>
-<button aria-label="メニューの表示切り替え" class="sidebar-toggle-btn" type="button">
-<svg viewbox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>
-</button>
-</div>
-<nav class="sidebar-nav">
-<a class="sidebar-link" data-tip="TOPページ" href="top.html">
-<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"></path></svg></span>
-<span class="sidebar-link-label">TOPページ</span>
-</a>
-<a class="sidebar-link" data-tip="ダッシュボード" href="dashboard.html">
-<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><rect height="7" rx="1" width="4" x="4" y="13"></rect><rect height="11" rx="1" width="4" x="10" y="9"></rect><rect height="15" rx="1" width="4" x="16" y="5"></rect></svg></span>
-<span class="sidebar-link-label">ダッシュボード</span>
-</a>
-<a class="sidebar-link" data-tip="PROFiNDER" href="profinder.html">
-<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" x2="15.5" y1="20" y2="15.5"></line></svg></span>
-<span class="sidebar-link-label">PROFiNDER</span>
-</a>
-<a class="sidebar-link active" data-tip="在庫管理" href="inventory.html">
-<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"></path><path d="M3.5 8.2L12 13l8.5-4.8"></path><line x1="12" x2="12" y1="22" y2="13"></line></svg></span>
-<span class="sidebar-link-label">在庫管理</span>
-</a>
-<a class="sidebar-link" data-tip="キャッシュフロー管理" href="cashflow.html">
-<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="6"></rect><path d="M3 10h18"></path><circle cx="17" cy="14.2" r="1.5"></circle></svg></span>
-<span class="sidebar-link-label">キャッシュフロー管理</span>
-</a>
-<a class="sidebar-link" data-tip="その他SLC関連" href="resources.html">
-<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"></path></svg></span>
-<span class="sidebar-link-label">その他SLC関連</span>
-</a>
-<a class="sidebar-link" data-tip="LAS" href="https://master.worldshift-slc-las.com/login" rel="noopener" target="_blank">
-<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="4"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg></span>
-<span class="sidebar-link-label">LAS</span><svg class="ext-icon" viewbox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"></path></svg>
-</a>
-<a class="sidebar-link" data-tip="設定" href="settings.html">
-<span class="sidebar-link-icon"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 00-.14-1.4l1.8-1.5-1.7-2.9-2.2.6a7 7 0 00-2.4-1.4L14 3h-4l-.36 2.4a7 7 0 00-2.4 1.4l-2.2-.6-1.7 2.9 1.8 1.5A7 7 0 005 12c0 .48.05.94.14 1.4l-1.8 1.5 1.7 2.9 2.2-.6a7 7 0 002.4 1.4L10 21h4l.36-2.4a7 7 0 002.4-1.4l2.2.6 1.7-2.9-1.8-1.5c.09-.46.14-.92.14-1.4z"></path></svg></span>
-<span class="sidebar-link-label">設定</span>
-</a>
-</nav>
-<div class="sidebar-foot">
-<div class="sidebar-user">
-<div class="sidebar-user-avatar"><svg viewbox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg></div>
-<div class="sidebar-user-text">
-<span class="label">会員番号</span>
-<span class="value" id="currentUserChip">-</span>
-</div>
-</div>
-<button class="sidebar-logout" type="button">
-<svg viewbox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg><span class="sidebar-logout-label">ログアウト</span>
-</button>
-</div>
-</aside>
-<main class="main-content">
-<div class="main-topbar">
-<div class="main-topbar-heading">
-<div class="kicker">INVENTORY</div>
-<h1>在庫管理</h1>
-</div>
-<div class="main-topbar-actions">
-<div class="topbar-search"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" x2="15.5" y1="20" y2="15.5"></line></svg>ASIN・商品を検索</div>
-<button aria-label="使い方ガイド" class="topbar-icon-btn" type="button"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.2 9a2.8 2.8 0 015.4 1c0 1.8-2.6 2.2-2.6 4"></path><circle cx="12" cy="16.6" fill="currentColor" r="0.1" stroke-width="1.6"></circle></svg></button>
-<div class="topbar-notify-wrap">
-<button aria-label="通知" class="topbar-icon-btn" type="button"><svg viewbox="0 0 24 24"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg><span class="badge-dot" id="topbarNotifyDot"></span></button>
-<div class="topbar-notify-panel hidden" id="topbarNotifyPanel">
-<div class="topbar-notify-panel-head">通知</div>
-<div class="topbar-notify-panel-list" id="topbarNotifyList"><div class="notify-text" style="padding:10px 14px">読み込み中です...</div></div>
-</div>
-</div>
-</div>
-</div>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-mark"><img src="worldshift-globe.png" alt="worldSHiFT" width="24" height="19"></div>
+      <div class="sidebar-brand-text">
+        <span class="kicker">SHiFT MEMBERS</span>
+        <span class="title">world<span class="brand-shift">SH<span class="brand-i">i</span>FT</span><br>Member Central</span>
+      </div>
+      <button type="button" class="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="メニューの表示切り替え">
+        <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"></path></svg>
+      </button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="top.html" class="sidebar-link" data-tip="TOPページ" oncontextmenu="showSidebarPageInfo(event,'top.html')">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"></path></svg></span>
+        <span class="sidebar-link-label">TOPページ</span>
+      </a>
+      <a href="dashboard.html" class="sidebar-link" data-tip="ダッシュボード" oncontextmenu="showSidebarPageInfo(event,'dashboard.html')">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="7" rx="1"></rect><rect x="10" y="9" width="4" height="11" rx="1"></rect><rect x="16" y="5" width="4" height="15" rx="1"></rect></svg></span>
+        <span class="sidebar-link-label">ダッシュボード</span>
+      </a>
+      <a href="profinder.html" class="sidebar-link" data-tip="PROFiNDER" oncontextmenu="showSidebarPageInfo(event,'profinder.html')">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" y1="20" x2="15.5" y2="15.5"></line></svg></span>
+        <span class="sidebar-link-label">PROFiNDER</span>
+      </a>
+      <a href="inventory.html" class="sidebar-link active" data-tip="在庫管理" oncontextmenu="showSidebarPageInfo(event,'inventory.html')">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"></path><path d="M3.5 8.2L12 13l8.5-4.8"></path><line x1="12" y1="22" x2="12" y2="13"></line></svg></span>
+        <span class="sidebar-link-label">在庫管理</span>
+      </a>
+      <a href="cashflow.html" class="sidebar-link" data-tip="キャッシュフロー管理" oncontextmenu="showSidebarPageInfo(event,'cashflow.html')">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"></rect><path d="M3 10h18"></path><circle cx="17" cy="14.2" r="1.5"></circle></svg></span>
+        <span class="sidebar-link-label">キャッシュフロー管理</span>
+      </a>
+      <a href="resources.html" class="sidebar-link" data-tip="その他SLC関連" oncontextmenu="showSidebarPageInfo(event,'resources.html')">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"></path></svg></span>
+        <span class="sidebar-link-label">その他SLC関連</span>
+      </a>
+      <a href="https://master.worldshift-slc-las.com/login" class="sidebar-link" target="_blank" rel="noopener" data-tip="LAS" oncontextmenu="showSidebarPageInfo(event,'las')">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+        <span class="sidebar-link-label">LAS</span><svg class="ext-icon" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"></path></svg>
+      </a>
+      <a href="settings.html" class="sidebar-link" data-tip="設定" oncontextmenu="showSidebarPageInfo(event,'settings.html')">
+        <span class="sidebar-link-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 00-.14-1.4l1.8-1.5-1.7-2.9-2.2.6a7 7 0 00-2.4-1.4L14 3h-4l-.36 2.4a7 7 0 00-2.4 1.4l-2.2-.6-1.7 2.9 1.8 1.5A7 7 0 005 12c0 .48.05.94.14 1.4l-1.8 1.5 1.7 2.9 2.2-.6a7 7 0 002.4 1.4L10 21h4l.36-2.4a7 7 0 002.4-1.4l2.2.6 1.7-2.9-1.8-1.5c.09-.46.14-.92.14-1.4z"></path></svg></span>
+        <span class="sidebar-link-label">設定</span>
+      </a>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg></div>
+        <div class="sidebar-user-text">
+          <span class="label">会員番号</span>
+          <span class="value" id="currentUserChip">-</span>
+        </div>
+      </div>
+      <button type="button" class="sidebar-logout" onclick="logout()">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg><span class="sidebar-logout-label">ログアウト</span>
+      </button>
+    </div>
+  </aside>
+  <main class="main-content">
+    <div class="main-topbar">
+      <div class="main-topbar-heading">
+        <div class="kicker">INVENTORY</div>
+        <h1>在庫管理</h1>
+      </div>
+      <div class="main-topbar-actions">
+        <div class="topbar-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" y1="20" x2="15.5" y2="15.5"></line></svg>ASIN・商品を検索</div>
+        <button type="button" class="topbar-icon-btn" aria-label="使い方ガイド" onclick="openHelpModal()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.2 9a2.8 2.8 0 015.4 1c0 1.8-2.6 2.2-2.6 4"></path><circle cx="12" cy="16.6" r="0.1" fill="currentColor" stroke-width="1.6"></circle></svg></button>
+        <div class="topbar-notify-wrap">
+          <button type="button" class="topbar-icon-btn" aria-label="通知" onclick="toggleTopbarNotify(event)"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg><span class="badge-dot" id="topbarNotifyDot"></span></button>
+          <div class="topbar-notify-panel hidden" id="topbarNotifyPanel">
+            <div class="topbar-notify-panel-head">通知</div>
+            <div class="topbar-notify-panel-list" id="topbarNotifyList"><div class="notify-text" style="padding:10px 14px">読み込み中です...</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
 <div class="container sub-nav-shell">
-<div class="tabs-row">
-<div aria-label="在庫管理切り替え" class="research-tabs" role="tablist">
-<button aria-controls="purchasePanel" aria-selected="true" class="tab-btn active" id="purchaseTab" role="tab" type="button">仕入れリスト</button>
-<button aria-controls="inventoryPanel" aria-selected="false" class="tab-btn" id="inventoryTab" role="tab" type="button">棚卸</button>
-</div>
-</div>
-</div>
+    <div class="tabs-row">
+    <div class="research-tabs" role="tablist" aria-label="在庫管理切り替え">
+      <button type="button" class="tab-btn active" id="purchaseTab" role="tab" aria-selected="true" aria-controls="purchasePanel" onclick="switchInventoryTab('purchase')">仕入れリスト</button>
+      <button type="button" class="tab-btn" id="inventoryTab" role="tab" aria-selected="false" aria-controls="inventoryPanel" onclick="switchInventoryTab('inventory')">棚卸</button>
+    </div>
+  </div>
+  </div>
+
 <div class="container page-body">
-<section aria-labelledby="purchaseTab" class="research-panel" id="purchasePanel" role="tabpanel">
-<div class="panel-toolbar">
-<div class="toolbar-group"><div class="updated">更新日<span>-</span></div></div>
-</div>
-<div class="card" style="padding:22px;display:flex;flex-direction:column;gap:14px">
-<div class="list-wrap">
-<table>
-<thead><tr><th>ASIN</th><th>商品名</th><th>仕入数</th><th>仕入日</th><th>仕入金額</th><th>ステータス</th></tr></thead>
-<tbody><tr><td class="empty" colspan="6">連携準備中のため表示できるデータがありません。</td></tr></tbody>
-</table>
-</div>
-</div>
-</section>
-<section aria-labelledby="inventoryTab" class="research-panel hidden" id="inventoryPanel" role="tabpanel">
-<div class="panel-toolbar">
-<div class="toolbar-group"><div class="updated">更新日<span>-</span></div></div>
-</div>
-<div class="card" style="padding:22px;display:flex;flex-direction:column;gap:14px">
-<div class="list-wrap">
-<table>
-<thead><tr><th>ASIN</th><th>商品名</th><th>現在庫数</th><th>最終棚卸日</th><th>差異</th></tr></thead>
-<tbody><tr><td class="empty" colspan="5">連携準備中のため表示できるデータがありません。</td></tr></tbody>
-</table>
-</div>
-</div>
-</section>
-<div class="dashboard-footer logo-only"><img alt="WorldShift" class="logo logo-sm" src="corp.png"/></div>
-</div>
-</main>
+
+  <section class="research-panel" id="purchasePanel" role="tabpanel" aria-labelledby="purchaseTab">
+    <div class="panel-toolbar">
+      <div class="toolbar-group"><div class="updated">更新日<span>-</span></div></div>
+    </div>
+    <div class="card" style="padding:22px;display:flex;flex-direction:column;gap:14px">
+      <div class="list-wrap">
+        <table>
+          <thead><tr><th>ASIN</th><th>商品名</th><th>仕入数</th><th>仕入日</th><th>仕入金額</th><th>ステータス</th></tr></thead>
+          <tbody><tr><td colspan="6" class="empty">連携準備中のため表示できるデータがありません。</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-panel hidden" id="inventoryPanel" role="tabpanel" aria-labelledby="inventoryTab">
+    <div class="panel-toolbar">
+      <div class="toolbar-group"><div class="updated">更新日<span>-</span></div></div>
+    </div>
+    <div class="card" style="padding:22px;display:flex;flex-direction:column;gap:14px">
+      <div class="list-wrap">
+        <table>
+          <thead><tr><th>ASIN</th><th>商品名</th><th>現在庫数</th><th>最終棚卸日</th><th>差異</th></tr></thead>
+          <tbody><tr><td colspan="5" class="empty">連携準備中のため表示できるデータがありません。</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="dashboard-footer logo-only"><img class="logo logo-sm" src="corp.png" alt="WorldShift"></div>
 </div>
 
+  </main>
+</div>
 
+<script src="app-common.js"></script>
+<script>
+function switchInventoryTab(type){
+  const panelIds={purchase:"purchasePanel",inventory:"inventoryPanel"};
+  Object.keys(panelIds).forEach(key=>{
+    const panel=document.getElementById(panelIds[key]);
+    if(panel)panel.classList.toggle("hidden",key!==type);
+    const tab=document.getElementById(key+"Tab");
+    if(tab){tab.classList.toggle("active",key===type);tab.setAttribute("aria-selected",String(key===type))}
+  });
+}
+(function(){
+  const session = requireSession();
+  if(!session) return;
+  applyUserChip(session);
+  renderTopbarNotify(session);
+  applyTopbarTimeClass();
+  switchInventoryTab("purchase");
+})();
+function notifyPlaceholder(el){
+  showCopyToast("リンク先URLが未設定です（" + el.textContent.trim() + "）");
+  return false;
+}
+</script>
 </body>
 </html>
