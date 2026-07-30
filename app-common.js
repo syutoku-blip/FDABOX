@@ -5,7 +5,19 @@
    ========================================================================= */
 
 const SESSION_KEY = "shift_session";
-const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyfOE6dymQp-OYemADZQZ-cRWzlG89Udyaf1aUyGUUb56qXID9djzWUoirrRHO4YKRUKQ/exec";
+// ダミー環境のためGASバックエンドへの通信は行わない(意図的に無効なURLにしている)
+const GAS_WEB_APP_URL = "";
+
+/* ---------- ダミーデータ(見た目確認用) ---------- */
+const DUMMY_RELATION_ITEMS = [
+  {"ASIN":"B0DEMO0001","ブランド":"サンプルブランドA","カテゴリ":"キッチン用品","30日販売数":128,"出品セラー数":6,"推奨仕入れ数":12,"日本仕入JPY":1580,"売値USD":24.99,"TWAP":26.10,"想定送料JPY":420,"想定関税JPY":80,"AMZ想定手数料JPY":610,"入金額予想JPY":2980,"利益期待値JPY":890},
+  {"ASIN":"B0DEMO0002","ブランド":"サンプルブランドB","カテゴリ":"文房具","30日販売数":64,"出品セラー数":3,"推奨仕入れ数":8,"日本仕入JPY":890,"売値USD":15.50,"TWAP":16.20,"想定送料JPY":260,"想定関税JPY":40,"AMZ想定手数料JPY":380,"入金額予想JPY":1720,"利益期待値JPY":410},
+  {"ASIN":"B0DEMO0003","ブランド":"サンプルブランドC","カテゴリ":"おもちゃ","30日販売数":210,"出品セラー数":9,"推奨仕入れ数":20,"日本仕入JPY":2400,"売値USD":38.00,"TWAP":39.50,"想定送料JPY":540,"想定関税JPY":120,"AMZ想定手数料JPY":920,"入金額予想JPY":4520,"利益期待値JPY":1180}
+];
+const DUMMY_OVERLAY_ITEMS = [
+  {"ASIN":"B0DEMO1001","ブランド":"サンプルブランドD","カテゴリ":"日用品","黒字化％":72,"赤字化％":8,"ボラティリティ指数":14.2,"バンド指数":61,"30日販売数":95,"出品セラー数":5,"推奨仕入れ数":10,"日本仕入JPY":1200,"売値USD":19.80,"想定送料JPY":320,"想定関税JPY":60,"AMZ手数料JPY":470,"入金額予想JPY":2210,"利益期待値JPY":560},
+  {"ASIN":"B0DEMO1002","ブランド":"サンプルブランドE","カテゴリ":"アウトドア","黒字化％":58,"赤字化％":15,"ボラティリティ指数":21.5,"バンド指数":44,"30日販売数":47,"出品セラー数":4,"推奨仕入れ数":6,"日本仕入JPY":3100,"売値USD":52.00,"想定送料JPY":680,"想定関税JPY":190,"AMZ手数料JPY":1240,"入金額予想JPY":5980,"利益期待値JPY":1350}
+];
 
 /* ---------- セッション管理 ---------- */
 function getSession(){
@@ -18,18 +30,28 @@ function getSession(){
 function saveSession(session){
   sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
 }
-// 未ログインなら強制的にログイン画面へ戻す。ログイン済みならセッションを返す。
+function buildDummySession(){
+  return {
+    memberNo: "DEMO",
+    relationItems: DUMMY_RELATION_ITEMS,
+    overlayItems: DUMMY_OVERLAY_ITEMS,
+    relationUpdatedDate: "2026/07/29",
+    overlayUpdatedDate: "2026/07/29",
+    loginAt: Date.now()
+  };
+}
+// ログイン画面を廃止したため、未ログインでも自動でダミーセッションを発行してそのまま利用する。
 function requireSession(){
-  const session = getSession();
+  let session = getSession();
   if(!session || !session.memberNo){
-    window.location.href = "index.html";
-    return null;
+    session = buildDummySession();
+    saveSession(session);
   }
   return session;
 }
 function logout(){
   sessionStorage.removeItem(SESSION_KEY);
-  window.location.href = "index.html";
+  window.location.href = "top.html";
 }
 function applyUserChip(session){
   const el = document.getElementById("currentUserChip");
@@ -898,7 +920,7 @@ async function pfCheckTutorialSeen(memberNo){
 }
 // 会員管理シートのC列（該当会員番号の行）にチェックを付ける
 function pfMarkTutorialSeen(memberNo){
-  if(!memberNo)return;
+  if(!memberNo||!GAS_WEB_APP_URL)return;
   try{
     fetch(GAS_WEB_APP_URL,{
       method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},

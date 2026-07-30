@@ -2,53 +2,12 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<script>(function(){try{var p=JSON.parse(localStorage.getItem("shift_display_prefs")||"{}");var h=document.documentElement;h.setAttribute("data-theme",p.theme||"light");h.setAttribute("data-fontsize",p.fontsize||"medium");h.setAttribute("data-tone",p.tone||"default");h.setAttribute("data-sidebar",localStorage.getItem("shift_sidebar_collapsed")==="1"?"collapsed":"expanded");}catch(e){}})();</script>
+<meta http-equiv="refresh" content="0; url=portal.html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ログイン | worldSHiFT Member Central</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<title>worldSHiFT Member Central</title>
 <link rel="stylesheet" href="style.css">
+<script>location.replace("portal.html");</script>
 </head>
 <body>
-
-<div class="loading-overlay" id="loadingOverlay" aria-live="polite" aria-busy="true"><div class="loading-box"><div class="spinner"></div><div class="loading-text" id="loadingText">処理中です</div></div></div>
-
-<div class="container" id="authPage">
-  <div class="brand">
-    <div class="brand-mark">
-      <span class="brand-kicker"><span class="kicker-dot"></span>SHiFT MEMBERS ONLY</span>
-      <h1 class="brand-title">worldSH<span class="brand-i">i</span>FT Member Central</h1>
-      <span class="brand-rule"></span>
-    </div>
-  </div>
-
-  <div class="card auth-card">
-    <div class="input-group">
-      <label class="input-label" for="username">会員番号</label>
-      <input type="text" id="username" placeholder="Member ID" autocomplete="username" oninput="validateUsernameInput()">
-    </div>
-    <div class="input-group">
-      <label class="input-label" for="password">パスワード</label>
-      <div class="password-wrap">
-        <input type="password" id="password" placeholder="Password" autocomplete="current-password">
-        <button type="button" class="eye-btn" id="togglePassword" onclick="togglePasswordVisibility()" aria-label="パスワードを表示">
-          <svg class="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-          <svg class="eye-off" viewBox="0 0 24 24"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a21.6 21.6 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 7 11 7a21.7 21.7 0 01-2.16 3.19M14.12 14.12a3 3 0 11-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-        </button>
-      </div>
-    </div>
-    <div class="actions">
-      <button type="button" class="action register-btn" onclick="registerUser()">新規登録</button>
-      <button type="button" class="action login-btn" onclick="loginUser()">ログイン</button>
-    </div>
-    <div class="message" id="message"></div>
-  </div>
-
-  <div class="powered">Provided by</div>
-  <img class="logo logo-sm" src="corp.png" alt="WorldShift">
-</div>
-
-<script src="login.js"></script>
 </body>
 </html>
