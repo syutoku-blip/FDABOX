@@ -766,6 +766,9 @@ body:before,body:after{display:none}
 .sidebar-link.active{background:linear-gradient(120deg,var(--accent),var(--accent-dark));color:#fff;box-shadow:0 10px 22px rgba(61,125,255,.28)}
 .sidebar-link.active .sidebar-link-icon{background:rgba(255,255,255,.2);color:#fff}
 .sidebar-link .ext-icon{margin-left:auto;width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.4;opacity:.6}
+.wmc-pf-pill{background:#fff;border-radius:7px;padding:4px 10px;display:inline-flex}
+.wmc-pf-pill img{height:21px;display:block}
+html[data-sidebar="collapsed"] .wmc-pf-pill{display:none!important}
 
 /* サイドバーの下部(会員番号チップ・ログアウト)もダーク背景向けに調整 */
 .sidebar-foot{border-top-color:rgba(255,255,255,.12)!important}

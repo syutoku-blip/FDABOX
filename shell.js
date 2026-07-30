@@ -8,7 +8,6 @@
 
 const CUSTOMER_PAGES = [
   { key: "top",        label: "TOPページ",          file: "top.html" },
-  { key: "dashboard",  label: "ダッシュボード",      file: "dashboard.html" },
   { key: "profinder",  label: "PROFiNDER",          file: "profinder.html" },
   { key: "inventory",  label: "在庫管理",            file: "inventory.html" },
   { key: "cashflow",   label: "キャッシュフロー管理", file: "cashflow.html" },

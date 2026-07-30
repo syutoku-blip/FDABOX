@@ -814,7 +814,6 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeHelpModal()});
 /* ---------- サイドバー：右クリックでページの説明を表示 ---------- */
 const SIDEBAR_PAGE_INFO = {
   "top.html":{title:"TOPページ",desc:"お知らせ・通知・ランキングなど、会員ページの入り口です。"},
-  "dashboard.html":{title:"ダッシュボード",desc:"在庫状況・売上状況・今すぐのアクションをまとめて確認できます。"},
   "profinder.html":{title:"PROFiNDER",desc:"セラーID・ASINのリサーチや、カート・仕入れ管理を行うツールです。"},
   "inventory.html":{title:"在庫管理",desc:"仕入れリストと棚卸を管理します。"},
   "cashflow.html":{title:"キャッシュフロー管理",desc:"資金繰りの状況を確認します。"},
