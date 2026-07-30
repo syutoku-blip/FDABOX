@@ -784,11 +784,33 @@ document.addEventListener("click",(e)=>{
 /* ---------- サイドバーの折りたたみ ---------- */
 function toggleSidebar(){
   const h = document.documentElement;
-  const collapsed = h.getAttribute("data-sidebar") === "collapsed";
-  const next = collapsed ? "expanded" : "collapsed";
+  const cur = h.getAttribute("data-sidebar") || "expanded";
+  // 展開 → アイコンのみ → 完全に隠す → 展開 の3段階でループする
+  const next = cur === "expanded" ? "collapsed" : (cur === "collapsed" ? "hidden" : "expanded");
   h.setAttribute("data-sidebar", next);
-  try{ localStorage.setItem("shift_sidebar_collapsed", next === "collapsed" ? "1" : "0"); }catch(e){}
+  try{ localStorage.setItem("shift_sidebar_collapsed", next); }catch(e){}
+  updateSidebarReopenTab();
 }
+function updateSidebarReopenTab(){
+  let tab = document.getElementById("sidebarReopenTab");
+  if(!tab){
+    tab = document.createElement("button");
+    tab.type = "button";
+    tab.id = "sidebarReopenTab";
+    tab.className = "sidebar-reopen-tab";
+    tab.setAttribute("aria-label", "サイドバーを表示する");
+    tab.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg>';
+    tab.addEventListener("click", function(){
+      document.documentElement.setAttribute("data-sidebar", "expanded");
+      try{ localStorage.setItem("shift_sidebar_collapsed", "expanded"); }catch(e){}
+      updateSidebarReopenTab();
+    });
+    document.body.appendChild(tab);
+  }
+  const hidden = document.documentElement.getAttribute("data-sidebar") === "hidden";
+  tab.classList.toggle("visible", hidden);
+}
+document.addEventListener("DOMContentLoaded", updateSidebarReopenTab);
 
 /* ---------- 使い方ガイド モーダル ---------- */
 function openHelpModal(){

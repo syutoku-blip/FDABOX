@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<script>(function(){try{var p=JSON.parse(localStorage.getItem("shift_display_prefs")||"{}");var h=document.documentElement;h.setAttribute("data-theme",p.theme||"light");h.setAttribute("data-fontsize",p.fontsize||"medium");h.setAttribute("data-tone",p.tone||"default");h.setAttribute("data-sidebar",localStorage.getItem("shift_sidebar_collapsed")==="1"?"collapsed":"expanded");}catch(e){}})();</script>
+<script>(function(){try{var p=JSON.parse(localStorage.getItem("shift_display_prefs")||"{}");var h=document.documentElement;h.setAttribute("data-theme",p.theme||"light");h.setAttribute("data-fontsize",p.fontsize||"medium");h.setAttribute("data-tone",p.tone||"default");var sb=localStorage.getItem("shift_sidebar_collapsed");h.setAttribute("data-sidebar",(sb==="collapsed"||sb==="hidden")?sb:"expanded");}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>キャッシュフロー管理 | worldSHiFT Member Central</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">

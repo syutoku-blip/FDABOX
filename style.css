@@ -923,6 +923,17 @@ html[data-sidebar="collapsed"] .sidebar{width:84px}
 html[data-sidebar="collapsed"] .sidebar-brand{padding-bottom:10px}
 html[data-sidebar="collapsed"] .sidebar-brand-logo{width:36px;border-radius:10px}
 html[data-sidebar="collapsed"] .sidebar-toggle-btn{position:static;margin:0 auto}
+
+/* ---- サイドバーを完全に隠す(3段階目) ---- */
+html[data-sidebar="hidden"] .sidebar{display:none}
+.sidebar-reopen-tab{
+  display:none;position:fixed;top:50%;left:0;transform:translateY(-50%);z-index:60;
+  width:26px;height:52px;border-radius:0 12px 12px 0;background:var(--navy);color:#fff;
+  border:1px solid rgba(255,255,255,.2);border-left:0;cursor:pointer;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-sm);
+}
+.sidebar-reopen-tab.visible{display:flex}
+.sidebar-reopen-tab svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4}
 html[data-sidebar="collapsed"] .sidebar-toggle-btn svg{transform:rotate(180deg)}
 html[data-sidebar="collapsed"] .sidebar-link{justify-content:center;padding:11px 8px}
 html[data-sidebar="collapsed"] .sidebar-link-label,
