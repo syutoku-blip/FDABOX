@@ -9,11 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<style>
-html,body{height:100%!important;padding:0!important;margin:0!important;overflow:hidden!important}
-.app-shell{height:100vh!important;min-height:100vh!important;max-width:none!important;width:100%!important;margin:0!important;border-radius:0!important}
-.main-content{overflow:hidden!important;padding:0!important}
-</style>
 </head>
 <body>
 
@@ -131,8 +126,33 @@ html,body{height:100%!important;padding:0!important;margin:0!important;overflow:
       </button>
     </div>
   </aside>
-  <main class="main-content"><iframe src="profinder-app.html" title="PROFiNDER" style="flex:1;width:100%;min-height:0;border:0;display:block"></iframe></main>
+  <main class="main-content"><iframe id="profinderFrame" src="profinder-app.html" title="PROFiNDER" style="width:100%;min-height:600px;border:0;display:block" scrolling="no"></iframe></main>
 </div>
+
+<script>
+(function(){
+  var frame = document.getElementById("profinderFrame");
+  function resizeFrame(){
+    try{
+      var doc = frame.contentWindow.document;
+      var h = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+      frame.style.height = h + "px";
+    }catch(e){}
+  }
+  frame.addEventListener("load", function(){
+    resizeFrame();
+    // 中のタブ切替・データ描画などでも高さが変わるので継続的に監視する
+    setInterval(resizeFrame, 500);
+    try{
+      var innerDoc = frame.contentWindow.document;
+      if(window.ResizeObserver){
+        new ResizeObserver(resizeFrame).observe(innerDoc.body);
+      }
+    }catch(e){}
+  });
+  window.addEventListener("resize", resizeFrame);
+})();
+</script>
 
 <script src="app-common.js"></script>
 <script>
