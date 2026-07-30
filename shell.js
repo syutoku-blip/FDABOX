@@ -38,6 +38,15 @@ function init(){
   q("modeCustomerBtn").addEventListener("click", function(){ setMode("customer"); });
   q("modeAdminBtn").addEventListener("click", function(){ setMode("admin"); });
 
+  q("hideModeBarBtn").addEventListener("click", function(){
+    q("modeBar").classList.add("hidden");
+    q("reopenModeBarBtn").classList.remove("hidden");
+  });
+  q("reopenModeBarBtn").addEventListener("click", function(){
+    q("modeBar").classList.remove("hidden");
+    q("reopenModeBarBtn").classList.add("hidden");
+  });
+
   document.querySelectorAll(".admin-subtab").forEach(function(btn){
     btn.addEventListener("click", function(){ setAdminTab(btn.dataset.tab); });
   });

@@ -150,13 +150,17 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
 .pf-table-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;overflow-x:auto;position:relative}
 .pf-scroll-edge{
-  position:absolute;top:0;bottom:0;width:44px;display:none;align-items:center;justify-content:center;
-  cursor:pointer;z-index:6;color:var(--muted);transition:.15s ease;
+  position:absolute;top:0;bottom:0;width:52px;display:none;align-items:center;
+  cursor:pointer;z-index:20;transition:.15s ease;
 }
-.pf-scroll-edge:hover{color:var(--accent)}
-.pf-scroll-edge svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4}
-.pf-scroll-edge.left{left:0;background:linear-gradient(90deg,rgba(255,255,255,.97),rgba(255,255,255,0));border-radius:18px 0 0 18px}
-.pf-scroll-edge.right{right:0;background:linear-gradient(270deg,rgba(255,255,255,.97),rgba(255,255,255,0));border-radius:0 18px 18px 0}
+.pf-scroll-edge .btn{
+  width:34px;height:34px;border-radius:50%;background:#fff;border:1.5px solid var(--line-strong);
+  color:var(--navy);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.14);
+}
+.pf-scroll-edge:hover .btn{color:var(--accent);border-color:var(--accent)}
+.pf-scroll-edge svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.6}
+.pf-scroll-edge.left{left:0;justify-content:flex-start;padding-left:6px;background:linear-gradient(90deg,rgba(255,255,255,.92),rgba(255,255,255,0));border-radius:18px 0 0 18px}
+.pf-scroll-edge.right{right:0;justify-content:flex-end;padding-right:6px;background:linear-gradient(270deg,rgba(255,255,255,.92),rgba(255,255,255,0));border-radius:0 18px 18px 0}
 .pf-siire-row{display:grid;grid-template-columns:130px 60px 1fr 140px 100px 100px 110px 90px 50px 140px;gap:14px;align-items:center;padding:18px 16px;border-bottom:1px solid var(--line);min-width:1300px}
 .pf-siire-row.head{background:#fafafd;color:var(--muted);font-size:12.5px;font-weight:700}
 .pf-th-main{display:flex;align-items:center;justify-content:center;gap:5px}
@@ -729,13 +733,14 @@ if(miningBtn){
 
 /* ---- 表の横スクロール: 左右の縦長オーバーレイをクリックでスライド ---- */
 function addEdgeScrollers(el){
-  if(!el) return;
+  if(!el || el.dataset.edgeReady) return;
+  el.dataset.edgeReady = "1";
   var left=document.createElement("div");
   left.className="pf-scroll-edge left";
-  left.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>';
+  left.innerHTML='<span class="btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></span>';
   var right=document.createElement("div");
   right.className="pf-scroll-edge right";
-  right.innerHTML='<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>';
+  right.innerHTML='<span class="btn"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></span>';
   el.appendChild(left);
   el.appendChild(right);
   left.addEventListener("click", function(){ el.scrollBy({left:-320,behavior:"smooth"}); });
@@ -750,8 +755,25 @@ function addEdgeScrollers(el){
   el.addEventListener("scroll", updateEdges, {passive:true});
   window.addEventListener("resize", updateEdges);
   updateEdges();
+  // フォント読み込み等で幅が後から変わっても正しく判定できるように再計測する
+  window.addEventListener("load", updateEdges);
+  setTimeout(updateEdges, 300);
+  setTimeout(updateEdges, 1000);
+  if(window.ResizeObserver){
+    new ResizeObserver(updateEdges).observe(el);
+  }
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(updateEdges);
+  }
 }
 document.querySelectorAll(".pf-table-wrap").forEach(addEdgeScrollers);
+document.querySelectorAll(".pf-tab").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    setTimeout(function(){
+      document.querySelectorAll(".pf-panel.active .pf-table-wrap").forEach(addEdgeScrollers);
+    }, 50);
+  });
+});
 </script>
 </body>
 </html>

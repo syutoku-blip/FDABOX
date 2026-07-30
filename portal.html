@@ -15,7 +15,7 @@
 <div class="shell">
 
   <!-- 1段目：顧客向け / 管理者向け 切替 -->
-  <div class="mode-bar">
+  <div class="mode-bar" id="modeBar">
     <div class="mode-bar-brand">
       <img src="worldshift-globe.png" alt="worldSHiFT">
       <span class="mode-bar-brand-text">world<span class="accent">SH</span>iFT Member Central</span>
@@ -24,7 +24,9 @@
       <button type="button" id="modeCustomerBtn" class="mode-tab">【顧客向けページ】</button>
       <button type="button" id="modeAdminBtn" class="mode-tab">【管理者向けページ】</button>
     </div>
+    <button type="button" class="mode-bar-hide-btn" id="hideModeBarBtn" title="このバーを隠す">✕</button>
   </div>
+  <button type="button" class="mode-bar-reopen hidden" id="reopenModeBarBtn" title="切替バーを表示する">☰</button>
 
   <!-- 2段目：管理者向けページ内の3タブ(管理者向け選択時のみ表示) -->
   <div class="admin-subbar hidden" id="adminSubbar">
