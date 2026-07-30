@@ -128,14 +128,15 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
 .pf-banner-col{flex:1.6;min-width:340px;display:flex;flex-direction:column;gap:6px}
 .pf-eye-banner{
-  background:linear-gradient(90deg,#123a7a,#1c56b0);border-radius:10px;padding:6px;text-align:center;
-  color:#fff;font-family:var(--font-head);font-weight:800;font-size:14px;letter-spacing:.02em;
+  height:34px;background:linear-gradient(90deg,#123a7a,#1c56b0);border-radius:9px;text-align:center;
+  color:#fff;font-family:var(--font-head);font-weight:800;font-size:13px;letter-spacing:.02em;
   display:flex;align-items:center;justify-content:center;gap:6px;
 }
+.pf-eye-banner svg,.pf-eye-banner img{width:14px;height:14px}
 .pf-quick-actions{display:flex;gap:6px;flex-wrap:nowrap}
 .pf-quick-btn{
-  flex:1;min-width:0;height:26px;border-radius:7px;border:1px solid transparent;background:#fff;
-  display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--font-head);font-weight:700;font-size:11px;cursor:pointer;white-space:nowrap;
+  flex:1;min-width:0;height:34px;border-radius:9px;border:1px solid transparent;background:#fff;
+  display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--font-head);font-weight:700;font-size:10.5px;cursor:pointer;white-space:nowrap;
 }
 .pf-quick-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;flex:none}
 .qb-ai{background:#efeafb;color:#5b3fc4;border-color:#ded4f7}
@@ -354,8 +355,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   <nav class="pf-tabs">
     <button type="button" class="pf-tab active" data-tab="home">ホーム</button>
     <button type="button" class="pf-tab" data-tab="siire">仕入リスト</button>
-    <button type="button" class="pf-tab" data-tab="tana">棚卸</button>
     <button type="button" class="pf-tab" data-tab="seller">セラー</button>
+    <button type="button" class="pf-tab" data-tab="tana">棚卸</button>
   </nav>
 
   <div class="pf-header-right">
