@@ -195,6 +195,68 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .buy-rakuten{background:#fbe1e1;color:#c22a2a}
 .buy-yahoo{background:#fbe1e1;color:#c22a2a}
 
+/* ---------- 棚卸 ---------- */
+.pf-tana-title{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--navy);margin-bottom:16px}
+.pf-tana-title svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:1.8}
+.pf-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin-bottom:18px}
+.pf-card-note{font-size:12.5px;color:var(--muted);line-height:1.9;margin-top:14px}
+
+.pf-tana-row1{display:flex;gap:40px;flex-wrap:wrap}
+.pf-field-label{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.pf-select,.pf-date-input{height:40px;border:1px solid var(--line-strong);border-radius:10px;padding:0 14px;font-size:14px;color:var(--text);background:#fff}
+.pf-snapshot-row{display:flex;align-items:center;gap:12px}
+.pf-save-snap-btn{height:40px;padding:0 16px;border-radius:10px;background:#dcecfd;color:#1f5fac;border:1px solid #b7d6f7;font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px}
+
+.pf-flow-heading{font-weight:700;font-size:14.5px;color:var(--navy);margin-bottom:16px}
+.pf-flow-row{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.pf-flow-card{flex:1;min-width:150px;background:#f4f5f8;border:2px solid var(--line-strong);border-radius:14px;padding:16px;text-align:center;cursor:pointer}
+.pf-flow-card .lbl{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.pf-flow-card .num{font-family:var(--font-head);font-size:26px;font-weight:800;color:var(--navy)}
+.pf-flow-card .chk{font-size:11px;color:#2e6b1f;margin-top:8px;font-weight:700}
+.pf-flow-card.teal{border-color:#1a94a8;background:#e9f7f9}
+.pf-flow-card.teal .num{color:#0f7688}
+.pf-flow-card.blue{border-color:#2f6fed;background:#eaf1fd}
+.pf-flow-card.blue .num{color:#1f5fac}
+.pf-flow-card.green{border-color:#4b8a1f;background:#eef7e3}
+.pf-flow-card.green .num{color:#2e6b1f}
+.pf-flow-arrow{display:flex;align-items:center;color:var(--faint);font-size:18px;flex:none}
+.pf-flow-toggle-row{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.pf-pill-toggle{display:flex;gap:6px}
+.pf-pill-toggle button{height:36px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;color:var(--muted);cursor:pointer}
+.pf-pill-toggle button.active{border-color:var(--navy);color:var(--navy)}
+
+.pf-stat-boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}
+@media(max-width:900px){.pf-stat-boxes{grid-template-columns:repeat(2,1fr)}}
+.pf-statbox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.pf-statbox .lbl{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.pf-statbox .val{font-family:var(--font-head);font-size:26px;font-weight:800;color:var(--navy)}
+.pf-statbox .val.teal{color:#0f7688}
+.pf-statbox .sub{font-size:11px;color:var(--faint);margin-top:6px}
+
+.pf-breakdown-row{display:flex;gap:14px;flex-wrap:wrap}
+.pf-bd-card{flex:1;min-width:150px;border-radius:14px;border:2px solid var(--line-strong);background:#f4f5f8;padding:16px;text-align:left}
+.pf-bd-card .lbl{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.pf-bd-card .val{font-family:var(--font-head);font-size:21px;font-weight:800;color:var(--navy)}
+.pf-bd-card .qty{font-size:11.5px;color:var(--faint);margin-top:6px}
+.pf-bd-card.green{border-color:#4b8a1f;background:#eef7e3}.pf-bd-card.green .val{color:#2e6b1f}
+.pf-bd-card.blue{border-color:#2f6fed;background:#eaf1fd}.pf-bd-card.blue .val{color:#1f5fac}
+.pf-bd-card.teal{border-color:#1a94a8;background:#e9f7f9}.pf-bd-card.teal .val{color:#0f7688}
+
+.pf-detail-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.pf-detail-head h3{font-size:15px;font-weight:700;color:var(--navy)}
+.pf-detail-head h3 span{font-weight:400;color:var(--muted);font-size:12.5px}
+.pf-csv-btn{height:38px;padding:0 16px;border-radius:9px;background:#dcecfd;color:#1f5fac;border:1px solid #b7d6f7;font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px}
+
+.pf-detail-table{width:100%;border-collapse:collapse;font-size:13px}
+.pf-detail-table th{font-size:11.5px;color:var(--muted);font-weight:700;text-align:center;padding:10px 8px;border-bottom:1px solid var(--line)}
+.pf-detail-table th:first-child{text-align:left}
+.pf-detail-table td{padding:16px 8px;text-align:center;border-bottom:1px solid var(--line);vertical-align:top}
+.pf-detail-table td:first-child{text-align:left}
+.pf-detail-table .prodname{font-weight:700;color:var(--navy);font-size:13.5px}
+.pf-detail-table .prodasin{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);margin-top:2px}
+.pf-detail-table .qtytotal{font-weight:800}
+.pf-detail-table .amzlink{color:#2f6fed;font-size:12px;white-space:nowrap}
+
 
 .pf-eye-btn{
   position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:#12182a;color:#fff;
@@ -351,7 +413,92 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   </section>
 
   <section class="pf-panel" id="panel-tana">
-    <div class="pf-soon-box">棚卸のソースが未共有のため準備中です</div>
+    <div class="pf-tana-title"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M9 3v3h6V3"></path></svg>棚卸</div>
+
+    <div class="pf-card">
+      <div class="pf-tana-row1">
+        <div>
+          <div class="pf-field-label">表示する棚卸</div>
+          <select class="pf-select"><option>ライブ（最新）</option></select>
+        </div>
+        <div>
+          <div class="pf-field-label">スナップショット基準日</div>
+          <div class="pf-snapshot-row">
+            <input type="date" class="pf-date-input" value="2026-07-30">
+            <button type="button" class="pf-save-snap-btn">📷 この日付で棚卸を保存</button>
+          </div>
+        </div>
+      </div>
+      <div class="pf-card-note">月末棚卸：基準日に月末日（例 3月31日）を選んで「保存」すると、その時点の在庫資産が記録され、あとからいつでも「◯月◯日時点」として呼び出し・CSV出力できます。まだ保存はありません（デモ）。</div>
+    </div>
+
+    <div class="pf-card">
+      <div class="pf-flow-heading">在庫の流れ（カードをクリックで計上対象を選択）</div>
+      <div class="pf-flow-row">
+        <div class="pf-flow-card"><div class="lbl">①入荷待ち</div><div class="num">95個</div><div class="chk">✓計上中</div></div>
+        <div class="pf-flow-arrow">→</div>
+        <div class="pf-flow-card"><div class="lbl">②SLC保管</div><div class="num">17個</div><div class="chk">✓計上中</div></div>
+        <div class="pf-flow-arrow">→</div>
+        <div class="pf-flow-card teal"><div class="lbl">③国際輸送中 推定</div><div class="num">0個</div><div class="chk">✓計上中</div></div>
+        <div class="pf-flow-arrow">→</div>
+        <div class="pf-flow-card blue"><div class="lbl">④移動中</div><div class="num">51個</div><div class="chk">✓計上中</div></div>
+        <div class="pf-flow-arrow">→</div>
+        <div class="pf-flow-card green"><div class="lbl">⑤販売可能</div><div class="num">730個</div><div class="chk">✓計上中</div></div>
+      </div>
+      <div class="pf-flow-toggle-row">
+        <span>クリックで計上対象を切替：</span>
+        <div class="pf-pill-toggle">
+          <button type="button" class="active">すべて(①〜⑤)</button>
+          <button type="button">決算用(①を除外)</button>
+        </div>
+      </div>
+      <div class="pf-card-note">棚卸資産額（合計）＝計上対象に選んだ段階の評価額（各カードをクリックで切替）。全段階とも仕入額（取得原価）で評価します（国際送料・SLC手数料は含めない＝販売価格換算でもありません）。発送済(③④⑤)の仕入単価は追跡番号データから取得。③国際輸送中は推定（合計に「うち推定」を併記）。前提：LAS登録＝仕入確定（未受＝未着品）。仕入単価カバー率＝発送済198/232件(85%)（デモ数値）。</div>
+    </div>
+
+    <div class="pf-stat-boxes">
+      <div class="pf-statbox"><div class="lbl">棚卸資産額（合計）</div><div class="val">¥3,285,509</div><div class="sub">計上①②③④⑤｜すべて確定分</div></div>
+      <div class="pf-statbox"><div class="lbl">確定分</div><div class="val">¥3,285,509</div></div>
+      <div class="pf-statbox"><div class="lbl">うち推定（国際輸送中）</div><div class="val teal">¥0</div></div>
+      <div class="pf-statbox"><div class="lbl">対象ASIN</div><div class="val">256</div></div>
+    </div>
+
+    <div class="pf-card">
+      <div class="pf-flow-heading">段階別の内訳（資産額）</div>
+      <div class="pf-breakdown-row">
+        <div class="pf-bd-card green"><div class="lbl">⑤販売可能</div><div class="val">¥2,240,472</div><div class="qty">730個</div></div>
+        <div class="pf-bd-card blue"><div class="lbl">④移動中</div><div class="val">¥406,421</div><div class="qty">51個</div></div>
+        <div class="pf-bd-card teal"><div class="lbl">③国際輸送中 推定</div><div class="val">¥0</div><div class="qty">0個</div></div>
+        <div class="pf-bd-card"><div class="lbl">②SLC保管</div><div class="val">¥91,203</div><div class="qty">17個</div></div>
+        <div class="pf-bd-card"><div class="lbl">①入荷待ち</div><div class="val">¥547,413</div><div class="qty">95個</div></div>
+      </div>
+    </div>
+
+    <div class="pf-card">
+      <div class="pf-detail-head">
+        <h3>在庫資産明細 <span>／ 基準 ライブ（最新データ 2026/07/30 07:33）</span></h3>
+        <button type="button" class="pf-csv-btn">⬇ CSV出力</button>
+      </div>
+      <div class="pf-card-note" style="margin-top:0;margin-bottom:16px">数量＝①入荷待ち＋②SLC保管＋③国際輸送中＋④移動中＋⑤販売可能。仕入済で所有権のある在庫をすべて計上します（キャンセルはLASから消え自動修正）。資産額＝全段階とも仕入額（発送済③④⑤は仕入単価×数量、未発送①②はLASの仕入額）。</div>
+      <div class="pf-table-wrap" style="overflow-x:auto">
+        <table class="pf-detail-table">
+          <thead><tr><th>商品</th><th>⑤販売可能</th><th>④移動中</th><th>③輸送中</th><th>②SLC保管</th><th>①入荷待ち</th><th>合計数量</th><th>資産額</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><div class="prodname">サンプル商品A（デモ）</div><div class="prodasin">B0DEMO0001</div></td>
+              <td>-</td><td>2</td><td>-</td><td>-</td><td>-</td>
+              <td class="qtytotal">2</td><td>¥194,480</td>
+              <td class="amzlink">🔗 Amazon</td>
+            </tr>
+            <tr>
+              <td><div class="prodname">サンプル商品B（デモ）</div><div class="prodasin">B0DEMO0002</div></td>
+              <td>4</td><td>-</td><td>-</td><td>-</td><td>-</td>
+              <td class="qtytotal">4</td><td>¥152,000</td>
+              <td class="amzlink">🔗 Amazon</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 
   <section class="pf-panel" id="panel-seller">

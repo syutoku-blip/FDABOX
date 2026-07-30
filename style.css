@@ -742,7 +742,9 @@ body:before,body:after{display:none}
 .sidebar{
   flex:none;width:248px;display:flex;flex-direction:column;gap:26px;
   padding:26px 18px 22px;
-  background:linear-gradient(180deg,rgba(var(--accent-rgb),.55) 0%,rgba(var(--accent-rgb),.24) 40%,#0c1226 100%);
+  background:
+    radial-gradient(120% 90% at 18% 0%,rgba(var(--accent-rgb),.42),transparent 62%),
+    linear-gradient(180deg,#141b33 0%,#0e1428 45%,#0a0f1e 100%);
   border-right:1px solid rgba(255,255,255,.08);
 }
 .sidebar-brand{
