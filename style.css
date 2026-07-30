@@ -754,10 +754,9 @@ body:before,body:after{display:none}
 .sidebar-brand-logo{
   width:100%;max-width:112px;display:block;border-radius:12px;transition:.2s ease;position:relative;z-index:1;
   filter:
-    drop-shadow(0 0 1px rgba(255,224,150,.95))
-    drop-shadow(0 0 2px rgba(255,224,150,.85))
-    drop-shadow(0 0 4px rgba(255,224,150,.65))
-    drop-shadow(0 0 7px rgba(255,224,150,.45));
+    drop-shadow(0 0 1px rgba(190,225,255,.6))
+    drop-shadow(0 0 2px rgba(190,225,255,.5))
+    drop-shadow(0 0 4px rgba(190,225,255,.35));
 }
 .brand-i{color:#e8342a}
 
@@ -777,10 +776,9 @@ body:before,body:after{display:none}
 .wmc-pf-pill img{
   height:24px;display:block;position:relative;z-index:1;
   filter:
-    drop-shadow(0 0 1px rgba(255,224,150,.95))
-    drop-shadow(0 0 2px rgba(255,224,150,.85))
-    drop-shadow(0 0 3px rgba(255,224,150,.65))
-    drop-shadow(0 0 5px rgba(255,224,150,.45));
+    drop-shadow(0 0 1px rgba(190,225,255,.6))
+    drop-shadow(0 0 2px rgba(190,225,255,.5))
+    drop-shadow(0 0 3px rgba(190,225,255,.35));
 }
 html[data-sidebar="collapsed"] .wmc-pf-pill{display:none!important}
 
