@@ -4,24 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PROFiNDER</title>
+<script>(function(){try{var p=JSON.parse(localStorage.getItem("shift_display_prefs")||"{}");var h=document.documentElement;h.setAttribute("data-theme",p.theme||"light");h.setAttribute("data-tone",p.tone||"default");}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-:root{
-  --bg:#f4f5f8;--panel:#ffffff;--line:#e7e9f0;--text:#1c2333;--muted:#6b7285;--faint:#9aa0b2;
-  --accent:#2f6fed;--navy:#152238;
-  --font-head:"Space Grotesk","Noto Sans JP",sans-serif;
-  --font-mono:"JetBrains Mono","Noto Sans JP",monospace;
-  --font-body:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif;
-}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
 body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflow-x:hidden}
+</style>
+<style>
 
 /* ---------- ヘッダー ---------- */
 .pf-header{
-  display:flex;align-items:center;gap:18px;padding:12px 24px;background:#fff;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:18px;padding:12px 24px;
+  background:linear-gradient(90deg,rgba(var(--accent-rgb),.10),rgba(var(--accent-rgb),.03) 60%,transparent);
+  border-bottom:2px solid rgba(var(--accent-rgb),.35);
   flex-wrap:wrap;
 }
 .pf-menu-btn{
@@ -30,6 +29,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 .pf-menu-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
 .pf-logo{display:flex;align-items:center;gap:2px;font-family:var(--font-head);font-weight:800;font-size:18px;flex:none;white-space:nowrap}
+.pf-logo-img{height:34px;display:block;flex:none}
 .pf-logo .mag{color:#5b57ff}
 .pf-logo .fi{color:#e8342a}
 
@@ -39,7 +39,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   font-family:var(--font-head);font-weight:700;font-size:14px;cursor:pointer;transition:.15s ease;
 }
 .pf-tab:hover{color:var(--navy)}
-.pf-tab.active{background:#dfeafe;color:#1b57d6}
+.pf-tab.active{background:rgba(var(--accent-rgb),.14);color:var(--accent-dark)}
 
 .pf-header-right{display:flex;align-items:center;gap:12px;margin-left:auto;flex-wrap:wrap}
 .pf-inquiry-btn{
@@ -129,8 +129,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-quick-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
 .qb-ai{background:#efeafb;color:#5b3fc4;border-color:#ded4f7}
 .qb-list{background:#eaf5df;color:#4b7015;border-color:#d6ecc4}
-.qb-refresh{background:#e4f0fd;color:#1f5fac;border-color:#cde3fa}
-.qb-csv{background:#e4f0fd;color:#1f5fac;border-color:#cde3fa}
+.qb-refresh{background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);border-color:rgba(var(--accent-rgb),.3)}
+.qb-csv{background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);border-color:rgba(var(--accent-rgb),.3)}
 
 .pf-ship-notice{
   background:#eaf3da;border:1px solid #cfe3ab;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;
@@ -155,25 +155,25 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .col-gain .dash{color:var(--faint);font-size:16px}
 
 .pf-badge{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:11px;font-weight:700;margin-bottom:6px}
-.badge-restock{background:#dcecfd;color:#1f5fac}
+.badge-restock{background:rgba(var(--accent-rgb),.14);color:var(--accent-dark)}
 .badge-stock{background:#faf0cf;color:#8a6d12}
 .pf-prod-name{font-size:13.5px;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:4px}
 .pf-prod-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.pf-prod-asin{font-family:var(--font-mono);font-size:12px;color:#2f6fed}
+.pf-prod-asin{font-family:var(--font-mono);font-size:12px;color:var(--accent)}
 .pf-warn-badge,.pf-call-badge{width:20px;height:20px;border-radius:6px;border:1.5px solid;display:inline-flex;align-items:center;justify-content:center}
-.pf-warn-badge{border-color:#2f6fed;color:#2f6fed}
+.pf-warn-badge{border-color:var(--accent);color:var(--accent)}
 .pf-call-badge{border-color:#e0793a;color:#e0793a}
 .pf-warn-badge svg,.pf-call-badge svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.4}
 .pf-edit-chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:7px;padding:2px 8px;font-size:11px;color:var(--muted);margin-bottom:6px}
 .pf-tag-row{display:flex;gap:6px;flex-wrap:wrap}
 .pf-tag{background:#f0f1f5;border-radius:6px;padding:2px 7px;font-size:11px;color:var(--muted);font-family:var(--font-mono)}
-.pf-tag.blue{background:#dcecfd;color:#1f5fac}
+.pf-tag.blue{background:rgba(var(--accent-rgb),.14);color:var(--accent-dark)}
 .pf-tag.green{background:#dff2d8;color:#3c6b1f}
 
 .col-recommend{text-align:center}
 .col-recommend .ok-circle{width:26px;height:26px;border-radius:50%;border:2px solid #2e8b57;color:#2e8b57;display:flex;align-items:center;justify-content:center;margin:0 auto 4px}
 .col-recommend .ok-circle svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:3}
-.col-recommend .stock-link{font-size:11.5px;color:#2f6fed;text-decoration:underline;font-family:var(--font-mono)}
+.col-recommend .stock-link{font-size:11.5px;color:var(--accent);text-decoration:underline;font-family:var(--font-mono)}
 .pf-day-tabs{display:flex;gap:4px;justify-content:center}
 .pf-day-tab{width:32px;padding:4px 0;border-radius:7px;text-align:center;font-size:10px;color:var(--muted);background:#f4f5f8}
 .pf-day-tab b{display:block;font-size:13px;color:var(--navy)}
@@ -205,7 +205,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-field-label{font-size:12.5px;color:var(--muted);margin-bottom:8px}
 .pf-select,.pf-date-input{height:40px;border:1px solid var(--line-strong);border-radius:10px;padding:0 14px;font-size:14px;color:var(--text);background:#fff}
 .pf-snapshot-row{display:flex;align-items:center;gap:12px}
-.pf-save-snap-btn{height:40px;padding:0 16px;border-radius:10px;background:#dcecfd;color:#1f5fac;border:1px solid #b7d6f7;font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px}
+.pf-save-snap-btn{height:40px;padding:0 16px;border-radius:10px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);border:1px solid rgba(var(--accent-rgb),.32);font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px}
 
 .pf-flow-heading{font-weight:700;font-size:14.5px;color:var(--navy);margin-bottom:16px}
 .pf-flow-row{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
@@ -245,7 +245,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-detail-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px}
 .pf-detail-head h3{font-size:15px;font-weight:700;color:var(--navy)}
 .pf-detail-head h3 span{font-weight:400;color:var(--muted);font-size:12.5px}
-.pf-csv-btn{height:38px;padding:0 16px;border-radius:9px;background:#dcecfd;color:#1f5fac;border:1px solid #b7d6f7;font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px}
+.pf-csv-btn{height:38px;padding:0 16px;border-radius:9px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);border:1px solid rgba(var(--accent-rgb),.32);font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:6px}
 
 .pf-detail-table{width:100%;border-collapse:collapse;font-size:13px}
 .pf-detail-table th{font-size:11.5px;color:var(--muted);font-weight:700;text-align:center;padding:10px 8px;border-bottom:1px solid var(--line)}
@@ -255,17 +255,17 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-detail-table .prodname{font-weight:700;color:var(--navy);font-size:13.5px}
 .pf-detail-table .prodasin{font-family:var(--font-mono);font-size:11.5px;color:var(--faint);margin-top:2px}
 .pf-detail-table .qtytotal{font-weight:800}
-.pf-detail-table .amzlink{color:#2f6fed;font-size:12px;white-space:nowrap}
+.pf-detail-table .amzlink{color:var(--accent);font-size:12px;white-space:nowrap}
 
 /* ---------- セラー ---------- */
 .pf-seller-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;position:relative}
 .pf-seller-title{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--navy)}
 .pf-seller-title svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:1.8}
 .pf-outline-pill{height:38px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;color:var(--text);display:flex;align-items:center;gap:6px;cursor:pointer}
-.pf-outline-pill.blue{border-color:#9cc4f7;background:#eaf3fd;color:#1f5fac}
+.pf-outline-pill.blue{border-color:rgba(var(--accent-rgb),.4);background:rgba(var(--accent-rgb),.1);color:var(--accent-dark)}
 .pf-outline-pill.amber{border-color:#eccb8d;background:#fbf1de;color:#8a5a08}
 .pf-check-label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text)}
-.pf-check-label input{width:16px;height:16px;accent-color:#2f6fed}
+.pf-check-label input{width:16px;height:16px;accent-color:var(--accent)}
 .pf-check-label .on{color:#2e6b1f}
 
 .pf-mining-btn{
@@ -297,13 +297,13 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-ship-tag{display:inline-flex;height:20px;padding:0 8px;border-radius:5px;font-size:10.5px;font-weight:800;color:#fff;align-items:center}
 .pf-ship-tag.fba{background:#e0a020}
 .pf-ship-tag.fbm{background:#3a3f4c}
-.pf-research-btn{height:36px;padding:0 14px;border-radius:9px;border:1.5px solid var(--line-strong);background:#eaf3fd;color:#1f5fac;font-family:var(--font-head);font-weight:700;font-size:12px;white-space:nowrap}
+.pf-research-btn{height:36px;padding:0 14px;border-radius:9px;border:1.5px solid var(--line-strong);background:rgba(var(--accent-rgb),.1);color:var(--accent-dark);font-family:var(--font-head);font-weight:700;font-size:12px;white-space:nowrap}
 .col-profit-green{color:#2e6b1f;font-weight:800}
 .col-profit-amber{color:#a8650a;font-weight:800}
 .pf-unreg-cell{line-height:1.5}
 .pf-unreg-cell b{display:block;font-size:14px;color:var(--navy)}
 .pf-unreg-cell .an{font-size:10.5px;color:var(--faint)}
-.col-sim{color:#1f5fac;font-weight:700}
+.col-sim{color:var(--accent-dark);font-weight:700}
 
 
 .pf-eye-btn{
@@ -315,8 +315,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 <body>
 
 <header class="pf-header">
-  <button type="button" class="pf-menu-btn" aria-label="メニュー"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
-  <div class="pf-logo"><span class="mag">🔍</span>FiNDER</div>
+  <img class="pf-logo-img" src="finder-icon.png" alt="FiNDER">
 
   <nav class="pf-tabs">
     <button type="button" class="pf-tab active" data-tab="home">ホーム</button>
@@ -584,8 +583,6 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   </section>
 
 </div>
-
-<div class="pf-eye-btn" title="管理モードの操作を開く">👁</div>
 
 <script>
 /* ---- タブ切り替え ---- */
