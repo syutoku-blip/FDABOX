@@ -156,7 +156,12 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-notice-btn.solid{background:#2e5f1e;color:#fff}
 .pf-notice-btn.ghost{background:#fff;color:var(--navy);border-color:var(--line)}
 
-.pf-table-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;overflow-x:auto;position:relative}
+.pf-table-outer{position:relative}
+.pf-table-wrap{
+  background:#fff;border:1px solid var(--line);border-radius:18px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.pf-table-wrap::-webkit-scrollbar{display:none}
 .pf-scroll-edge{
   position:absolute;top:0;bottom:0;width:84px;display:none;align-items:center;
   cursor:pointer;z-index:20;transition:opacity .15s ease;
@@ -727,14 +732,20 @@ if(miningBtn){
 function addEdgeScrollers(el){
   if(!el || el.dataset.edgeReady) return;
   el.dataset.edgeReady = "1";
+  // オーバーレイはスクロールする要素の「外側」に置く(内側だと環境によって位置がずれるため)
+  var outer=document.createElement("div");
+  outer.className="pf-table-outer";
+  el.parentNode.insertBefore(outer, el);
+  outer.appendChild(el);
+
   var left=document.createElement("div");
   left.className="pf-scroll-edge left";
   left.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>';
   var right=document.createElement("div");
   right.className="pf-scroll-edge right";
   right.innerHTML='<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>';
-  el.appendChild(left);
-  el.appendChild(right);
+  outer.appendChild(left);
+  outer.appendChild(right);
   function nudge(dir){
     el.scrollBy({left:dir*320,behavior:"smooth"});
     // smoothスクロール中もボタンの表示状態を追従させる
