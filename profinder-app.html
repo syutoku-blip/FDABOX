@@ -257,6 +257,54 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-detail-table .qtytotal{font-weight:800}
 .pf-detail-table .amzlink{color:#2f6fed;font-size:12px;white-space:nowrap}
 
+/* ---------- セラー ---------- */
+.pf-seller-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;position:relative}
+.pf-seller-title{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--navy)}
+.pf-seller-title svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:1.8}
+.pf-outline-pill{height:38px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;color:var(--text);display:flex;align-items:center;gap:6px;cursor:pointer}
+.pf-outline-pill.blue{border-color:#9cc4f7;background:#eaf3fd;color:#1f5fac}
+.pf-outline-pill.amber{border-color:#eccb8d;background:#fbf1de;color:#8a5a08}
+.pf-check-label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text)}
+.pf-check-label input{width:16px;height:16px;accent-color:#2f6fed}
+.pf-check-label .on{color:#2e6b1f}
+
+.pf-mining-btn{
+  margin-left:auto;height:40px;padding:0 16px;border-radius:10px;background:#3a2a12;color:#f0d693;
+  font-family:var(--font-head);font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;cursor:pointer;border:0;
+}
+.pf-mining-popup{
+  position:absolute;top:48px;right:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
+  padding:18px;box-shadow:0 14px 34px rgba(0,0,0,.14);z-index:20;
+}
+.pf-mining-popup .head{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:#5c3d00;font-size:14.5px;margin-bottom:14px}
+.pf-mining-popup .head span{cursor:pointer;color:var(--faint);font-weight:400}
+.pf-mining-result{border:1.5px dashed #d8b361;border-radius:12px;padding:14px;text-align:center;margin-bottom:12px}
+.pf-mining-result .lbl{font-size:12px;color:#8a6a1f;margin-bottom:6px}
+.pf-mining-result .val{font-family:var(--font-head);font-size:24px;font-weight:800;color:#5c3d00}
+.pf-mining-note{font-size:12px;color:#8a6a1f;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.pf-mining-go{width:100%;height:42px;border-radius:10px;background:#3a2a12;color:#f0d693;font-family:var(--font-head);font-weight:700;font-size:13px;border:0;margin-bottom:8px;cursor:pointer}
+.pf-mining-more{width:100%;height:40px;border-radius:10px;background:transparent;color:#5c3d00;font-family:var(--font-head);font-weight:700;font-size:12.5px;border:1.5px solid #d8b361;cursor:pointer}
+
+.pf-seller-table{width:100%;border-collapse:collapse;font-size:13px;min-width:1100px}
+.pf-seller-table th{font-size:11.5px;color:var(--muted);font-weight:700;text-align:center;padding:12px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.pf-seller-table td{padding:16px 10px;text-align:center;border-bottom:1px solid var(--line);vertical-align:middle}
+.pf-seller-table tr:nth-child(even) td{background:#fafafd}
+.pf-seller-table .star{color:var(--faint);font-size:16px;cursor:pointer}
+.pf-seller-table .sellercell{text-align:left}
+.pf-seller-table .sname{font-weight:700;color:var(--navy);font-size:13.5px}
+.pf-seller-table .said{font-family:var(--font-mono);font-size:11px;color:var(--faint);margin-top:2px}
+.pf-ship-badges{display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.pf-ship-tag{display:inline-flex;height:20px;padding:0 8px;border-radius:5px;font-size:10.5px;font-weight:800;color:#fff;align-items:center}
+.pf-ship-tag.fba{background:#e0a020}
+.pf-ship-tag.fbm{background:#3a3f4c}
+.pf-research-btn{height:36px;padding:0 14px;border-radius:9px;border:1.5px solid var(--line-strong);background:#eaf3fd;color:#1f5fac;font-family:var(--font-head);font-weight:700;font-size:12px;white-space:nowrap}
+.col-profit-green{color:#2e6b1f;font-weight:800}
+.col-profit-amber{color:#a8650a;font-weight:800}
+.pf-unreg-cell{line-height:1.5}
+.pf-unreg-cell b{display:block;font-size:14px;color:var(--navy)}
+.pf-unreg-cell .an{font-size:10.5px;color:var(--faint)}
+.col-sim{color:#1f5fac;font-weight:700}
+
 
 .pf-eye-btn{
   position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:#12182a;color:#fff;
@@ -502,7 +550,37 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   </section>
 
   <section class="pf-panel" id="panel-seller">
-    <div class="pf-soon-box">セラーのソースが未共有のため準備中です</div>
+    <div class="pf-seller-head">
+      <div class="pf-seller-title"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"></circle><path d="M2 21v-2a4 4 0 014-4h6a4 4 0 014 4v2"></path><circle cx="17" cy="8" r="3"></circle><path d="M22 21v-1.5a3.5 3.5 0 00-2.5-3.4"></path></svg>セラー（登録29社・デモ）</div>
+      <button type="button" class="pf-outline-pill blue">▽ 扱うカテゴリ</button>
+      <button type="button" class="pf-outline-pill amber">🔖 要申請カテゴリ</button>
+      <label class="pf-check-label"><input type="checkbox" checked>要申請ASINを取得しない<span class="on">ON</span></label>
+
+      <button type="button" class="pf-mining-btn" id="miningBtn">⛏ セラーマイニング</button>
+      <div class="pf-mining-popup hidden" id="miningPopup">
+        <div class="head">⛏ セラーマイニング<span id="miningClose">✕</span></div>
+        <div class="pf-mining-result"><div class="lbl">今日の成果</div><div class="val">0 セラー獲得</div></div>
+        <div class="pf-mining-note">⛏ あと1回 採掘できる</div>
+        <button type="button" class="pf-mining-go">⛏ 今すぐ取得する</button>
+        <button type="button" class="pf-mining-more">もっとセラーを取得する</button>
+      </div>
+    </div>
+
+    <div class="pf-card">
+      <div class="pf-card-note" style="margin-top:0;margin-bottom:16px">保有ASINに出品している日本輸出セラー。想定利益＝そのセラーの未登録ASINから刈り取れる利益の合計（デモ用の算出値）。見出しをクリックで並び替え・各見出しにマウスを乗せると説明。</div>
+
+      <div style="margin-bottom:14px"><button type="button" class="pf-research-btn">🔍 全セラーでリサーチ</button></div>
+
+      <div class="pf-table-wrap" style="overflow-x:auto">
+        <table class="pf-seller-table">
+          <thead><tr>
+            <th>☆</th><th>セラー</th><th>発送</th><th></th>
+            <th>出品できる利益▼</th><th>要申請利益</th><th>未登録</th><th>類似率</th><th>カテゴリー一致率</th><th>出品単価</th><th>総ASIN</th>
+          </tr></thead>
+          <tbody id="sellerTbody"></tbody>
+        </table>
+      </div>
+    </div>
   </section>
 
 </div>
@@ -552,6 +630,41 @@ document.getElementById("statGrid").innerHTML = STAT_CARDS.map(function(c){
     + '<div class="pf-stat-amount">'+c.amount+'</div>'
     + '</div>';
 }).join("");
+
+/* ---- セラータブ(ダミーデータ) ---- */
+var SAMPLE_SELLERS = [
+  {name:"サンプルセラーA", id:"A00000000001", ship:["FBA","FBM"], profit:"¥678,218", req:"¥43,766", unreg:"—", analyzed:"180件", sim:"6.1%", cat:"—", price:"—", total:"812"},
+  {name:"サンプルセラーB", id:"A00000000002", ship:["FBA"], profit:"¥556,672", req:"—", unreg:"143", analyzed:"17件", sim:"0%", cat:"90%", price:"$251", total:"165"},
+  {name:"サンプルセラーC", id:"A00000000003", ship:[], profit:"¥298,920", req:"—", unreg:"—", analyzed:"44件", sim:"—", cat:"—", price:"—", total:"44"},
+  {name:"サンプルセラーD", id:"A00000000004", ship:["FBA"], profit:"¥106,830", req:"¥21,960", unreg:"297", analyzed:"17件", sim:"8.2%", cat:"85%", price:"$131", total:"321"},
+  {name:"サンプルセラーE", id:"A00000000005", ship:[], profit:"¥85,764", req:"—", unreg:"—", analyzed:"4件", sim:"—", cat:"—", price:"—", total:"4"}
+];
+document.getElementById("sellerTbody").innerHTML = SAMPLE_SELLERS.map(function(s){
+  var shipHtml = s.ship.length
+    ? '<div class="pf-ship-badges">' + s.ship.map(function(t){ return '<span class="pf-ship-tag '+t.toLowerCase()+'">'+t+'</span>'; }).join("") + '</div>'
+    : '-';
+  var reqHtml = s.req === "—" ? '—' : '<span class="col-profit-amber">'+s.req+'</span>';
+  return '<tr>'
+    + '<td class="star">☆</td>'
+    + '<td class="sellercell"><div class="sname">'+s.name+'</div><div class="said">'+s.id+'</div></td>'
+    + '<td>'+shipHtml+'</td>'
+    + '<td><button type="button" class="pf-research-btn">🔍 このセラーでリサーチする</button></td>'
+    + '<td class="col-profit-green">'+s.profit+'</td>'
+    + '<td>'+reqHtml+'</td>'
+    + '<td class="pf-unreg-cell">'+(s.unreg==="—"?'—':'<b>'+s.unreg+'</b>')+'<div class="an">分析済<br>'+s.analyzed+'</div></td>'
+    + '<td class="col-sim">'+s.sim+'</td>'
+    + '<td>'+s.cat+'</td>'
+    + '<td>'+s.price+'</td>'
+    + '<td>'+s.total+'</td>'
+    + '</tr>';
+}).join("");
+
+var miningBtn = document.getElementById("miningBtn");
+var miningPopup = document.getElementById("miningPopup");
+if(miningBtn){
+  miningBtn.addEventListener("click", function(){ miningPopup.classList.toggle("hidden"); });
+  document.getElementById("miningClose").addEventListener("click", function(){ miningPopup.classList.add("hidden"); });
+}
 </script>
 </body>
 </html>
