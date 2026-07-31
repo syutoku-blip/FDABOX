@@ -894,13 +894,14 @@ html[data-sidebar="collapsed"] .wmc-pf-pill{display:none!important}
    サイドバーの折りたたみ（アイコンのみ表示）
    ========================================================================== */
 .sidebar{transition:width .2s ease}
-.sidebar-toggle-btn{
+.sidebar-toggle-btn,.sidebar-hide-btn{
   position:static;
   flex:none;width:26px!important;height:26px!important;border-radius:8px!important;border:1px solid var(--line);background:var(--panel2);
   display:grid;place-items:center;color:var(--muted);cursor:pointer;transition:.15s ease;
 }
-.sidebar-toggle-btn:hover{color:var(--accent);border-color:var(--accent)}
-.sidebar-toggle-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .2s ease}
+.sidebar-toggle-btn:hover,.sidebar-hide-btn:hover{color:var(--accent);border-color:var(--accent)}
+.sidebar-toggle-btn svg,.sidebar-hide-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .2s ease}
+.sidebar-hide-btn{display:none!important}
 .sidebar-logout-label{white-space:nowrap}
 
 html[data-sidebar="collapsed"] .sidebar{width:84px}
@@ -909,13 +910,7 @@ html[data-sidebar="collapsed"] .sidebar-brand-logo{width:36px;border-radius:10px
 
 /* ---- ツールバー(展開/縮小・完全に隠す)のボタン群 ---- */
 .sidebar-toggle-group{position:static;display:flex;gap:6px;justify-content:center;width:100%}
-.sidebar-hide-btn{
-  display:none!important;width:26px!important;height:26px!important;border-radius:8px!important;border:1px solid var(--line);background:var(--panel2);
-  align-items:center;justify-content:center;color:var(--muted);cursor:pointer;transition:.15s ease;
-}
-.sidebar-hide-btn:hover{color:var(--accent);border-color:var(--accent)}
-.sidebar-hide-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4}
-html[data-sidebar="collapsed"] .sidebar-hide-btn{display:flex!important}
+html[data-sidebar="collapsed"] .sidebar-hide-btn{display:grid!important}
 html[data-sidebar="collapsed"] .sidebar-hide-btn svg{transform:none}
 
 /* ---- サイドバーを完全に隠す(3段階目) ---- */
@@ -929,7 +924,7 @@ html[data-sidebar="hidden"] .sidebar{display:none}
 .sidebar-reopen-tab.visible{display:flex}
 .sidebar-reopen-tab svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4}
 html[data-sidebar="collapsed"] .sidebar-toggle-btn svg{transform:rotate(180deg)}
-html[data-sidebar="collapsed"] .sidebar-toggle-btn{display:flex}
+html[data-sidebar="collapsed"] .sidebar-toggle-btn{display:grid}
 html[data-sidebar="collapsed"] .sidebar-link{justify-content:center;padding:11px 8px}
 html[data-sidebar="collapsed"] .sidebar-link-label,
 html[data-sidebar="collapsed"] .sidebar-link .ext-icon,
