@@ -391,7 +391,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-switch-thumb{position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .18s ease}
 .pf-switch-wrap[aria-pressed="true"] .pf-switch-thumb{left:17px}
 
-.reqcat-modal-box{width:min(760px,100%)}
+.reqcat-modal-box{width:min(760px,100%);align-self:flex-start;margin-top:32px}
 .reqcat-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
 .reqcat-stat{flex:1;min-width:180px;background:var(--panel2);border-radius:14px;padding:14px 16px}
 .reqcat-stat .lbl{font-size:12px;color:var(--muted);margin-bottom:6px}
@@ -408,11 +408,18 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .reqcat-axis-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);font-family:var(--font-mono)}
 .reqcat-note{font-size:12px;color:var(--muted);line-height:1.8;border-top:1px solid var(--line);padding-top:14px}
 
-.catfilter-modal-box{width:min(600px,100%);display:flex;flex-direction:column;max-height:85vh}
+.catfilter-modal-box{width:min(600px,100%);display:flex;flex-direction:column;max-height:85vh;align-self:flex-start;margin-top:32px}
 .catfilter-body{padding:0 22px 18px;overflow-y:auto}
 .catfilter-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:14px}
 .catfilter-new-row{display:flex;align-items:center;gap:9px;padding:11px 14px;background:var(--panel2);border-radius:10px;margin-bottom:14px;font-size:13px;font-weight:700;color:var(--text);cursor:pointer}
 .catfilter-new-row input{width:16px;height:16px;accent-color:var(--accent);flex:none}
+.catfilter-cat-toggle{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 4px;
+  border:0;background:none;cursor:pointer;font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--navy);
+}
+.catfilter-cat-toggle .pf-th-chevron{transition:transform .15s ease}
+.catfilter-cat-toggle.open .pf-th-chevron{transform:rotate(90deg)}
+.catfilter-list.hidden{display:none}
 .catfilter-new-badge{background:var(--danger);color:#fff;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.03em}
 .catfilter-list{border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .catfilter-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);cursor:pointer}
@@ -426,7 +433,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .catfilter-closebtn{flex:1;height:42px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-family:var(--font-head);font-weight:700;font-size:13px;cursor:pointer}
 .catfilter-closebtn:hover{background:var(--accent-dark)}
 
-.dispset-modal-box{width:min(640px,100%);display:flex;flex-direction:column;max-height:85vh}
+.dispset-modal-box{width:min(640px,100%);display:flex;flex-direction:column;max-height:85vh;align-self:flex-start;margin-top:32px}
 .dispset-desc{font-size:12.5px;color:var(--muted);line-height:1.7;padding:0 22px 16px}
 .dispset-body{overflow-y:auto}
 .dispset-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 22px;border-top:1px solid var(--line)}
@@ -446,7 +453,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-th-info-btn:hover{color:var(--accent-dark)}
 .pf-th-info-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
 
-.pcalc-modal-box{width:min(540px,100%);display:flex;flex-direction:column;max-height:88vh}
+.pcalc-modal-box{width:min(540px,100%);display:flex;flex-direction:column;max-height:88vh;align-self:flex-start;margin-top:32px}
 .pcalc-body{padding:0 22px 20px;overflow-y:auto}
 .pcalc-desc{font-size:12.5px;color:var(--muted);margin-bottom:14px}
 .pcalc-radio-card{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:.15s ease}
@@ -464,7 +471,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pcalc-tariff-table td{padding:5px 4px;border-bottom:1px solid var(--line)}
 .pcalc-tariff-table input{width:52px;height:26px;border-radius:6px;border:1px solid var(--line-strong);text-align:right;padding:0 6px;font-family:var(--font-mono);font-size:12px}
 
-.csvup-modal-box{width:min(560px,100%);display:flex;flex-direction:column;max-height:85vh}
+.csvup-modal-box{width:min(560px,100%);display:flex;flex-direction:column;max-height:85vh;align-self:flex-start;margin-top:32px}
 .csvup-body{padding:0 22px 22px;overflow-y:auto}
 .csvup-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:16px}
 .csvup-dropzone{
@@ -594,7 +601,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
     <div class="catfilter-body">
       <div class="catfilter-desc">チェックを外したカテゴリは<b>集計からもリサーチ候補からも除外</b>されます（あなたが扱わないカテゴリ）。取得ASIN数の多い順。</div>
       <label class="catfilter-new-row"><input type="checkbox" id="catFilterNewOnly"><span class="catfilter-new-badge">NEW</span>追加から24時間以内のセラーのみ表示</label>
-      <div class="catfilter-list" id="catFilterList">
+      <button type="button" class="catfilter-cat-toggle" id="catFilterCatToggle" onclick="pfToggleCatFilterList()">
+        <span>カテゴリ</span>
+        <span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span>
+      </button>
+      <div class="catfilter-list hidden" id="catFilterList">
         <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#6b6b6b;color:#6b6b6b">その他</span><span class="catfilter-count">7,746件</span></label>
         <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#e2531f;color:#e2531f">おもちゃ</span><span class="catfilter-count">31件</span></label>
         <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#1a7a3e;color:#1a7a3e">スポーツ・アウトドア</span><span class="catfilter-count">22件</span></label>
@@ -1199,6 +1210,12 @@ function closeCatFilterModal(){
 }
 function catFilterSelectAll(){
   document.querySelectorAll("#catFilterList input[type=checkbox]").forEach(function(cb){ cb.checked = true; });
+}
+function pfToggleCatFilterList(){
+  var list = document.getElementById("catFilterList");
+  var toggle = document.getElementById("catFilterCatToggle");
+  var open = list.classList.toggle("hidden") === false;
+  toggle.classList.toggle("open", open);
 }
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeCatFilterModal(); });
 
