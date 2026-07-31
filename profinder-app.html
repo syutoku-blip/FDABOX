@@ -222,12 +222,13 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 .pf-th-main{display:flex;align-items:center;justify-content:center;gap:5px}
 .pf-th-sub{display:flex;flex-direction:column;align-items:center;gap:4px}
-.pf-th-sub .sub-label{font-size:10px;font-weight:400;color:var(--faint)}
 .pf-th-chevron{width:22px;height:22px;border-radius:7px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
 .pf-th-chevron svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6;transition:transform .15s ease}
 .pf-th-chevron.open svg{transform:rotate(90deg)}
-.pf-subcol{font-size:10.5px;color:var(--faint);text-align:center;white-space:nowrap}
-.pf-th-sort{margin-left:3px;font-size:9px;opacity:.6}
+.pf-subcol{font-size:10.5px;color:var(--faint);text-align:center;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:3px}
+.pf-th-pin{width:12px;height:12px;flex:none;cursor:pointer;stroke:var(--faint);fill:none;stroke-width:2;opacity:.55;transition:.15s ease}
+.pf-th-pin:hover{opacity:1}
+.pf-th-pin.pinned{stroke:var(--accent-dark);fill:var(--accent-dark);opacity:1}
 .col-sub-val{text-align:center;font-size:12.5px;font-weight:600;color:var(--text)}
 .pf-index-pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1.5px solid;font-size:11px;font-weight:800;line-height:1.5}
 .pf-index-pill.green{border-color:#2e6b1f;color:#2e6b1f}
@@ -608,9 +609,9 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <div class="pf-th-center">商品</div>
         <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'recommend')">推奨仕入</span></div>
         <div class="pf-th-sub" data-colgroup="until"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'until')">在庫切れまで</span><span class="pf-th-chevron" onclick="pfToggleColGroup('until')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="price"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'price')">販売額$</span><span class="sub-label">現在の米ドル価格 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('price')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'profit')">想定利益額</span><span class="sub-label">日本Amazon仕入 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="rate"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'rate')">想定利益率</span><span class="sub-label">日本Amazon仕入 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="price"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'price')">販売額$</span><span class="pf-th-chevron" onclick="pfToggleColGroup('price')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'profit')">想定利益額</span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="rate"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'rate')">想定利益率</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="index"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'index')">指数</span><span class="pf-th-chevron" onclick="pfToggleColGroup('index')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div></div>
       </div>
@@ -929,14 +930,23 @@ var PF_COL_SUB_VALUES = {
   rate:   ["41.8%","42.2%","0.0%"],
   index:  ['<span class="pf-index-pill green">164%<small>損益分岐を防衛</small></span>','29%','持続','<span class="pf-index-pill red">×1.00<small>▲セラー増57%</small></span>','定常']
 };
+var PF_COL_GROUP_ORDER = ["until","price","profit","rate","index"];
 var pfColGroupState = {until:false, price:false, profit:false, rate:false, index:false};
+var pfPinnedSubs = {}; // "key:index" -> true
 
+function pfVisibleSubIndices(key){
+  var group = PF_COL_GROUPS[key];
+  var indices = [];
+  group.subs.forEach(function(s, i){
+    if(pfColGroupState[key] || pfPinnedSubs[key+":"+i]) indices.push(i);
+  });
+  return indices;
+}
 function pfBuildGridTemplate(){
-  var order = ["until","price","profit","rate","index"];
   var tracks = ["100px","60px","1fr","140px"];
-  order.forEach(function(key){
+  PF_COL_GROUP_ORDER.forEach(function(key){
     tracks.push(PF_COL_GROUPS[key].width);
-    if(pfColGroupState[key]) PF_COL_GROUPS[key].subs.forEach(function(s){ tracks.push(s[1]); });
+    pfVisibleSubIndices(key).forEach(function(i){ tracks.push(PF_COL_GROUPS[key].subs[i][1]); });
   });
   tracks.push("140px");
   return tracks.join(" ");
@@ -945,39 +955,51 @@ function pfApplyGridTemplate(){
   var tmpl = pfBuildGridTemplate();
   document.querySelectorAll(".pf-siire-row").forEach(function(row){ row.style.gridTemplateColumns = tmpl; });
 }
-function pfToggleColGroup(key){
-  var expanded = !pfColGroupState[key];
-  pfColGroupState[key] = expanded;
+function pfPinIconSvg(pinned){
+  return '<svg class="pf-th-pin'+(pinned?' pinned':'')+'" viewBox="0 0 24 24" onclick="event.stopPropagation();pfToggleSubPin(this)"><path d="M12 17v5M8 3h8l-1 6 3 3v2H6v-2l3-3z"></path></svg>';
+}
+function pfRenderColGroup(key){
+  document.querySelectorAll(".pf-subcol-"+key).forEach(function(el){ el.remove(); });
 
+  var indices = pfVisibleSubIndices(key);
   var headerCell = document.querySelector('.pf-siire-row.head [data-colgroup="'+key+'"]');
   var chevron = headerCell && headerCell.querySelector(".pf-th-chevron");
-  if(chevron) chevron.classList.toggle("open", expanded);
+  if(chevron) chevron.classList.toggle("open", pfColGroupState[key]);
 
-  if(expanded){
-    if(headerCell){
-      var headFrag = document.createDocumentFragment();
-      PF_COL_GROUPS[key].subs.forEach(function(s){
-        var d = document.createElement("div");
-        d.className = "pf-th-sub pf-subcol pf-subcol-"+key;
-        d.innerHTML = s[0] + '<span class="pf-th-sort">⇅</span>';
-        headFrag.appendChild(d);
-      });
-      headerCell.after(headFrag);
-    }
-    document.querySelectorAll('.pf-siire-row:not(.head) [data-colgroup="'+key+'"]').forEach(function(mainCell){
-      var frag = document.createDocumentFragment();
-      PF_COL_SUB_VALUES[key].forEach(function(v){
-        var d = document.createElement("div");
-        d.className = "pf-subcol pf-subcol-"+key+" col-sub-val";
-        d.innerHTML = v;
-        frag.appendChild(d);
-      });
-      mainCell.after(frag);
+  if(headerCell){
+    var headFrag = document.createDocumentFragment();
+    indices.forEach(function(i){
+      var s = PF_COL_GROUPS[key].subs[i];
+      var pinned = !!pfPinnedSubs[key+":"+i];
+      var d = document.createElement("div");
+      d.className = "pf-th-sub pf-subcol pf-subcol-"+key;
+      d.setAttribute("data-subkey", key+":"+i);
+      d.innerHTML = s[0] + pfPinIconSvg(pinned);
+      headFrag.appendChild(d);
     });
-  } else {
-    document.querySelectorAll(".pf-subcol-"+key).forEach(function(el){ el.remove(); });
+    headerCell.after(headFrag);
   }
+  document.querySelectorAll('.pf-siire-row:not(.head) [data-colgroup="'+key+'"]').forEach(function(mainCell){
+    var frag = document.createDocumentFragment();
+    indices.forEach(function(i){
+      var d = document.createElement("div");
+      d.className = "pf-subcol pf-subcol-"+key+" col-sub-val";
+      d.innerHTML = PF_COL_SUB_VALUES[key][i];
+      frag.appendChild(d);
+    });
+    mainCell.after(frag);
+  });
   pfApplyGridTemplate();
+}
+function pfToggleColGroup(key){
+  pfColGroupState[key] = !pfColGroupState[key];
+  pfRenderColGroup(key);
+}
+function pfToggleSubPin(iconEl){
+  var subkey = iconEl.closest("[data-subkey]").getAttribute("data-subkey");
+  pfPinnedSubs[subkey] = !pfPinnedSubs[subkey];
+  var key = subkey.split(":")[0];
+  pfRenderColGroup(key);
 }
 pfApplyGridTemplate();
 
