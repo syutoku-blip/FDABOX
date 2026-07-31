@@ -19,7 +19,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 /* ---------- ヘッダー ---------- */
 .pf-header{
   display:flex;align-items:center;gap:18px;padding:12px 24px;
-  background:var(--accent-dark);
+  background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),var(--accent-dark);
   border-bottom:1px solid rgba(255,255,255,.1);
   flex-wrap:wrap;
 }
@@ -223,8 +223,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-th-chevron svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6}
 .pf-th-info{width:14px;height:14px;stroke:var(--faint);fill:none;stroke-width:2}
 .pf-th-hint{border-bottom:2px dashed var(--accent);cursor:context-menu}
+.pf-th-center{text-align:center}
+.pf-check-cell{display:flex;align-items:center;justify-content:center}
 .pf-siire-row input[type="checkbox"]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
-.pf-prod-cell{display:flex;gap:10px;text-align:left}
+.pf-prod-cell{display:flex;gap:10px;text-align:left;justify-content:center}
 .pf-prod-thumb{flex:none;width:56px;height:56px;border-radius:10px;background:#f0f1f5;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--faint)}
 .pf-prod-thumb svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.6}
 .pf-siire-row:last-child{border-bottom:0}
@@ -508,7 +510,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       <div class="pf-siire-row head">
         <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'gain')">利益を増やせる<br>余地</span></div>
         <div class="pf-th-main">仕入<svg class="pf-th-info" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"></path><line x1="3" y1="3" x2="21" y2="21"></line></svg></div>
-        <div>商品</div>
+        <div class="pf-th-center">商品</div>
         <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'recommend')">推奨仕入</span></div>
         <div class="pf-th-sub">在庫切れまで<span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub">販売額$<span class="sub-label">現在の米ドル価格 ▾</span></div>
@@ -520,7 +522,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
       <div class="pf-siire-row">
         <div class="col-gain"><div class="amt">+¥74,540</div><div class="sub">増やせる可能性があります（+200%）</div></div>
-        <div><input type="checkbox"></div>
+        <div class="pf-check-cell"><input type="checkbox"></div>
         <div class="pf-prod-cell">
           <div class="pf-prod-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
           <div>
@@ -553,7 +555,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
       <div class="pf-siire-row">
         <div class="col-gain"><div class="amt">+¥98,838</div><div class="sub">増やせる可能性があります</div></div>
-        <div><input type="checkbox"></div>
+        <div class="pf-check-cell"><input type="checkbox"></div>
         <div class="pf-prod-cell">
           <div class="pf-prod-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
           <div>
@@ -586,7 +588,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
       <div class="pf-siire-row">
         <div class="col-gain"><div class="amt">+¥69,977</div><div class="sub">増やせる可能性があります</div></div>
-        <div><input type="checkbox"></div>
+        <div class="pf-check-cell"><input type="checkbox"></div>
         <div class="pf-prod-cell">
           <div class="pf-prod-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
           <div>
