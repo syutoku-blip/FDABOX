@@ -19,10 +19,15 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 /* ---------- ヘッダー ---------- */
 .pf-header{
   display:flex;align-items:center;gap:18px;padding:12px 24px;
-  background:#1c2748;
+  background:linear-gradient(100deg,var(--navy) 0%,var(--accent-dark) 55%,var(--accent) 100%);
   border-bottom:1px solid rgba(255,255,255,.1);
   flex-wrap:wrap;
+  transition:background 1.2s ease;
 }
+/* 時間帯によって背景色を出し分ける（サイト全体の3色スキームと連動：朝／昼／夜） */
+.pf-header.time-morning{background:linear-gradient(100deg,#7fb8ff 0%,#5a94f5 55%,#3d7dff 100%)}
+.pf-header.time-day{background:linear-gradient(100deg,#3d7dff 0%,#5a94f5 45%,#6fc3ff 100%)}
+.pf-header.time-night{background:linear-gradient(100deg,#0b1330 0%,#1b2c5e 55%,#2554d1 100%)}
 .pf-menu-btn{
   width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;
   cursor:pointer;flex:none;color:var(--navy);
@@ -738,6 +743,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 </div>
 
 <script>
+/* ---- ヘッダー背景をサイト全体の時間帯カラー（朝／昼／夜）と連動させる ---- */
+(function(){
+  var hour = new Date().getHours();
+  var period = (hour>=5 && hour<11) ? "morning" : (hour>=11 && hour<18) ? "day" : "night";
+  var header = document.querySelector(".pf-header");
+  if(header) header.classList.add("time-"+period);
+})();
+
 /* ---- タブ切り替え ---- */
 document.querySelectorAll(".pf-tab").forEach(function(btn){
   btn.addEventListener("click", function(){
