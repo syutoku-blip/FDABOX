@@ -441,6 +441,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .dispset-tutorial-btn{flex:none;height:38px;padding:0 16px;border-radius:10px;border:1px solid rgba(var(--accent-rgb),.35);background:rgba(var(--accent-rgb),.08);color:var(--accent-dark);font-family:var(--font-head);font-weight:700;font-size:12.5px;cursor:pointer;display:flex;align-items:center;gap:5px}
 .dispset-tutorial-btn:hover{background:rgba(var(--accent-rgb),.16)}
 
+.pf-th-label-row{display:flex;align-items:center;gap:3px;white-space:nowrap}
 .pf-th-info-btn{width:14px;height:14px;flex:none;cursor:pointer;color:var(--faint);border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
 .pf-th-info-btn:hover{color:var(--accent-dark)}
 .pf-th-info-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
@@ -880,7 +881,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'recommend')">推奨仕入</span></div>
         <div class="pf-th-sub" data-colgroup="until"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'until')">在庫切れまで</span><span class="pf-th-chevron" onclick="pfToggleColGroup('until')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="price"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'price')">販売額$</span><span class="pf-th-chevron" onclick="pfToggleColGroup('price')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'profit')">想定利益額</span><span class="pf-th-info-btn" onclick="event.stopPropagation();openPcalcModal()" title="計算基準の設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-label-row"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'profit')">想定利益額</span><span class="pf-th-info-btn" onclick="event.stopPropagation();openPcalcModal()" title="計算基準の設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></span></span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="rate"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'rate')">想定利益率</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="index"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'index')">指数</span><span class="pf-th-chevron" onclick="pfToggleColGroup('index')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-updated">最終更新 07/31 12:00</div>
@@ -1324,8 +1325,14 @@ function pfRenderColGroup(key){
   pfApplyGridTemplate();
 }
 function pfToggleColGroup(key){
+  var wrap = document.querySelector(".pf-siire-row.head") && document.querySelector(".pf-siire-row.head").closest(".pf-table-wrap");
+  var scrollLeft = wrap ? wrap.scrollLeft : 0;
   pfColGroupState[key] = !pfColGroupState[key];
   pfRenderColGroup(key);
+  if(wrap) wrap.scrollLeft = scrollLeft;
+  if(document.activeElement && document.activeElement.classList.contains("pf-th-chevron")){
+    document.activeElement.blur();
+  }
 }
 function pfToggleSubPin(iconEl){
   var subkey = iconEl.closest("[data-subkey]").getAttribute("data-subkey");
