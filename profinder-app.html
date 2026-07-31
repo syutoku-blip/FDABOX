@@ -230,7 +230,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 .pf-th-main{display:flex;align-items:center;justify-content:center;gap:5px}
 .pf-th-sub{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
-.pf-th-updated{font-size:10px;color:var(--faint);text-align:right;font-family:var(--font-mono);white-space:nowrap}
+.pf-updated-note{font-size:10px;color:var(--faint);text-align:right;font-family:var(--font-mono);white-space:nowrap;margin-bottom:10px}
 .pf-th-chevron{width:22px;height:22px;border-radius:7px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
 .pf-th-chevron svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6;transition:transform .15s ease}
 .pf-th-chevron.open svg{transform:rotate(90deg)}
@@ -391,7 +391,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-switch-thumb{position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .18s ease}
 .pf-switch-wrap[aria-pressed="true"] .pf-switch-thumb{left:17px}
 
-.reqcat-modal-box{width:min(760px,100%);align-self:flex-start;margin-top:32px}
+.reqcat-modal-box{width:min(760px,100%);align-self:flex-start;margin-top:32px;max-height:calc(100vh - 88px);display:flex;flex-direction:column;overflow:hidden}
 .reqcat-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
 .reqcat-stat{flex:1;min-width:180px;background:var(--panel2);border-radius:14px;padding:14px 16px}
 .reqcat-stat .lbl{font-size:12px;color:var(--muted);margin-bottom:6px}
@@ -408,18 +408,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .reqcat-axis-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);font-family:var(--font-mono)}
 .reqcat-note{font-size:12px;color:var(--muted);line-height:1.8;border-top:1px solid var(--line);padding-top:14px}
 
-.catfilter-modal-box{width:min(600px,100%);display:flex;flex-direction:column;max-height:85vh;align-self:flex-start;margin-top:32px}
-.catfilter-body{padding:0 22px 18px;overflow-y:auto}
+.catfilter-modal-box{width:min(600px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 88px);align-self:flex-start;margin-top:32px}
+.catfilter-body{padding:0 22px 22px;overflow-y:auto}
 .catfilter-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:14px}
-.catfilter-new-row{display:flex;align-items:center;gap:9px;padding:11px 14px;background:var(--panel2);border-radius:10px;margin-bottom:14px;font-size:13px;font-weight:700;color:var(--text);cursor:pointer}
+.catfilter-new-row{display:flex;align-items:center;gap:9px;padding:11px 14px;background:var(--panel2);border-radius:10px;margin-bottom:10px;font-size:13px;font-weight:700;color:var(--text);cursor:pointer}
 .catfilter-new-row input{width:16px;height:16px;accent-color:var(--accent);flex:none}
-.catfilter-cat-toggle{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 4px;
-  border:0;background:none;cursor:pointer;font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--navy);
-}
-.catfilter-cat-toggle .pf-th-chevron{transition:transform .15s ease}
-.catfilter-cat-toggle.open .pf-th-chevron{transform:rotate(90deg)}
-.catfilter-list.hidden{display:none}
 
 .pf-filter-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .pf-filter-chip{
@@ -432,19 +425,16 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-filter-chip.excl .pf-filter-chip-x{background:rgba(168,101,10,.15)}
 .pf-filter-chip-x svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:3}
 .catfilter-new-badge{background:var(--danger);color:#fff;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.03em}
-.catfilter-list{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.catfilter-cat-badge{background:var(--accent);color:#fff;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.03em}
+.catfilter-list{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:14px}
 .catfilter-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);cursor:pointer}
+.catfilter-row.sub{padding-left:34px;background:var(--panel2)}
 .catfilter-row:last-child{border-bottom:0}
 .catfilter-row input{width:17px;height:17px;accent-color:var(--accent);flex:none}
 .cat-tag{border:1.5px solid;border-radius:8px;padding:3px 10px;font-size:12px;font-weight:700;flex:none}
 .catfilter-count{margin-left:auto;font-size:12.5px;color:var(--muted);font-family:var(--font-mono)}
-.catfilter-footer{display:flex;gap:10px;padding:16px 22px;border-top:1px solid var(--line);flex:none}
-.catfilter-allbtn{flex:1;height:42px;border-radius:10px;border:1px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:13px;cursor:pointer}
-.catfilter-allbtn:hover{border-color:var(--accent);color:var(--accent-dark)}
-.catfilter-closebtn{flex:1;height:42px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-family:var(--font-head);font-weight:700;font-size:13px;cursor:pointer}
-.catfilter-closebtn:hover{background:var(--accent-dark)}
 
-.dispset-modal-box{width:min(640px,100%);display:flex;flex-direction:column;max-height:85vh;align-self:flex-start;margin-top:32px}
+.dispset-modal-box{width:min(640px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 88px);align-self:flex-start;margin-top:32px}
 .dispset-desc{font-size:12.5px;color:var(--muted);line-height:1.7;padding:0 22px 16px}
 .dispset-body{overflow-y:auto}
 .dispset-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 22px;border-top:1px solid var(--line)}
@@ -464,7 +454,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-th-info-btn:hover{color:var(--accent-dark)}
 .pf-th-info-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
 
-.pcalc-modal-box{width:min(540px,100%);display:flex;flex-direction:column;max-height:88vh;align-self:flex-start;margin-top:32px}
+.pcalc-modal-box{width:min(540px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 88px);align-self:flex-start;margin-top:32px}
 .pcalc-body{padding:0 22px 20px;overflow-y:auto}
 .pcalc-desc{font-size:12.5px;color:var(--muted);margin-bottom:14px}
 .pcalc-radio-card{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:.15s ease}
@@ -482,7 +472,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pcalc-tariff-table td{padding:5px 4px;border-bottom:1px solid var(--line)}
 .pcalc-tariff-table input{width:52px;height:26px;border-radius:6px;border:1px solid var(--line-strong);text-align:right;padding:0 6px;font-family:var(--font-mono);font-size:12px}
 
-.csvup-modal-box{width:min(560px,100%);display:flex;flex-direction:column;max-height:85vh;align-self:flex-start;margin-top:32px}
+.csvup-modal-box{width:min(560px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 88px);align-self:flex-start;margin-top:32px}
 .csvup-body{padding:0 22px 22px;overflow-y:auto}
 .csvup-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:16px}
 .csvup-dropzone{
@@ -612,36 +602,29 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
     <div class="catfilter-body">
       <div class="catfilter-desc">チェックを外したカテゴリは<b>集計からもリサーチ候補からも除外</b>されます（あなたが扱わないカテゴリ）。取得ASIN数の多い順。</div>
       <label class="catfilter-new-row"><input type="checkbox" id="catFilterNewOnly"><span class="catfilter-new-badge">NEW</span>追加から24時間以内のセラーのみ表示</label>
-      <button type="button" class="catfilter-cat-toggle" id="catFilterCatToggle" onclick="pfToggleCatFilterList()">
-        <span>カテゴリ</span>
-        <span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span>
-      </button>
-      <div class="catfilter-list hidden" id="catFilterList">
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#6b6b6b;color:#6b6b6b">その他</span><span class="catfilter-count">7,746件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#e2531f;color:#e2531f">おもちゃ</span><span class="catfilter-count">31件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#1a7a3e;color:#1a7a3e">スポーツ・アウトドア</span><span class="catfilter-count">22件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#c81e5c;color:#c81e5c">衣類・靴・宝飾</span><span class="catfilter-count">22件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#7c3aed;color:#7c3aed">CD・レコード</span><span class="catfilter-count">21件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#8b3fd8;color:#8b3fd8">楽器</span><span class="catfilter-count">16件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#2f5fe0;color:#2f5fe0">オフィス</span><span class="catfilter-count">16件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#16a34a;color:#16a34a">ホーム・キッチン</span><span class="catfilter-count">13件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#a3195b;color:#a3195b">手芸・クラフト</span><span class="catfilter-count">11件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#374151;color:#374151">工具・住設</span><span class="catfilter-count">11件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#1c2333;color:#1c2333">車・バイク</span><span class="catfilter-count">10件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#0ea5e9;color:#0ea5e9">家電</span><span class="catfilter-count">8件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#7c3aed;color:#7c3aed">ゲーム</span><span class="catfilter-count">4件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#374151;color:#374151">産業・科学</span><span class="catfilter-count">2件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#16a34a;color:#16a34a">ガーデン</span><span class="catfilter-count">2件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#92400e;color:#92400e">本</span><span class="catfilter-count">2件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#dc2626;color:#dc2626">ヘルス・日用品</span><span class="catfilter-count">2件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#0284c7;color:#0284c7">携帯</span><span class="catfilter-count">2件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#ea580c;color:#ea580c">映画・TV</span><span class="catfilter-count">2件</span></label>
-        <label class="catfilter-row"><input type="checkbox" checked><span class="cat-tag" style="border-color:#db2777;color:#db2777">美容</span><span class="catfilter-count">1件</span></label>
+      <label class="catfilter-new-row"><input type="checkbox" id="catFilterCatAll" checked onchange="pfCatFilterToggleAll(this.checked)"><span class="catfilter-cat-badge">カテゴリ</span>すべてのカテゴリを扱う</label>
+      <div class="catfilter-list" id="catFilterList">
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#6b6b6b;color:#6b6b6b">その他</span><span class="catfilter-count">7,746件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#e2531f;color:#e2531f">おもちゃ</span><span class="catfilter-count">31件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#1a7a3e;color:#1a7a3e">スポーツ・アウトドア</span><span class="catfilter-count">22件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#c81e5c;color:#c81e5c">衣類・靴・宝飾</span><span class="catfilter-count">22件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#7c3aed;color:#7c3aed">CD・レコード</span><span class="catfilter-count">21件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#8b3fd8;color:#8b3fd8">楽器</span><span class="catfilter-count">16件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#2f5fe0;color:#2f5fe0">オフィス</span><span class="catfilter-count">16件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#16a34a;color:#16a34a">ホーム・キッチン</span><span class="catfilter-count">13件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#a3195b;color:#a3195b">手芸・クラフト</span><span class="catfilter-count">11件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#374151;color:#374151">工具・住設</span><span class="catfilter-count">11件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#1c2333;color:#1c2333">車・バイク</span><span class="catfilter-count">10件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#0ea5e9;color:#0ea5e9">家電</span><span class="catfilter-count">8件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#7c3aed;color:#7c3aed">ゲーム</span><span class="catfilter-count">4件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#374151;color:#374151">産業・科学</span><span class="catfilter-count">2件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#16a34a;color:#16a34a">ガーデン</span><span class="catfilter-count">2件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#92400e;color:#92400e">本</span><span class="catfilter-count">2件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#dc2626;color:#dc2626">ヘルス・日用品</span><span class="catfilter-count">2件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#0284c7;color:#0284c7">携帯</span><span class="catfilter-count">2件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#ea580c;color:#ea580c">映画・TV</span><span class="catfilter-count">2件</span></label>
+        <label class="catfilter-row sub"><input type="checkbox" checked><span class="cat-tag" style="border-color:#db2777;color:#db2777">美容</span><span class="catfilter-count">1件</span></label>
       </div>
-    </div>
-    <div class="catfilter-footer">
-      <button type="button" class="catfilter-allbtn" onclick="catFilterSelectAll()">すべて扱う</button>
-      <button type="button" class="catfilter-closebtn" onclick="closeCatFilterModal()">閉じる</button>
     </div>
   </div>
 </div>
@@ -891,6 +874,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       </div>
     </div>
 
+    <div class="pf-updated-note">最終更新 07/31 12:00</div>
     <div class="pf-table-wrap">
       <div class="pf-siire-row head">
         <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'gain')">利益を増やせる<br>余地</span></div>
@@ -906,7 +890,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-label-row"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'profit')">想定利益額</span><span class="pf-th-info-btn" onclick="event.stopPropagation();openPcalcModal()" title="計算基準の設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></span></span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="rate"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'rate')">想定利益率</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="index"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'index')">指数</span><span class="pf-th-chevron" onclick="pfToggleColGroup('index')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-updated">最終更新 07/31 12:00</div>
+        <div></div>
       </div>
 
       <div class="pf-siire-row">
@@ -1220,19 +1204,20 @@ function closeCatFilterModal(){
   modal.classList.remove("visible");
   document.body.style.overflow = "";
 }
-function catFilterSelectAll(){
-  document.querySelectorAll("#catFilterList input[type=checkbox]").forEach(function(cb){ cb.checked = true; });
+function pfCatFilterToggleAll(checked){
+  document.querySelectorAll("#catFilterList input[type=checkbox]").forEach(function(cb){ cb.checked = checked; });
   pfUpdateFilterChips();
-}
-function pfToggleCatFilterList(){
-  var list = document.getElementById("catFilterList");
-  var toggle = document.getElementById("catFilterCatToggle");
-  var open = list.classList.toggle("hidden") === false;
-  toggle.classList.toggle("open", open);
 }
 /* ---- セラー一覧の上に、有効なフィルターをチップで表示 ---- */
 function pfUpdateFilterChips(){
   var container = document.getElementById("pfFilterChips");
+  var catAll = document.getElementById("catFilterCatAll");
+  var boxes = document.querySelectorAll("#catFilterList input[type=\"checkbox\"]");
+  var checkedCount = Array.prototype.filter.call(boxes, function(cb){ return cb.checked; }).length;
+  if(catAll){
+    catAll.checked = checkedCount === boxes.length;
+    catAll.indeterminate = checkedCount > 0 && checkedCount < boxes.length;
+  }
   if(!container) return;
   container.innerHTML = "";
   var newCb = document.getElementById("catFilterNewOnly");
