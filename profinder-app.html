@@ -19,7 +19,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 /* ---------- ヘッダー ---------- */
 .pf-header{
   display:flex;align-items:center;gap:18px;padding:12px 24px;
-  background:#151d38;
+  background:#1c2748;
   border-bottom:1px solid rgba(255,255,255,.1);
   flex-wrap:wrap;
 }
@@ -71,10 +71,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-search-csv-btn:hover{color:var(--accent-dark);background:rgba(var(--accent-rgb),.08)}
 .pf-search-csv-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 .pf-header-icon-btn{
-  flex:none;width:40px;height:40px;border-radius:10px;border:0;background:rgba(255,255,255,.9);color:var(--navy);
+  flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:var(--muted);
   display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;
 }
-.pf-header-icon-btn:hover{background:#fff}
+.pf-header-icon-btn:hover{border-color:var(--accent);color:var(--accent);background:#fff}
 .pf-header-icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
 .pf-help-tip{
   display:none;position:absolute;top:48px;right:0;width:220px;background:#fff;border:1px solid var(--line);border-radius:12px;
