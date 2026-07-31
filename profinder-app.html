@@ -420,6 +420,17 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .catfilter-cat-toggle .pf-th-chevron{transition:transform .15s ease}
 .catfilter-cat-toggle.open .pf-th-chevron{transform:rotate(90deg)}
 .catfilter-list.hidden{display:none}
+
+.pf-filter-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pf-filter-chip{
+  display:flex;align-items:center;gap:6px;padding:5px 10px 5px 12px;border-radius:999px;
+  font-family:var(--font-head);font-weight:700;font-size:11.5px;white-space:nowrap;
+}
+.pf-filter-chip.new{background:var(--danger);color:#fff}
+.pf-filter-chip.excl{background:#fbeee0;color:#a8650a;border:1px solid #eccb8d}
+.pf-filter-chip-x{width:15px;height:15px;flex:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.3)}
+.pf-filter-chip.excl .pf-filter-chip-x{background:rgba(168,101,10,.15)}
+.pf-filter-chip-x svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:3}
 .catfilter-new-badge{background:var(--danger);color:#fff;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.03em}
 .catfilter-list{border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .catfilter-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);cursor:pointer}
@@ -500,26 +511,26 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .csvup-row-btn:hover{opacity:.85}
 
 .pf-id-register-btn{
-  height:48px;padding:0 16px;border-radius:10px;border:0;background:linear-gradient(100deg,var(--accent),var(--accent-dark));
-  color:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:7px;
-  cursor:pointer;box-shadow:0 3px 10px rgba(var(--accent-rgb),.3);transition:.15s ease;
+  height:48px;padding:0 16px;border-radius:10px;border:1.5px solid rgba(var(--accent-rgb),.35);background:rgba(var(--accent-rgb),.06);
+  color:var(--accent-dark);font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:7px;
+  cursor:pointer;transition:.15s ease;
 }
-.pf-id-register-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--accent-rgb),.4)}
+.pf-id-register-btn:hover{background:rgba(var(--accent-rgb),.12);border-color:var(--accent)}
 
 .pf-mining-wrap{position:relative}
 .pf-mining-chip{
   align-self:flex-start;
-  background:linear-gradient(100deg,#e2531f,#c62a44);color:#fff;font-family:var(--font-head);
+  background:linear-gradient(100deg,var(--danger),#c62a44);color:#fff;font-family:var(--font-head);
   font-size:8.5px;font-weight:800;padding:1px 8px;border-radius:999px;white-space:nowrap;
 }
 .pf-mining-btn{
-  height:48px;padding:5px 18px;border-radius:10px;background:linear-gradient(100deg,#4a3418,#2b1e0c);color:#f0d693;
-  font-family:var(--font-head);font-weight:800;font-size:12.5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  cursor:pointer;border:1px solid #6b4d20;box-shadow:0 3px 10px rgba(58,42,18,.35);transition:.15s ease;
+  height:56px;padding:6px 22px;border-radius:12px;background:linear-gradient(100deg,var(--navy),#2a3a6b 45%,var(--accent-dark));color:var(--amber);
+  font-family:var(--font-head);font-weight:800;font-size:13.5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  cursor:pointer;border:1px solid rgba(246,168,33,.4);box-shadow:0 5px 16px rgba(21,34,56,.4);transition:.15s ease;
 }
-.pf-mining-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(58,42,18,.45)}
+.pf-mining-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(21,34,56,.5)}
 .pf-mining-popup{
-  position:absolute;top:56px;left:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
+  position:absolute;top:64px;left:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
   padding:18px;box-shadow:0 14px 34px rgba(0,0,0,.14);z-index:20;
 }
 .pf-mining-popup .head{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:#5c3d00;font-size:14.5px;margin-bottom:14px}
@@ -595,7 +606,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 <div class="modal-overlay" id="catFilterModal" onclick="if(event.target===this)closeCatFilterModal()">
   <div class="modal-box catfilter-modal-box">
     <div class="modal-head">
-      <h3>▽ 扱うカテゴリの設定</h3>
+      <h3>▽ フィルター設定</h3>
       <button type="button" class="modal-close" onclick="closeCatFilterModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
     <div class="catfilter-body">
@@ -1104,7 +1115,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
           <button type="button" class="pf-mining-more">もっとセラーを取得する</button>
         </div>
       </div>
-      <button type="button" class="pf-id-register-btn">🪪 セラーID登録</button>
+      <button type="button" class="pf-id-register-btn" onclick="pfFocusSellerIdSearch()">🪪 セラーID登録</button>
       <div class="pf-outline-pill amber pf-toggle-pill" id="pfReqCategoryPill">
         <button type="button" class="pf-req-cat-label" onclick="openReqCategoryModal()">🔖 要申請カテゴリ</button>
         <button type="button" class="pf-switch-wrap" id="pfReqCategoryBadge" aria-pressed="true">
@@ -1118,6 +1129,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
     <div class="pf-card">
       <div style="margin-bottom:14px"><button type="button" class="pf-research-btn">🔍 全セラーでリサーチ</button></div>
+      <div class="pf-filter-chips" id="pfFilterChips"></div>
 
       <div class="pf-table-wrap" style="overflow-x:auto">
         <table class="pf-seller-table">
@@ -1210,6 +1222,7 @@ function closeCatFilterModal(){
 }
 function catFilterSelectAll(){
   document.querySelectorAll("#catFilterList input[type=checkbox]").forEach(function(cb){ cb.checked = true; });
+  pfUpdateFilterChips();
 }
 function pfToggleCatFilterList(){
   var list = document.getElementById("catFilterList");
@@ -1217,6 +1230,36 @@ function pfToggleCatFilterList(){
   var open = list.classList.toggle("hidden") === false;
   toggle.classList.toggle("open", open);
 }
+/* ---- セラー一覧の上に、有効なフィルターをチップで表示 ---- */
+function pfUpdateFilterChips(){
+  var container = document.getElementById("pfFilterChips");
+  if(!container) return;
+  container.innerHTML = "";
+  var newCb = document.getElementById("catFilterNewOnly");
+  if(newCb && newCb.checked){
+    var newChip = document.createElement("span");
+    newChip.className = "pf-filter-chip new";
+    newChip.innerHTML = 'NEW（24時間以内のみ表示）<span class="pf-filter-chip-x"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>';
+    newChip.querySelector(".pf-filter-chip-x").addEventListener("click", function(){ newCb.checked = false; pfUpdateFilterChips(); });
+    container.appendChild(newChip);
+  }
+  document.querySelectorAll("#catFilterList .catfilter-row").forEach(function(row){
+    var cb = row.querySelector('input[type="checkbox"]');
+    if(cb && !cb.checked){
+      var name = row.querySelector(".cat-tag").textContent;
+      var chip = document.createElement("span");
+      chip.className = "pf-filter-chip excl";
+      chip.innerHTML = '除外中：'+name+'<span class="pf-filter-chip-x"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>';
+      chip.querySelector(".pf-filter-chip-x").addEventListener("click", function(){ cb.checked = true; pfUpdateFilterChips(); });
+      container.appendChild(chip);
+    }
+  });
+}
+var pfNewOnlyCb = document.getElementById("catFilterNewOnly");
+if(pfNewOnlyCb) pfNewOnlyCb.addEventListener("change", pfUpdateFilterChips);
+document.querySelectorAll("#catFilterList input[type=\"checkbox\"]").forEach(function(cb){
+  cb.addEventListener("change", pfUpdateFilterChips);
+});
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeCatFilterModal(); });
 
 /* ---- 表示設定モーダル ---- */
@@ -1529,6 +1572,19 @@ function pfCsvRegisterSeller(sellerId){
   var sellerTab = document.querySelector('.pf-tab[data-tab="seller"]');
   if(sellerTab) sellerTab.click();
   closeCsvUploadModal();
+}
+/* ---- セラーID登録：検索バーをセラーID入力モードにする ---- */
+function pfFocusSellerIdSearch(){
+  var searchInput = document.querySelector(".pf-search");
+  if(!searchInput) return;
+  var original = searchInput.placeholder;
+  searchInput.placeholder = "セラーIDを入力してEnter";
+  searchInput.value = "";
+  searchInput.focus();
+  searchInput.addEventListener("blur", function restore(){
+    searchInput.placeholder = original;
+    searchInput.removeEventListener("blur", restore);
+  });
 }
 var csvBtn = document.getElementById("pfCsvUploadBtn");
 var csvInput = document.getElementById("pfCsvFileInput");
