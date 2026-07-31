@@ -118,7 +118,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   color:#fff;overflow:hidden;cursor:pointer;transition:transform .15s ease;
 }
 .pf-promo-card:hover{transform:translateY(-1px)}
-.promo-badge{position:absolute;top:6px;right:10px;left:auto;font-size:9px;font-weight:800;padding:1px 7px;border-radius:999px;font-family:var(--font-head)}
+.pf-promo-card.has-badge{justify-content:flex-end;padding-bottom:8px}
+.promo-badge{position:absolute;top:6px;left:10px;right:auto;font-size:9px;font-weight:800;padding:1px 7px;border-radius:999px;font-family:var(--font-head)}
 .badge-popular{background:#fde68a;color:#7a5b00}
 .badge-new{background:#ff8fc8;color:#7a0044}
 .badge-eye{background:#ffe08a;color:#6b4a00;white-space:nowrap}
@@ -134,14 +135,15 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .promo-eye{flex:.7;min-width:130px;background:linear-gradient(135deg,#5f85d6,#3f5fa8);opacity:.92}
 .promo-eye .promo-title{font-size:13px}
 
-.pf-stack-col{display:flex;flex-direction:column;gap:4px;min-width:130px;height:56px}
+.pf-stack-col{display:flex;flex-direction:column;gap:4px;min-width:150px;height:auto}
+.qb-filter{background:#fff;color:var(--muted);border-color:var(--line)}
 .pf-stack-col .pf-quick-btn{flex:1;height:auto}
 
 .pf-siire-top-divider{width:1px;background:var(--line-strong);align-self:stretch;flex:none}
-.pf-cart-box{width:52px;height:56px;flex:none;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.pf-cart-box{width:36px;height:56px;flex:none;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center}
 .pf-cart-box svg{width:18px;height:18px;stroke:var(--faint);fill:none;stroke-width:1.8}
 .pf-goal-card{
-  height:56px;flex:2.4;min-width:340px;background:#12182a;border-radius:12px;color:#fff;padding:0 18px;
+  height:56px;flex:4.2;min-width:340px;background:#12182a;border-radius:12px;color:#fff;padding:0 18px;
   display:flex;align-items:center;gap:22px;flex-wrap:nowrap;overflow:hidden;
 }
 .pf-goal-head{display:flex;flex-direction:column;gap:2px}
@@ -424,7 +426,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         </div>
       </div>
 
-      <div class="pf-promo-card promo-ai">
+      <div class="pf-promo-card promo-ai has-badge">
         <span class="promo-badge badge-new">NEW</span>
         <div class="promo-row">
           <span class="promo-icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"></rect><circle cx="9" cy="14" r="1.4"></circle><circle cx="15" cy="14" r="1.4"></circle><path d="M12 8V5"></path><circle cx="12" cy="4" r="1.2"></circle></svg></span>
@@ -433,7 +435,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         </div>
       </div>
 
-      <div class="pf-promo-card promo-eye">
+      <div class="pf-promo-card promo-eye has-badge">
         <span class="promo-badge badge-eye">仕入れに迷ったら</span>
         <div class="promo-row">
           <span class="promo-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
@@ -445,6 +447,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       <div class="pf-stack-col">
         <button type="button" class="pf-quick-btn qb-refresh"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"></path></svg>在庫を最新にする</button>
         <button type="button" class="pf-quick-btn qb-csv"><svg viewBox="0 0 24 24"><path d="M12 3v12"></path><polyline points="7 10 12 15 17 10"></polyline><path d="M4 20h16"></path></svg>CSV</button>
+        <button type="button" class="pf-quick-btn qb-filter" title="フィルター"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z"></path></svg>フィルター</button>
       </div>
 
       <div class="pf-siire-top-divider"></div>
@@ -465,7 +468,6 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         </div>
       </div>
 
-      <div class="pf-cart-box" title="フィルター"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z"></path></svg></div>
     </div>
 
     <div class="pf-ship-notice" id="pfShipNotice">
