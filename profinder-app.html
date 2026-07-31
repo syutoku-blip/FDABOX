@@ -593,14 +593,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
     <div class="pf-table-wrap">
       <div class="pf-siire-row head">
-        <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event)">利益を増やせる<br>余地</span></div>
+        <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'gain')">利益を増やせる<br>余地</span></div>
         <div class="pf-th-main">仕入
           <button type="button" class="pf-hide-checked-btn" id="pfHideCheckedBtn" aria-pressed="false" title="チェック済みの商品を非表示にする">
             <svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
           </button>
         </div>
         <div class="pf-th-center">商品</div>
-        <div class="pf-th-main">推奨仕入</div>
+        <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'recommend')">推奨仕入</span></div>
         <div class="pf-th-sub">在庫切れまで<span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub">販売額$<span class="sub-label">現在の米ドル価格 ▾</span></div>
         <div class="pf-th-sub">想定利益額<span class="sub-label">日本Amazon仕入 ▾</span></div>
@@ -840,13 +840,17 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 </div>
 
 <script>
-/* ---- 「利益を増やせる余地」：点線の下線で右クリックすると説明を表示 ---- */
-var PF_COL_INFO_TEXT = "利益を増やせる余地＝推奨どおり（安全に持てる最長の日数分＝推奨仕入の推奨段）仕入れて売れば増やせる利益（円）＋バリエ機会損失。推奨仕入の日数と連動します。基準の選択にも連動。";
-function showColInfo(evt){
+/* ---- 列見出し：点線の下線で右クリックすると説明を表示 ---- */
+var PF_COL_INFO = {
+  gain: "利益を増やせる余地＝推奨どおり（安全に持てる最長の日数分＝推奨仕入の推奨段）仕入れて売れば増やせる利益（円）＋バリエ機会損失。推奨仕入の日数と連動します。基準の選択にも連動。",
+  recommend: "推奨仕入れ数＝目標在庫－（在庫＋移動中＋発送前）。今いくつ仕入れるべきか。下の（在庫◯）は現在庫合計で、クリックすると内訳モーダルが開きます。空欄＝アイコンで理由（在庫足りている/在庫過多/仕入不可）を表示。"
+};
+function showColInfo(evt, key){
   var popup = document.getElementById("pfColInfoPopup");
-  if(!popup) return;
+  var text = PF_COL_INFO[key];
+  if(!popup || !text) return;
   evt.preventDefault();
-  popup.textContent = PF_COL_INFO_TEXT;
+  popup.textContent = text;
   var margin = 12;
   var x = evt.clientX + 10, y = evt.clientY + 10;
   var maxX = window.innerWidth - 280 - margin;
