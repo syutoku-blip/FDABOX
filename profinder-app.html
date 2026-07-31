@@ -76,12 +76,6 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 .pf-header-icon-btn:hover{border-color:var(--accent);color:var(--accent);background:#fff}
 .pf-header-icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
-.pf-help-tip{
-  display:none;position:absolute;top:48px;right:0;width:220px;background:#fff;border:1px solid var(--line);border-radius:12px;
-  padding:12px 14px;font-size:12px;color:var(--text);line-height:1.7;box-shadow:var(--shadow-md);z-index:30;text-align:left;
-}
-.pf-help-tip.visible{display:block}
-
 /* ---------- コンテンツ ---------- */
 .pf-body{padding:24px 24px 120px}
 .pf-panel{display:none}
@@ -493,6 +487,22 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .csvup-id-submit svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
 .csvup-or-divider{display:flex;align-items:center;gap:10px;margin:14px 0;font-size:11px;color:var(--faint)}
 .csvup-or-divider:before,.csvup-or-divider:after{content:"";flex:1;height:1px;background:var(--line)}
+
+.guide-modal-box{width:min(620px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 88px);align-self:flex-start;margin-top:32px}
+.guide-tabs{display:flex;gap:6px;padding:0 22px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;flex:none}
+.guide-tab{height:34px;padding:0 14px;border-radius:9px;border:1px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--muted);cursor:pointer;transition:.15s ease}
+.guide-tab:hover{border-color:var(--accent);color:var(--accent-dark)}
+.guide-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.guide-body{padding:20px 22px 24px;overflow-y:auto}
+.guide-panel{display:none}
+.guide-panel.active{display:block}
+.guide-panel h4{font-family:var(--font-head);font-weight:800;font-size:15px;color:var(--navy);margin-bottom:12px}
+.guide-item{font-size:13px;color:var(--text);line-height:1.8;margin-bottom:10px;padding-left:16px;position:relative}
+.guide-item:before{content:"・";position:absolute;left:0}
+.guide-sub-title{font-family:var(--font-head);font-weight:800;font-size:13px;color:var(--navy);margin:18px 0 10px}
+.guide-callout{background:var(--panel2);border-radius:12px;padding:14px 16px;margin-top:10px}
+.guide-callout-label{font-family:var(--font-head);font-weight:800;font-size:11px;color:var(--accent-dark);margin-bottom:8px;letter-spacing:.03em}
+.guide-link{color:var(--accent-dark);font-weight:700;cursor:pointer;text-decoration:underline;font-size:12.5px;background:none;border:0;padding:0;font-family:inherit;margin-top:10px;display:inline-block}
 .csvup-example code{background:var(--panel2);border-radius:4px;padding:1px 5px;font-family:var(--font-mono)}
 .csvup-results{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
 .csvup-results-head{font-family:var(--font-head);font-weight:800;font-size:13px;color:var(--navy);margin-bottom:10px}
@@ -800,6 +810,50 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 </div>
 <input type="file" id="pfSellerCsvInput" accept=".csv" style="display:none">
 
+<div class="modal-overlay" id="guideModal" onclick="if(event.target===this)closeGuideModal()">
+  <div class="modal-box guide-modal-box">
+    <div class="modal-head">
+      <h3>📘 profinderガイド</h3>
+      <button type="button" class="modal-close" onclick="closeGuideModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="guide-tabs">
+      <button type="button" class="guide-tab active" data-guide-tab="basic" onclick="pfSwitchGuideTab('basic')">①基本操作</button>
+      <button type="button" class="guide-tab" data-guide-tab="action" onclick="pfSwitchGuideTab('action')">②アクションボタン</button>
+      <button type="button" class="guide-tab" data-guide-tab="siire" onclick="pfSwitchGuideTab('siire')">③仕入れページ</button>
+      <button type="button" class="guide-tab" data-guide-tab="seller" onclick="pfSwitchGuideTab('seller')">④セラーページ</button>
+    </div>
+    <div class="guide-body">
+      <div class="guide-panel active" data-guide-panel="basic">
+        <h4>①基本操作</h4>
+        <div class="guide-item">点線の下線（‑‑‑‑‑）が付いている項目は、右クリックするとその項目の説明が確認できます。</div>
+        <div class="guide-item">ⓘマークが付いている項目は、ⓘを押すと詳細設定ができます。</div>
+      </div>
+      <div class="guide-panel" data-guide-panel="action">
+        <h4>②アクションボタン</h4>
+        <div class="guide-item"><b>ホーム：</b>各アクションに合わせて、仕入れリスト・セラーページのうち、やりたいことに対応したページや絞り込み状態を瞬時に呼び出します。</div>
+        <div class="guide-item"><b>仕入れリストページ：</b>ページ内のどこかで右クリックすると、ホームと同じアクションボタンをショートカットとして呼び出せます。</div>
+      </div>
+      <div class="guide-panel" data-guide-panel="siire">
+        <h4>③仕入れページ</h4>
+        <div class="guide-item">このページに表示されるASINは、自分が扱ったことのある商品（現在販売中の商品、過去に扱ったことのある商品）です。</div>
+        <div class="guide-callout">
+          <div class="guide-callout-label">ポイント</div>
+          <div class="guide-item">「新規ASIN取得」のアクションボタンを押すと、セラーリストの中から自分がまだ扱ったことがなく、かつ利益を見込める商品のみを取得します。</div>
+          <button type="button" class="guide-link" onclick="pfSwitchGuideTab('seller')">セラーリストについてはこちら</button>
+        </div>
+      </div>
+      <div class="guide-panel" data-guide-panel="seller">
+        <h4>④セラーページ</h4>
+        <div class="guide-item">このページに表示されるセラーは、自分がリサーチしたことのあるセラーです。</div>
+        <div class="guide-callout">
+          <div class="guide-callout-label">ポイント</div>
+          <div class="guide-item">新規セラーを取得する場合は「セラーマイニング」を使うことで、優良なセラーのみを取得できます。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <header class="pf-header">
   <img class="pf-logo-img" src="profinderlogo.png" alt="PROFiNDER">
 
@@ -819,9 +873,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       <input type="file" id="pfCsvFileInput" accept=".csv" style="display:none">
       <button type="button" class="pf-search-btn" aria-label="検索"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" y1="20" x2="15.5" y2="15.5"></line></svg></button>
     </div>
-    <button type="button" class="pf-header-icon-btn" id="pfHelpBtn" aria-label="使い方ガイド" title="使い方ガイド">
+    <button type="button" class="pf-header-icon-btn" id="pfHelpBtn" aria-label="使い方ガイド" title="使い方ガイド" onclick="openGuideModal()">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.2 9a2.8 2.8 0 015.4 1c0 1.8-2.6 2.2-2.6 4"></path><circle cx="12" cy="16.6" r="0.1" fill="currentColor" stroke-width="1.6"></circle></svg>
-      <div class="pf-help-tip" id="pfHelpTip">ご不明な点がございましたら、画面右上の「問い合わせ」からお気軽にご連絡ください。</div>
     </button>
     <button type="button" class="pf-header-icon-btn" id="pfSettingsBtn" aria-label="設定" title="設定" onclick="openDispSettingsModal()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 00-.14-1.4l1.8-1.5-1.7-2.9-2.2.6a7 7 0 00-2.4-1.4L14 3h-4l-.36 2.4a7 7 0 00-2.4 1.4l-2.2-.6-1.7 2.9 1.8 1.5A7 7 0 005 12c0 .48.05.94.14 1.4l-1.8 1.5 1.7 2.9 2.2-.6a7 7 0 002.4 1.4L10 21h4l.36-2.4a7 7 0 002.4-1.4l2.2.6 1.7-2.9-1.8-1.5c.09-.46.14-.92.14-1.4z"></path></svg></button>
   </div>
@@ -1520,17 +1573,24 @@ if(shipNoticeLaterBtn){
   });
 }
 
-/* ---- ヘルプ(?)アイコンのツールチップ ---- */
-var pfHelpBtn = document.getElementById("pfHelpBtn");
-if(pfHelpBtn){
-  pfHelpBtn.addEventListener("click", function(e){
-    e.stopPropagation();
-    document.getElementById("pfHelpTip").classList.toggle("visible");
-  });
-  document.addEventListener("click", function(){
-    document.getElementById("pfHelpTip").classList.remove("visible");
-  });
+/* ---- profinderガイド モーダル ---- */
+function openGuideModal(){
+  var modal = document.getElementById("guideModal");
+  if(!modal) return;
+  modal.classList.add("visible");
+  document.body.style.overflow = "hidden";
 }
+function closeGuideModal(){
+  var modal = document.getElementById("guideModal");
+  if(!modal) return;
+  modal.classList.remove("visible");
+  document.body.style.overflow = "";
+}
+function pfSwitchGuideTab(key){
+  document.querySelectorAll(".guide-tab").forEach(function(t){ t.classList.toggle("active", t.dataset.guideTab === key); });
+  document.querySelectorAll(".guide-panel").forEach(function(p){ p.classList.toggle("active", p.dataset.guidePanel === key); });
+}
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeGuideModal(); });
 
 /* ---- CSVで一括検索 ---- */
 function openCsvUploadModal(){
