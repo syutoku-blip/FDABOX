@@ -231,6 +231,12 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-hide-checked-btn.active{color:var(--accent);background:rgba(var(--accent-rgb),.14)}
 .pf-row-hidden{display:none}
 .pf-th-center{text-align:center}
+.pf-th-hint{border-bottom:2px dashed var(--accent);cursor:context-menu}
+.pf-col-info-popup{
+  position:fixed;z-index:3000;width:280px;background:#fff;border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow-md);padding:14px 16px;font-size:12.5px;color:var(--text);line-height:1.8;
+}
+.pf-col-info-popup.hidden{display:none}
 .pf-check-cell{display:flex;align-items:center;justify-content:center}
 .pf-siire-row input[type="checkbox"]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
 .pf-prod-cell{display:flex;gap:10px;text-align:left;justify-content:center}
@@ -403,6 +409,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 </head>
 <body>
 
+<div class="pf-col-info-popup hidden" id="pfColInfoPopup"></div>
+
 <header class="pf-header">
   <img class="pf-logo-img" src="profinderlogo.png" alt="PROFiNDER">
 
@@ -510,7 +518,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
     <div class="pf-table-wrap">
       <div class="pf-siire-row head">
-        <div class="pf-th-main">利益を増やせる<br>余地</div>
+        <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event)">利益を増やせる<br>余地</span></div>
         <div class="pf-th-main">仕入
           <button type="button" class="pf-hide-checked-btn" id="pfHideCheckedBtn" aria-pressed="false" title="チェック済みの商品を非表示にする">
             <svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -754,6 +762,31 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 </div>
 
 <script>
+/* ---- 「利益を増やせる余地」：点線の下線で右クリックすると説明を表示 ---- */
+var PF_COL_INFO_TEXT = "利益を増やせる余地＝推奨どおり（安全に持てる最長の日数分＝推奨仕入の推奨段）仕入れて売れば増やせる利益（円）＋バリエ機会損失。推奨仕入の日数と連動します。基準の選択にも連動。";
+function showColInfo(evt){
+  var popup = document.getElementById("pfColInfoPopup");
+  if(!popup) return;
+  evt.preventDefault();
+  popup.textContent = PF_COL_INFO_TEXT;
+  var margin = 12;
+  var x = evt.clientX + 10, y = evt.clientY + 10;
+  var maxX = window.innerWidth - 280 - margin;
+  var maxY = window.innerHeight - 140 - margin;
+  if(x > maxX) x = Math.max(margin, maxX);
+  if(y > maxY) y = evt.clientY - 10 - 140;
+  popup.style.left = x + "px";
+  popup.style.top = y + "px";
+  popup.classList.remove("hidden");
+}
+function hideColInfo(){
+  var popup = document.getElementById("pfColInfoPopup");
+  if(popup) popup.classList.add("hidden");
+}
+document.addEventListener("click", hideColInfo);
+document.addEventListener("scroll", hideColInfo, true);
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") hideColInfo(); });
+
 /* ---- 仕入リスト：チェック済みの商品を非表示にする ---- */
 var PF_EYE_ICON = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle>';
 var PF_EYE_OFF_ICON = '<path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a21.8 21.8 0 015.06-5.94"></path><path d="M9.9 4.24A10.94 10.94 0 0112 4c7 0 11 7 11 7a21.8 21.8 0 01-2.16 3.19"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
