@@ -931,9 +931,9 @@ html[data-sidebar="collapsed"] .sidebar-brand-logo{width:36px;border-radius:10px
 }
 .sidebar-hide-btn:hover{color:var(--accent);border-color:var(--accent)}
 .sidebar-hide-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4}
-html[data-sidebar="collapsed"] .sidebar-toggle-group{position:static;margin:0 auto}
+html[data-sidebar="collapsed"] .sidebar-toggle-group{position:static;top:auto;right:auto;left:auto;width:fit-content;margin:0 auto}
 html[data-sidebar="collapsed"] .sidebar-hide-btn{display:flex}
-html[data-sidebar="collapsed"] .sidebar-hide-btn svg{transform:rotate(180deg)}
+html[data-sidebar="collapsed"] .sidebar-hide-btn svg{transform:none}
 
 /* ---- サイドバーを完全に隠す(3段階目) ---- */
 html[data-sidebar="hidden"] .sidebar{display:none}
