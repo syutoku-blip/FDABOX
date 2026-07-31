@@ -1209,22 +1209,6 @@ html[data-theme="dark"] .pf-scroll-arrow-right{background:linear-gradient(270deg
 
 .pf-table-toolbar{display:flex;justify-content:flex-end;padding:12px 16px;border-bottom:1px solid var(--line)}
 
-/* ---------- 右クリック可能な場所：ホバー時だけ文字の横に小さい「i」アイコンがフェードイン ---------- */
-[oncontextmenu]{
-  cursor:pointer;
-}
-[oncontextmenu]::after{
-  content:"";display:inline-block;vertical-align:middle;margin-left:6px;width:14px;height:14px;border-radius:50%;flex:none;
-  background-color:var(--faint);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='2.3' r='1' fill='white'/%3E%3Crect x='4.2' y='4.2' width='1.6' height='4.2' rx='.8' fill='white'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:center;
-  opacity:0;transition:opacity .15s ease;
-}
-[oncontextmenu]:hover::after{opacity:1}
-/* 折りたたみ時のサイドバーリンクは、ホバーしていない間はアイコン用の ::after を
-   レイアウトから完全に外す（幅を持たせない）ことで中央揃えが崩れないようにする */
-html[data-sidebar="collapsed"] .sidebar-link::after{display:none}
-
 /* ==========================================================================
    ASINリスト：アクションメニュー＋カート状況（半分幅・右寄せ）
    ========================================================================== */
