@@ -90,14 +90,13 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-stat-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:16px;margin-bottom:20px}
 @media(max-width:1400px){.pf-stat-grid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:900px){.pf-stat-grid{grid-template-columns:repeat(2,1fr)}}
-.pf-discover-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-.pf-discover-btn{
-  height:44px;padding:0 18px;border-radius:10px;border:0;background:linear-gradient(100deg,var(--accent),var(--accent-dark));
-  color:#fff;font-family:var(--font-head);font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;
-  cursor:pointer;box-shadow:0 3px 10px rgba(var(--accent-rgb),.3);transition:.15s ease;
+.pf-discover-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.pf-discover-card{
+  flex:1;min-width:220px;border-radius:18px;padding:22px 18px;text-align:center;border:1px solid transparent;
+  cursor:pointer;font-family:inherit;transition:.15s ease;
 }
-.pf-discover-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
-.pf-discover-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--accent-rgb),.4)}
+.pf-discover-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.pf-discover-card-label{font-family:var(--font-head);font-weight:800;font-size:15px}
 
 .pf-stat-card{border-radius:18px;padding:22px 18px;text-align:center;border:1px solid transparent}
 .pf-stat-icon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;color:#fff}
@@ -486,6 +485,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .csvup-dz-btn{height:38px;padding:0 18px;border-radius:9px;border:0;background:var(--accent);color:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;cursor:pointer}
 .csvup-dz-btn:hover{background:var(--accent-dark)}
 .csvup-example{font-size:11.5px;color:var(--faint);line-height:1.7;margin-top:12px}
+.csvup-input-row{display:flex;gap:8px;margin-bottom:16px}
+.csvup-id-input{flex:1;height:44px;border-radius:10px;border:1px solid var(--line-strong);padding:0 14px;font-family:var(--font-mono);font-size:13px;color:var(--text)}
+.csvup-id-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(var(--accent-rgb),.14)}
+.csvup-id-submit{width:44px;height:44px;flex:none;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s ease}
+.csvup-id-submit:hover{background:var(--accent-dark)}
+.csvup-id-submit svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
+.csvup-or-divider{display:flex;align-items:center;gap:10px;margin:14px 0;font-size:11px;color:var(--faint)}
+.csvup-or-divider:before,.csvup-or-divider:after{content:"";flex:1;height:1px;background:var(--line)}
 .csvup-example code{background:var(--panel2);border-radius:4px;padding:1px 5px;font-family:var(--font-mono)}
 .csvup-results{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
 .csvup-results-head{font-family:var(--font-head);font-weight:800;font-size:13px;color:var(--navy);margin-bottom:10px}
@@ -635,7 +642,6 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       <h3>⚙ 表示設定</h3>
       <button type="button" class="modal-close" onclick="closeDispSettingsModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
-    <div class="dispset-desc">表示に関する設定です。関税など利益計算の前提は、仕入リストの「<b>想定利益額</b>」の設定から変更できます。</div>
     <div class="dispset-body">
       <div class="dispset-row">
         <div class="dispset-row-text">
@@ -749,14 +755,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       <button type="button" class="modal-close" onclick="closeCsvUploadModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
     <div class="csvup-body">
-      <div class="csvup-desc">ASIN・セラーIDを一括で検索できます。<b>A列（1列目）に1行につき1つ</b>ずつ記載したCSVファイルをご用意ください。</div>
+      <div class="csvup-desc">ASIN・セラーIDを一括で検索できます</div>
       <div class="csvup-dropzone" id="csvDropzone">
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
         <div class="csvup-dz-title">ここにCSVファイルをドラッグ＆ドロップ</div>
         <div class="csvup-dz-sub">または</div>
         <button type="button" class="csvup-dz-btn" onclick="document.getElementById('pfCsvFileInput').click()">ファイルを選択</button>
       </div>
-      <div class="csvup-example">例：A列に <code>B0DEMO0001</code>（ASIN）や <code>A1B2C3D4E5F6G7</code>（セラーID）のように1つずつ記載してください。</div>
+      <div class="csvup-example">A列に <code>B0DEMO0001</code>（ASIN）や <code>A1B2C3D4E5F6G7</code>（セラーID）のように1行につき1つずつ記載してください。</div>
       <div class="csvup-results hidden" id="csvResults">
         <div class="csvup-results-head"><span id="csvResultCount">0</span>件を読み込みました</div>
         <div class="csvup-results-list" id="csvResultList"></div>
@@ -764,6 +770,35 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
     </div>
   </div>
 </div>
+
+<div class="modal-overlay" id="sellerRegisterModal" onclick="if(event.target===this)closeSellerRegisterModal()">
+  <div class="modal-box csvup-modal-box">
+    <div class="modal-head">
+      <h3>🪪 セラーID登録</h3>
+      <button type="button" class="modal-close" onclick="closeSellerRegisterModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="csvup-body">
+      <div class="csvup-desc">セラーIDを一括で登録できます</div>
+      <div class="csvup-input-row">
+        <input type="text" class="csvup-id-input" id="sellerIdInput" placeholder="セラーIDを入力してEnter">
+        <button type="button" class="csvup-id-submit" onclick="pfSellerIdSubmit()" aria-label="登録"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><line x1="20" y1="20" x2="15.5" y2="15.5"></line></svg></button>
+      </div>
+      <div class="csvup-or-divider">または</div>
+      <div class="csvup-dropzone" id="sellerDropzone">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <div class="csvup-dz-title">ここにCSVファイルをドラッグ＆ドロップ</div>
+        <div class="csvup-dz-sub">または</div>
+        <button type="button" class="csvup-dz-btn" onclick="document.getElementById('pfSellerCsvInput').click()">ファイルを選択</button>
+      </div>
+      <div class="csvup-example">A列に <code>A1B2C3D4E5F6G7</code> のように、セラーIDを1行につき1つずつ記載してください。</div>
+      <div class="csvup-results hidden" id="sellerResults">
+        <div class="csvup-results-head"><span id="sellerResultCount">0</span>件を読み込みました</div>
+        <div class="csvup-results-list" id="sellerResultList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="file" id="pfSellerCsvInput" accept=".csv" style="display:none">
 
 <header class="pf-header">
   <img class="pf-logo-img" src="profinderlogo.png" alt="PROFiNDER">
@@ -797,8 +832,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   <section class="pf-panel active" id="panel-home">
     <div class="pf-stat-grid" id="statGrid"></div>
     <div class="pf-discover-actions">
-      <button type="button" class="pf-discover-btn" onclick="document.querySelector('.pf-tab[data-tab=\'siire\']').click()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>新規ASINを発掘</button>
-      <button type="button" class="pf-discover-btn" onclick="document.querySelector('.pf-tab[data-tab=\'seller\']').click();setTimeout(function(){document.getElementById('miningBtn').click()},0)"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>新規セラーを発掘（セラーマイニング）</button>
+      <button type="button" class="pf-discover-card tone-blue" onclick="document.querySelector('.pf-tab[data-tab=\'siire\']').click()">
+        <span class="pf-stat-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+        <span class="pf-discover-card-label">新規ASINを発掘</span>
+      </button>
+      <button type="button" class="pf-discover-card tone-purple" onclick="document.querySelector('.pf-tab[data-tab=\'seller\']').click();setTimeout(function(){document.getElementById('miningBtn').click()},0)">
+        <span class="pf-stat-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+        <span class="pf-discover-card-label">新規セラーを発掘（セラーマイニング）</span>
+      </button>
     </div>
     <div class="pf-placeholder">
       <svg viewBox="0 0 24 24"><rect x="4" y="13" width="4" height="7" rx="1"></rect><rect x="10" y="9" width="4" height="11" rx="1"></rect><rect x="16" y="5" width="4" height="15" rx="1"></rect></svg>
@@ -1099,7 +1140,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
           <button type="button" class="pf-mining-more">もっとセラーを取得する</button>
         </div>
       </div>
-      <button type="button" class="pf-id-register-btn" onclick="pfFocusSellerIdSearch()">🪪 セラーID登録</button>
+      <button type="button" class="pf-id-register-btn" onclick="openSellerRegisterModal()">🪪 セラーID登録</button>
       <div class="pf-outline-pill amber pf-toggle-pill" id="pfReqCategoryPill">
         <button type="button" class="pf-req-cat-label" onclick="openReqCategoryModal()">🔖 要申請カテゴリ</button>
         <button type="button" class="pf-switch-wrap" id="pfReqCategoryBadge" aria-pressed="true">
@@ -1558,19 +1599,77 @@ function pfCsvRegisterSeller(sellerId){
   if(sellerTab) sellerTab.click();
   closeCsvUploadModal();
 }
-/* ---- セラーID登録：検索バーをセラーID入力モードにする ---- */
-function pfFocusSellerIdSearch(){
-  var searchInput = document.querySelector(".pf-search");
-  if(!searchInput) return;
-  var original = searchInput.placeholder;
-  searchInput.placeholder = "セラーIDを入力してEnter";
-  searchInput.value = "";
-  searchInput.focus();
-  searchInput.addEventListener("blur", function restore(){
-    searchInput.placeholder = original;
-    searchInput.removeEventListener("blur", restore);
+
+/* ---- セラーID登録モーダル ---- */
+function openSellerRegisterModal(){
+  var modal = document.getElementById("sellerRegisterModal");
+  if(!modal) return;
+  modal.classList.add("visible");
+  document.body.style.overflow = "hidden";
+  document.getElementById("sellerIdInput").focus();
+}
+function closeSellerRegisterModal(){
+  var modal = document.getElementById("sellerRegisterModal");
+  if(!modal) return;
+  modal.classList.remove("visible");
+  document.body.style.overflow = "";
+}
+function pfRenderSellerResults(values){
+  var list = document.getElementById("sellerResultList");
+  var results = document.getElementById("sellerResults");
+  var count = document.getElementById("sellerResultCount");
+  values.forEach(function(v){
+    var row = document.createElement("div");
+    row.className = "csvup-row";
+    row.innerHTML = '<span class="csvup-row-type seller">セラーID</span><span class="csvup-row-val">'+v+'</span><button type="button" class="csvup-row-btn seller" onclick="pfCsvRegisterSeller(\''+v.replace(/'/g,"")+'\')">このセラーIDをセラーリストに登録する</button>';
+    list.appendChild(row);
+  });
+  count.textContent = list.children.length;
+  results.classList.remove("hidden");
+}
+function pfSellerIdSubmit(){
+  var input = document.getElementById("sellerIdInput");
+  var val = input.value.trim();
+  if(!val) return;
+  pfRenderSellerResults([val]);
+  input.value = "";
+}
+var sellerIdInputEl = document.getElementById("sellerIdInput");
+if(sellerIdInputEl){
+  sellerIdInputEl.addEventListener("keydown", function(e){ if(e.key === "Enter") pfSellerIdSubmit(); });
+}
+function pfHandleSellerCsvFile(file){
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    var values = pfParseCsvText(String(reader.result || ""));
+    pfRenderSellerResults(values);
+  };
+  reader.readAsText(file);
+}
+var pfSellerCsvInput = document.getElementById("pfSellerCsvInput");
+if(pfSellerCsvInput){
+  pfSellerCsvInput.addEventListener("change", function(){
+    if(pfSellerCsvInput.files && pfSellerCsvInput.files[0]){
+      pfHandleSellerCsvFile(pfSellerCsvInput.files[0]);
+      pfSellerCsvInput.value = "";
+    }
   });
 }
+var sellerDropzone = document.getElementById("sellerDropzone");
+if(sellerDropzone){
+  ["dragenter","dragover"].forEach(function(evt){
+    sellerDropzone.addEventListener(evt, function(e){ e.preventDefault(); e.stopPropagation(); sellerDropzone.classList.add("dragover"); });
+  });
+  ["dragleave","drop"].forEach(function(evt){
+    sellerDropzone.addEventListener(evt, function(e){ e.preventDefault(); e.stopPropagation(); sellerDropzone.classList.remove("dragover"); });
+  });
+  sellerDropzone.addEventListener("drop", function(e){
+    var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if(file) pfHandleSellerCsvFile(file);
+  });
+}
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeSellerRegisterModal(); });
 var csvBtn = document.getElementById("pfCsvUploadBtn");
 var csvInput = document.getElementById("pfCsvFileInput");
 if(csvBtn && csvInput){
