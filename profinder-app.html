@@ -470,7 +470,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       <div class="pf-cart-box" title="フィルター"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z"></path></svg></div>
     </div>
 
-    <div class="pf-ship-notice">
+    <div class="pf-ship-notice" id="pfShipNotice">
       <span class="ic">🚚</span>
       <div class="txt">
         <div class="main">発送を確認しました（2026/07/10・追跡 1799631142／44個・21kg）</div>
@@ -478,7 +478,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       </div>
       <div class="actions">
         <button type="button" class="pf-notice-btn solid">🚫 箱をクリアする</button>
-        <button type="button" class="pf-notice-btn ghost">あとで</button>
+        <button type="button" class="pf-notice-btn ghost" id="pfShipNoticeLater">あとで</button>
       </div>
     </div>
 
@@ -780,6 +780,14 @@ document.getElementById("sellerTbody").innerHTML = SAMPLE_SELLERS.map(function(s
     + '<td>'+s.total+'</td>'
     + '</tr>';
 }).join("");
+
+/* ---- 発送確認バナー:「あとで」で閉じる ---- */
+var shipNoticeLaterBtn = document.getElementById("pfShipNoticeLater");
+if(shipNoticeLaterBtn){
+  shipNoticeLaterBtn.addEventListener("click", function(){
+    document.getElementById("pfShipNotice").style.display = "none";
+  });
+}
 
 /* ---- CSVで一括検索(デモ: ファイル選択のみ) ---- */
 var csvBtn = document.getElementById("pfCsvUploadBtn");
