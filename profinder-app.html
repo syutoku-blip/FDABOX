@@ -607,11 +607,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         </div>
         <div class="pf-th-center">商品</div>
         <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'recommend')">推奨仕入</span></div>
-        <div class="pf-th-sub" data-colgroup="until">在庫切れまで<span class="pf-th-chevron" onclick="pfToggleColGroup('until')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="price">販売額$<span class="sub-label">現在の米ドル価格 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('price')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="profit">想定利益額<span class="sub-label">日本Amazon仕入 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="rate">想定利益率<span class="sub-label">日本Amazon仕入 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="index">指数<span class="pf-th-chevron" onclick="pfToggleColGroup('index')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="until"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'until')">在庫切れまで</span><span class="pf-th-chevron" onclick="pfToggleColGroup('until')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="price"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'price')">販売額$</span><span class="sub-label">現在の米ドル価格 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('price')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'profit')">想定利益額</span><span class="sub-label">日本Amazon仕入 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="rate"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'rate')">想定利益率</span><span class="sub-label">日本Amazon仕入 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="index"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'index')">指数</span><span class="pf-th-chevron" onclick="pfToggleColGroup('index')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div></div>
       </div>
 
@@ -855,7 +855,12 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 /* ---- 列見出し：点線の下線で右クリックすると説明を表示 ---- */
 var PF_COL_INFO = {
   gain: "利益を増やせる余地＝推奨どおり（安全に持てる最長の日数分＝推奨仕入の推奨段）仕入れて売れば増やせる利益（円）＋バリエ機会損失。推奨仕入の日数と連動します。基準の選択にも連動。",
-  recommend: "推奨仕入れ数＝目標在庫－（在庫＋移動中＋発送前）。今いくつ仕入れるべきか。下の（在庫◯）は現在庫合計で、クリックすると内訳モーダルが開きます。空欄＝アイコンで理由（在庫足りている/在庫過多/仕入不可）を表示。"
+  recommend: "推奨仕入れ数＝目標在庫－（在庫＋移動中＋発送前）。今いくつ仕入れるべきか。下の（在庫◯）は現在庫合計で、クリックすると内訳モーダルが開きます。空欄＝アイコンで理由（在庫足りている/在庫過多/仕入不可）を表示。",
+  until: "在庫切れまで＝今の在庫があと何日で無くなるか（在庫÷日販）。囲みボタンで 日販／Amazon30日販売数／セラー数（出品者数）を開閉。",
+  price: "販売額＝現在の米ドル価格。見出しをクリックで基準（現価／TWAP）を選択。囲みボタンでTWAP／乖離率／価格バンドの上限・下限／バンド指数を開閉。",
+  profit: "想定利益額＝推奨仕入数ぶんの合計利益（返品反映）。見出しをクリックで基準（日本Amazon仕入／過去仕入優先／自分の仕入額）を選択＝額・率・在庫改善指数すべてに連動。囲みボタンで内訳を開閉。",
+  rate: "想定利益率＝利益率－返品率。基準は想定利益額と共通（見出しクリックで同じモーダル）。囲みボタンで 過去仕入率／TWAP率／返品率を開閉。",
+  index: "仕入判断に使っている5つの指数（BPI・PVI・DPI・SRI・DRA）。開くと各指数の列が表示されます。"
 };
 function showColInfo(evt, key){
   var popup = document.getElementById("pfColInfoPopup");
