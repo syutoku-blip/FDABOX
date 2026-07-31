@@ -238,6 +238,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-sf-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(var(--accent-rgb),.14)}
 .pf-sf-search{width:220px}
 .pf-sf-check{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text);cursor:pointer;white-space:nowrap}
+.pf-sf-new{background:#fbeee4;border-radius:999px;padding:6px 12px 6px 8px;font-weight:700}
 .pf-sf-check input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
 .pf-sf-select{height:36px;border-radius:9px;border:1px solid var(--line-strong);padding:0 10px;font-size:12.5px;color:var(--text);background:#fff;cursor:pointer}
 .pf-sf-dropdown-btn{height:36px;padding:0 12px;border-radius:9px;border:1px solid var(--line-strong);background:#fff;font-size:12.5px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:5px}
@@ -545,20 +546,29 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 .pf-id-register-btn:hover{background:rgba(var(--accent-rgb),.12);border-color:var(--accent)}
 
-.pf-mining-wrap{position:relative}
+.pf-mining-wrap{position:relative;padding-top:11px}
 .pf-mining-chip{
-  align-self:flex-start;
+  position:absolute;top:0;left:16px;z-index:1;
   background:linear-gradient(100deg,var(--danger),#c62a44);color:#fff;font-family:var(--font-head);
-  font-size:8.5px;font-weight:800;padding:1px 8px;border-radius:999px;white-space:nowrap;
+  font-size:8.5px;font-weight:800;padding:2px 9px;border-radius:999px;white-space:nowrap;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
 .pf-mining-btn{
-  height:56px;padding:6px 22px;border-radius:12px;background:linear-gradient(100deg,var(--navy),#2a3a6b 45%,var(--accent-dark));color:var(--amber);
-  font-family:var(--font-head);font-weight:800;font-size:13.5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  height:48px;padding:0 20px;border-radius:10px;position:relative;overflow:hidden;
+  background:linear-gradient(100deg,var(--navy),#2a3a6b 45%,var(--accent-dark));color:var(--amber);
+  font-family:var(--font-head);font-weight:800;font-size:13px;display:flex;align-items:center;gap:9px;
   cursor:pointer;border:1px solid rgba(246,168,33,.4);box-shadow:0 5px 16px rgba(21,34,56,.4);transition:.15s ease;
 }
+.pf-mining-btn:before{
+  content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent);
+  transform:skewX(-20deg);animation:pfMiningShine 3.2s ease-in-out infinite;
+}
+@keyframes pfMiningShine{0%{left:-60%}55%,100%{left:130%}}
+.pf-mining-pick{width:17px;height:17px;stroke:var(--amber);fill:none;stroke-width:2;flex:none}
 .pf-mining-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(21,34,56,.5)}
 .pf-mining-popup{
-  position:absolute;top:64px;left:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
+  position:absolute;top:58px;left:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
   padding:18px;box-shadow:0 14px 34px rgba(0,0,0,.14);z-index:20;
 }
 .pf-mining-popup .head{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:#5c3d00;font-size:14.5px;margin-bottom:14px}
@@ -898,7 +908,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
   <section class="pf-panel active" id="panel-home">
     <div class="pf-stat-grid" id="statGrid">
-      <button type="button" class="pf-discover-card tone-blue" onclick="document.querySelector('.pf-tab[data-tab=\'siire\']').click()">
+      <button type="button" class="pf-discover-card tone-blue" onclick="pfDiscoverNewAsin()">
         <span class="pf-stat-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
         <span class="pf-discover-card-label">新規ASINを発掘</span>
       </button>
@@ -996,6 +1006,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <select class="pf-sf-select"><option>すべて表示</option><option>あり</option><option>なし</option></select>
       </div>
       <div class="pf-sf-row">
+        <label class="pf-sf-check pf-sf-new" id="pfSiireNewWrap"><input type="checkbox" id="pfSiireNewCheck"><span class="catfilter-new-badge">NEW</span>追加から24時間以内のみ表示</label>
         <button type="button" class="pf-sf-dropdown-btn">知財を隠す ▾</button>
         <span class="pf-sf-label">状態：</span>
         <select class="pf-sf-select"><option>選択</option><option>要申請</option><option>NG</option><option>正常</option></select>
@@ -1222,9 +1233,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   <section class="pf-panel" id="panel-seller">
     <div class="pf-seller-head">
       <div class="pf-mining-wrap">
+        <span class="pf-mining-chip">新規優良セラーを取得</span>
         <button type="button" class="pf-mining-btn" id="miningBtn">
-          <span class="pf-mining-chip">新規優良セラーを取得</span>
-          <span>⛏ セラーマイニング</span>
+          <svg class="pf-mining-pick" viewBox="0 0 24 24"><path d="M4 4c6 0 14 4 16 10-4-1-9 1-12 4C6 15 5 9 4 4z"></path></svg>
+          <span>セラーマイニング</span>
         </button>
         <div class="pf-mining-popup hidden" id="miningPopup">
           <div class="head">⛏ セラーマイニング<span id="miningClose">✕</span></div>
@@ -1247,6 +1259,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
     </div>
 
     <div class="pf-card">
+      <div class="pf-updated-note">最終更新 07/31 12:00</div>
       <div class="pf-filter-chips" id="pfFilterChips"></div>
 
       <div class="pf-table-wrap" style="overflow-x:auto">
@@ -1624,6 +1637,14 @@ function pfClearSiireFilter(){
   panel.querySelectorAll('input[type="text"],input[type="number"]').forEach(function(i){ i.value = ""; });
   panel.querySelectorAll('input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
   panel.querySelectorAll("select").forEach(function(s){ s.selectedIndex = 0; });
+}
+function pfDiscoverNewAsin(){
+  var tab = document.querySelector('.pf-tab[data-tab="siire"]');
+  if(tab) tab.click();
+  var panel = document.getElementById("pfSiireFilterPanel");
+  if(panel) panel.classList.remove("hidden");
+  var newCheck = document.getElementById("pfSiireNewCheck");
+  if(newCheck) newCheck.checked = true;
 }
 
 /* ---- profinderガイド モーダル ---- */
