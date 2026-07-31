@@ -227,6 +227,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-th-chevron{width:22px;height:22px;border-radius:7px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);display:inline-flex;align-items:center;justify-content:center}
 .pf-th-chevron svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6}
 .pf-th-info{width:14px;height:14px;stroke:var(--faint);fill:none;stroke-width:2}
+.pf-th-hint{border-bottom:2px dashed var(--accent);cursor:context-menu}
 .pf-siire-row input[type="checkbox"]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
 .pf-prod-cell{display:flex;gap:10px;text-align:left}
 .pf-prod-thumb{flex:none;width:56px;height:56px;border-radius:10px;background:#f0f1f5;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--faint)}
@@ -398,8 +399,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 </head>
 <body>
 
+<div class="sidebar-context-popup hidden" id="pfColInfoPopup">
+  <div class="sidebar-context-popup-title" id="pfColInfoTitle"></div>
+  <div class="sidebar-context-popup-desc" id="pfColInfoDesc"></div>
+</div>
+
 <header class="pf-header">
   <img class="pf-logo-img" src="profinderlogo.png" alt="PROFiNDER">
+
 
   <nav class="pf-tabs">
     <button type="button" class="pf-tab active" data-tab="home">ホーム</button>
@@ -418,7 +425,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
     </div>
     <button type="button" class="pf-header-icon-btn" id="pfHelpBtn" aria-label="使い方ガイド" title="使い方ガイド">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M9.2 9a2.8 2.8 0 015.4 1c0 1.8-2.6 2.2-2.6 4"></path><circle cx="12" cy="16.6" r="0.1" fill="currentColor" stroke-width="1.6"></circle></svg>
-      <div class="pf-help-tip" id="pfHelpTip">右クリックできる項目には「ⓘ」マークが表示されます。項目の上で右クリックすると、絞り込みや説明が表示される場合があります。</div>
+      <div class="pf-help-tip" id="pfHelpTip">点線の下線（‑‑‑‑‑）が付いている項目は、右クリックすると絞り込みや説明が表示される場合があります。</div>
     </button>
     <button type="button" class="pf-header-icon-btn" id="pfSettingsBtn" aria-label="設定" title="設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 00-.14-1.4l1.8-1.5-1.7-2.9-2.2.6a7 7 0 00-2.4-1.4L14 3h-4l-.36 2.4a7 7 0 00-2.4 1.4l-2.2-.6-1.7 2.9 1.8 1.5A7 7 0 005 12c0 .48.05.94.14 1.4l-1.8 1.5 1.7 2.9 2.2-.6a7 7 0 002.4 1.4L10 21h4l.36-2.4a7 7 0 002.4-1.4l2.2.6 1.7-2.9-1.8-1.5c.09-.46.14-.92.14-1.4z"></path></svg></button>
   </div>
@@ -504,10 +511,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
     <div class="pf-table-wrap">
       <div class="pf-siire-row head">
-        <div class="pf-th-main">利益を増やせる<br>余地<svg class="pf-th-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></div>
+        <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'gain')">利益を増やせる<br>余地</span></div>
         <div class="pf-th-main">仕入<svg class="pf-th-info" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"></path><line x1="3" y1="3" x2="21" y2="21"></line></svg></div>
         <div>商品</div>
-        <div class="pf-th-main">推奨仕入<svg class="pf-th-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></div>
+        <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'recommend')">推奨仕入</span></div>
         <div class="pf-th-sub">在庫切れまで<span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub">販売額$<span class="sub-label">現在の米ドル価格 ▾</span></div>
         <div class="pf-th-sub">想定利益額<span class="sub-label">日本Amazon仕入 ▾</span></div>
@@ -744,6 +751,36 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 </div>
 
 <script>
+/* ---- 列見出し：右クリックで説明を表示（点線の下線が付いている項目が対象） ---- */
+var PF_COL_INFO = {
+  gain: {title:"利益を増やせる余地", desc:"現在の仕入れ数量から推奨仕入数量まで増やした場合に見込める、追加の想定利益額です。"},
+  recommend: {title:"推奨仕入", desc:"在庫状況や売れ行きから算出した、15日／30日／60日ごとのおすすめ仕入れ数量です。"}
+};
+function showColInfo(evt, key){
+  var info = PF_COL_INFO[key];
+  var popup = document.getElementById("pfColInfoPopup");
+  if(!info || !popup) return;
+  evt.preventDefault();
+  document.getElementById("pfColInfoTitle").textContent = info.title;
+  document.getElementById("pfColInfoDesc").textContent = info.desc;
+  var margin = 12;
+  var x = evt.clientX + 10, y = evt.clientY + 10;
+  var maxX = window.innerWidth - 260 - margin;
+  var maxY = window.innerHeight - 90 - margin;
+  if(x > maxX) x = Math.max(margin, maxX);
+  if(y > maxY) y = evt.clientY - 10 - 90;
+  popup.style.left = x + "px";
+  popup.style.top = y + "px";
+  popup.classList.remove("hidden");
+}
+function hideColInfo(){
+  var popup = document.getElementById("pfColInfoPopup");
+  if(popup) popup.classList.add("hidden");
+}
+document.addEventListener("click", hideColInfo);
+document.addEventListener("scroll", hideColInfo, true);
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") hideColInfo(); });
+
 /* ---- ヘッダー背景をサイト全体の時間帯カラー（朝／昼／夜）と連動させる ---- */
 (function(){
   var hour = new Date().getHours();
