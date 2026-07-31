@@ -436,6 +436,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 .pf-filter-chip.new{background:var(--danger);color:#fff}
 .pf-filter-chip.excl{background:#fbeee0;color:#a8650a;border:1px solid #eccb8d}
+.pf-filter-chip.action{background:var(--accent);color:#fff}
 .pf-filter-chip-x{width:15px;height:15px;flex:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.3)}
 .pf-filter-chip.excl .pf-filter-chip-x{background:rgba(168,101,10,.15)}
 .pf-filter-chip-x svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:3}
@@ -914,7 +915,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       </button>
     </div>
     <div class="pf-discover-actions">
-      <button type="button" class="pf-discover-card tone-purple" onclick="document.querySelector('.pf-tab[data-tab=\'seller\']').click();setTimeout(function(){document.getElementById('miningBtn').click()},0)">
+      <button type="button" class="pf-discover-card tone-purple" onclick="pfDiscoverNewSeller()">
         <span class="pf-stat-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
         <span class="pf-discover-card-label">新規セラーを発掘（セラーマイニング）</span>
       </button>
@@ -994,6 +995,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
     </div>
 
     <div class="pf-siire-filter hidden" id="pfSiireFilterPanel">
+      <div class="pf-filter-chips" id="pfSiireFilterChips"></div>
       <div class="pf-sf-row">
         <span class="pf-sf-label">▽ フィルター</span>
         <input type="text" class="pf-sf-input pf-sf-search" placeholder="商品名／ASIN／SKU">
@@ -1638,6 +1640,15 @@ function pfClearSiireFilter(){
   panel.querySelectorAll('input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
   panel.querySelectorAll("select").forEach(function(s){ s.selectedIndex = 0; });
 }
+function pfShowActionChip(containerId, label){
+  var container = document.getElementById(containerId);
+  if(!container) return;
+  var chip = document.createElement("span");
+  chip.className = "pf-filter-chip action";
+  chip.innerHTML = 'アクション：'+label+'<span class="pf-filter-chip-x"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>';
+  chip.querySelector(".pf-filter-chip-x").addEventListener("click", function(){ chip.remove(); });
+  container.appendChild(chip);
+}
 function pfDiscoverNewAsin(){
   var tab = document.querySelector('.pf-tab[data-tab="siire"]');
   if(tab) tab.click();
@@ -1645,6 +1656,23 @@ function pfDiscoverNewAsin(){
   if(panel) panel.classList.remove("hidden");
   var newCheck = document.getElementById("pfSiireNewCheck");
   if(newCheck) newCheck.checked = true;
+  pfShowActionChip("pfSiireFilterChips", "新規ASIN取得");
+}
+function pfApplySellerNewFilter(actionLabel){
+  var newCheck = document.getElementById("catFilterNewOnly");
+  if(newCheck){
+    newCheck.checked = true;
+    if(typeof pfUpdateFilterChips === "function") pfUpdateFilterChips();
+  }
+  pfShowActionChip("pfFilterChips", actionLabel);
+}
+function pfDiscoverNewSeller(){
+  var tab = document.querySelector('.pf-tab[data-tab="seller"]');
+  if(tab) tab.click();
+  setTimeout(function(){
+    var btn = document.getElementById("miningBtn");
+    if(btn) btn.click();
+  }, 0);
 }
 
 /* ---- profinderガイド モーダル ---- */
@@ -1833,7 +1861,11 @@ document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeCs
 var miningBtn = document.getElementById("miningBtn");
 var miningPopup = document.getElementById("miningPopup");
 if(miningBtn){
-  miningBtn.addEventListener("click", function(){ miningPopup.classList.toggle("hidden"); });
+  miningBtn.addEventListener("click", function(){
+    var wasHidden = miningPopup.classList.contains("hidden");
+    miningPopup.classList.toggle("hidden");
+    if(wasHidden) pfApplySellerNewFilter("セラーマイニング");
+  });
   document.getElementById("miningClose").addEventListener("click", function(){ miningPopup.classList.add("hidden"); });
 }
 
