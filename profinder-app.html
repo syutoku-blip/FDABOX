@@ -223,8 +223,16 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-th-main{display:flex;align-items:center;justify-content:center;gap:5px}
 .pf-th-sub{display:flex;flex-direction:column;align-items:center;gap:4px}
 .pf-th-sub .sub-label{font-size:10px;font-weight:400;color:var(--faint)}
-.pf-th-chevron{width:22px;height:22px;border-radius:7px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);display:inline-flex;align-items:center;justify-content:center}
-.pf-th-chevron svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6}
+.pf-th-chevron{width:22px;height:22px;border-radius:7px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.pf-th-chevron svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6;transition:transform .15s ease}
+.pf-th-chevron.open svg{transform:rotate(90deg)}
+.pf-subcol{font-size:10.5px;color:var(--faint);text-align:center;white-space:nowrap}
+.pf-th-sort{margin-left:3px;font-size:9px;opacity:.6}
+.col-sub-val{text-align:center;font-size:12.5px;font-weight:600;color:var(--text)}
+.pf-index-pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1.5px solid;font-size:11px;font-weight:800;line-height:1.5}
+.pf-index-pill.green{border-color:#2e6b1f;color:#2e6b1f}
+.pf-index-pill.red{border-color:var(--danger);color:var(--danger)}
+.pf-index-pill small{display:block;font-size:8.5px;font-weight:600;opacity:.85}
 .pf-th-info{width:14px;height:14px;stroke:var(--faint);fill:none;stroke-width:2}
 .pf-hide-checked-btn{
   width:22px;height:22px;border-radius:7px;border:0;background:transparent;color:var(--faint);
@@ -599,11 +607,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         </div>
         <div class="pf-th-center">商品</div>
         <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'recommend')">推奨仕入</span></div>
-        <div class="pf-th-sub">在庫切れまで<span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub">販売額$<span class="sub-label">現在の米ドル価格 ▾</span></div>
-        <div class="pf-th-sub">想定利益額<span class="sub-label">日本Amazon仕入 ▾</span></div>
-        <div class="pf-th-sub">想定利益率<span class="sub-label">日本Amazon仕入 ▾</span></div>
-        <div class="pf-th-sub">指数<span class="pf-th-chevron"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="until">在庫切れまで<span class="pf-th-chevron" onclick="pfToggleColGroup('until')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="price">販売額$<span class="sub-label">現在の米ドル価格 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('price')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="profit">想定利益額<span class="sub-label">日本Amazon仕入 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="rate">想定利益率<span class="sub-label">日本Amazon仕入 ▾</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="index">指数<span class="pf-th-chevron" onclick="pfToggleColGroup('index')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div></div>
       </div>
 
@@ -628,11 +636,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
           </div>
           <a class="stock-link">在庫 2</a>
         </div>
-        <div class="col-until">20日</div>
-        <div class="col-price">$1020.00</div>
-        <div class="col-profit pos">¥74,540</div>
-        <div class="col-rate">12.2%</div>
-        <div class="col-index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
+        <div class="col-until" data-colgroup="until">20日</div>
+        <div class="col-price" data-colgroup="price">$1020.00</div>
+        <div class="col-profit pos" data-colgroup="profit">¥74,540</div>
+        <div class="col-rate" data-colgroup="rate">12.2%</div>
+        <div class="col-index" data-colgroup="index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
         <div class="col-buy">
           <span class="buy-btn buy-jp">🛍 日本で買う</span>
           <span class="buy-btn buy-rakuten">🛒 楽天で買う</span>
@@ -661,11 +669,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
           </div>
           <a class="stock-link">在庫 0</a>
         </div>
-        <div class="col-until">0日</div>
-        <div class="col-price">$78.99</div>
-        <div class="col-profit pos">¥98,838</div>
-        <div class="col-rate">43.9%</div>
-        <div class="col-index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
+        <div class="col-until" data-colgroup="until">0日</div>
+        <div class="col-price" data-colgroup="price">$78.99</div>
+        <div class="col-profit pos" data-colgroup="profit">¥98,838</div>
+        <div class="col-rate" data-colgroup="rate">43.9%</div>
+        <div class="col-index" data-colgroup="index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
         <div class="col-buy">
           <span class="buy-btn buy-jp">🛍 日本で買う</span>
           <span class="buy-btn buy-rakuten">🛒 楽天で買う</span>
@@ -694,11 +702,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
           </div>
           <a class="stock-link">在庫 0</a>
         </div>
-        <div class="col-until">0日</div>
-        <div class="col-price">$64.50</div>
-        <div class="col-profit pos">¥69,977</div>
-        <div class="col-rate">38.1%</div>
-        <div class="col-index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
+        <div class="col-until" data-colgroup="until">0日</div>
+        <div class="col-price" data-colgroup="price">$64.50</div>
+        <div class="col-profit pos" data-colgroup="profit">¥69,977</div>
+        <div class="col-rate" data-colgroup="rate">38.1%</div>
+        <div class="col-index" data-colgroup="index"><svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 6"></polyline></svg></div>
         <div class="col-buy">
           <span class="buy-btn buy-jp">🛍 日本で買う</span>
           <span class="buy-btn buy-rakuten">🛒 楽天で買う</span>
@@ -901,6 +909,73 @@ function closeReqCategoryModal(){
   document.body.style.overflow = "";
 }
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeReqCategoryModal(); });
+
+/* ---- 仕入リスト：列見出しの展開（在庫切れまで／販売額$／想定利益額／想定利益率／指数） ---- */
+var PF_COL_GROUPS = {
+  until:  {width:"100px", subs:[["日販","70px"],["Amazon30日","80px"],["セラー数","70px"]]},
+  price:  {width:"100px", subs:[["TWAP$","70px"],["乖離率","60px"],["バンド下限","70px"],["バンド上限","70px"],["バンド指数","70px"]]},
+  profit: {width:"110px", subs:[["過去仕入利益(計)","90px"],["TWAP利益(計)","90px"],["乖離率","60px"],["利益/個","70px"],["関税/個","70px"],["関税率","60px"]]},
+  rate:   {width:"90px",  subs:[["過去仕入率","70px"],["TWAP率","70px"],["返品率","60px"]]},
+  index:  {width:"50px",  subs:[["BPI","60px"],["PVI","60px"],["DPI","60px"],["SRI","60px"],["DRA","60px"]]}
+};
+var PF_COL_SUB_VALUES = {
+  until:  ["0.10","3","6"],
+  price:  ["$1062.35","-4.0%","$800.00","$1513.00","31"],
+  profit: ["¥0","¥0","+20.9%","¥28,041","¥12,155","12.5%"],
+  rate:   ["41.8%","42.2%","0.0%"],
+  index:  ['<span class="pf-index-pill green">164%<small>損益分岐を防衛</small></span>','29%','持続','<span class="pf-index-pill red">×1.00<small>▲セラー増57%</small></span>','定常']
+};
+var pfColGroupState = {until:false, price:false, profit:false, rate:false, index:false};
+
+function pfBuildGridTemplate(){
+  var order = ["until","price","profit","rate","index"];
+  var tracks = ["100px","60px","1fr","140px"];
+  order.forEach(function(key){
+    tracks.push(PF_COL_GROUPS[key].width);
+    if(pfColGroupState[key]) PF_COL_GROUPS[key].subs.forEach(function(s){ tracks.push(s[1]); });
+  });
+  tracks.push("140px");
+  return tracks.join(" ");
+}
+function pfApplyGridTemplate(){
+  var tmpl = pfBuildGridTemplate();
+  document.querySelectorAll(".pf-siire-row").forEach(function(row){ row.style.gridTemplateColumns = tmpl; });
+}
+function pfToggleColGroup(key){
+  var expanded = !pfColGroupState[key];
+  pfColGroupState[key] = expanded;
+
+  var headerCell = document.querySelector('.pf-siire-row.head [data-colgroup="'+key+'"]');
+  var chevron = headerCell && headerCell.querySelector(".pf-th-chevron");
+  if(chevron) chevron.classList.toggle("open", expanded);
+
+  if(expanded){
+    if(headerCell){
+      var headFrag = document.createDocumentFragment();
+      PF_COL_GROUPS[key].subs.forEach(function(s){
+        var d = document.createElement("div");
+        d.className = "pf-th-sub pf-subcol pf-subcol-"+key;
+        d.innerHTML = s[0] + '<span class="pf-th-sort">⇅</span>';
+        headFrag.appendChild(d);
+      });
+      headerCell.after(headFrag);
+    }
+    document.querySelectorAll('.pf-siire-row:not(.head) [data-colgroup="'+key+'"]').forEach(function(mainCell){
+      var frag = document.createDocumentFragment();
+      PF_COL_SUB_VALUES[key].forEach(function(v){
+        var d = document.createElement("div");
+        d.className = "pf-subcol pf-subcol-"+key+" col-sub-val";
+        d.innerHTML = v;
+        frag.appendChild(d);
+      });
+      mainCell.after(frag);
+    });
+  } else {
+    document.querySelectorAll(".pf-subcol-"+key).forEach(function(el){ el.remove(); });
+  }
+  pfApplyGridTemplate();
+}
+pfApplyGridTemplate();
 
 /* ---- 仕入リスト：チェック済みの商品を非表示にする ---- */
 var PF_EYE_ICON = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle>';
