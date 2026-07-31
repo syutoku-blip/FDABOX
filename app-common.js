@@ -838,46 +838,6 @@ function closeHelpModal(){
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeHelpModal()});
 
-/* ---------- サイドバー：右クリックでページの説明を表示 ---------- */
-const SIDEBAR_PAGE_INFO = {
-  "top.html":{title:"TOPページ",desc:"お知らせ・通知・ランキングなど、会員ページの入り口です。"},
-  "profinder.html":{title:"PROFiNDER",desc:"セラーID・ASINのリサーチや、カート・仕入れ管理を行うツールです。"},
-  "inventory.html":{title:"在庫管理",desc:"仕入れリストと棚卸を管理します。"},
-  "cashflow.html":{title:"キャッシュフロー管理",desc:"資金繰りの状況を確認します。"},
-  "resources.html":{title:"その他SLC関連",desc:"マニュアルや各種申請フォームをまとめています。"},
-  "settings.html":{title:"設定",desc:"表示設定や通知設定を変更できます。"},
-  "las":{title:"LAS",desc:"SLC/LASの管理画面を別タブで開きます。"}
-};
-function showContextInfo(evt,title,desc){
-  const popup=document.getElementById("sidebarContextPopup");
-  if(!popup)return;
-  evt.preventDefault();
-  document.getElementById("sidebarContextTitle").textContent=title;
-  document.getElementById("sidebarContextDesc").textContent=desc;
-  const margin=12;
-  const zoom=parseFloat(getComputedStyle(document.body).zoom)||1;
-  let x=(evt.clientX+10)/zoom, y=(evt.clientY+10)/zoom;
-  const maxX=(window.innerWidth-260-margin)/zoom;
-  const maxY=(window.innerHeight-90-margin)/zoom;
-  if(x>maxX)x=Math.max(margin,maxX);
-  if(y>maxY)y=(evt.clientY-10-90)/zoom;
-  popup.style.left=x+"px";
-  popup.style.top=y+"px";
-  popup.classList.remove("hidden");
-}
-function showSidebarPageInfo(evt,key){
-  const info=SIDEBAR_PAGE_INFO[key];
-  if(!info)return;
-  showContextInfo(evt,info.title,info.desc);
-}
-function hideSidebarPageInfo(){
-  const popup=document.getElementById("sidebarContextPopup");
-  if(popup)popup.classList.add("hidden");
-}
-document.addEventListener("click",hideSidebarPageInfo);
-document.addEventListener("scroll",hideSidebarPageInfo,true);
-document.addEventListener("keydown",e=>{if(e.key==="Escape")hideSidebarPageInfo()});
-
 /* =========================================================================
    チュートリアル（初回ログイン時の使い方ガイド：PROFiNDER編）
    TOPページに来た時点で自動的に始まる（「初回かどうか」は会員管理シートのC列で判定）。

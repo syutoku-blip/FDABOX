@@ -1009,64 +1009,10 @@ html[data-sidebar="collapsed"] .sidebar-logout{gap:0}
 /* ==========================================================================
    使い方ガイド モーダル（右クリックメニューのデモアニメーション）
    ========================================================================== */
-.help-modal-intro{padding:18px 22px 0;font-size:13px;color:var(--muted);line-height:1.7}
-.help-demo{
-  position:relative;height:250px;margin:18px 22px;border-radius:16px;
-  background:linear-gradient(160deg,var(--panel2) 0%,#fff 70%);border:1px solid var(--line);overflow:hidden;
-}
-.help-demo-page{position:absolute;inset:16px;display:flex;flex-direction:column;gap:10px;pointer-events:none}
-.help-demo-titlebar{height:14px;width:38%;border-radius:4px;background:var(--line-strong);opacity:.7}
-.help-demo-row{
-  position:relative;height:38px;border-radius:10px;background:#fff;border:1px solid var(--line);
-  display:flex;align-items:center;padding:0 14px;gap:10px;box-shadow:var(--shadow-sm);
-}
-.help-demo-row:nth-child(3){width:88%}
-.help-demo-row:nth-child(4){width:72%}
-.help-demo-row-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
-.help-demo-row-bar{height:8px;border-radius:4px;background:var(--line-strong);flex:1;max-width:160px}
-.help-demo-row-bar-hint{border-bottom:2px dashed var(--accent)}
-.help-cursor{
-  position:absolute;width:20px;height:20px;pointer-events:none;z-index:3;
-  filter:drop-shadow(0 2px 3px rgba(0,0,0,.28));
-  animation:helpCursorMove 5s cubic-bezier(.45,0,.2,1) infinite;
-}
-.help-cursor svg{width:100%;height:100%;fill:var(--accent);stroke:#fff;stroke-width:1}
-.help-click-ripple{
-  position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;
-  background:rgba(61,125,255,.35);border:1px solid rgba(61,125,255,.6);opacity:0;z-index:2;pointer-events:none;
-  animation:helpRipple 5s cubic-bezier(.45,0,.2,1) infinite;
-}
-.help-info-popup{
-  position:absolute;width:150px;background:#fff;border:1px solid var(--line);border-radius:12px;
-  box-shadow:var(--shadow-md);padding:10px 12px;opacity:0;transform:scale(.9);transform-origin:top left;z-index:4;pointer-events:none;
-  animation:helpMenuShow 5s cubic-bezier(.45,0,.2,1) infinite;
-}
-.help-info-popup-title{display:flex;align-items:center;gap:6px;font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);margin-bottom:4px}
-.help-info-popup-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
-.help-info-popup-desc{font-size:10.5px;color:var(--muted);line-height:1.5}
-html[data-theme="dark"] .help-info-popup{background:var(--panel);color:var(--text)}
-
-/* 座標は .help-demo（高さ250px）を基準に、メニュー(3項目・高さ約110px)が必ず枠内に収まるよう調整 */
-@keyframes helpCursorMove{
-  0%,14%{left:22px;top:22px}
-  38%,60%{left:118px;top:58px}
-  100%{left:22px;top:22px}
-}
-@keyframes helpRipple{
-  0%,36%{left:118px;top:58px;opacity:0;transform:scale(.6)}
-  40%{left:118px;top:58px;opacity:1;transform:scale(1)}
-  55%{left:118px;top:58px;opacity:0;transform:scale(1.8)}
-  100%{left:118px;top:58px;opacity:0;transform:scale(.6)}
-}
-@keyframes helpMenuShow{
-  0%,42%{left:100px;top:64px;opacity:0;transform:scale(.9)}
-  50%,82%{left:100px;top:64px;opacity:1;transform:scale(1)}
-  92%,100%{left:100px;top:64px;opacity:0;transform:scale(.9)}
-}
-.help-demo-caption{padding:2px 22px 20px;font-size:11.5px;color:var(--faint);font-family:var(--font-mono);text-align:center}
+.help-modal-intro{padding:18px 22px;font-size:13px;color:var(--muted);line-height:1.7}
 
 /* ==========================================================================
-   サイドバー：折りたたみ時のホバーツールチップ / 右クリックの説明ポップアップ
+   サイドバー：折りたたみ時のホバーツールチップ
    ========================================================================== */
 html[data-sidebar="collapsed"] .sidebar-link{position:relative}
 html[data-sidebar="collapsed"] .sidebar-link:hover:after{
@@ -1077,17 +1023,6 @@ html[data-sidebar="collapsed"] .sidebar-link:hover:after{
   padding:6px 11px;border-radius:8px;white-space:nowrap;box-shadow:var(--shadow-md);z-index:60;pointer-events:none;
 }
 html[data-theme="dark"][data-sidebar="collapsed"] .sidebar-link:hover:after{background-color:var(--panel);border:1px solid var(--line-strong)}
-
-.sidebar-context-popup{
-  position:fixed;z-index:3000;width:260px;background:#fff;border:1px solid var(--line);border-radius:14px;
-  box-shadow:var(--shadow-md);padding:12px 14px;pointer-events:none;
-}
-.sidebar-context-popup-title{
-  display:flex;align-items:center;gap:7px;font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--navy);margin-bottom:5px;
-}
-.sidebar-context-popup-title:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
-.sidebar-context-popup-desc{font-size:12px;color:var(--muted);line-height:1.6;white-space:pre-line}
-html[data-theme="dark"] .sidebar-context-popup{background:var(--panel);color:var(--text)}
 
 /* ==========================================================================
    現状の統計（ダッシュボード：損益・リードタイム・予測・仕入目標）
