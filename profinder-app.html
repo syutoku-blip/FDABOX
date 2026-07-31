@@ -113,20 +113,34 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 /* ---------- 仕入リスト ---------- */
 .pf-siire-top{display:flex;gap:14px;margin-bottom:16px;align-items:stretch;flex-wrap:wrap}
 
-.pf-action-tile{height:52px;border-radius:12px;padding:0 16px;display:flex;flex-direction:column;justify-content:center;gap:2px;flex:none}
-.pf-action-tile .title{display:flex;align-items:center;gap:7px;font-family:var(--font-head);font-weight:700;font-size:13px;white-space:nowrap}
-.pf-action-tile .title svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
-.tile-list{background:#eaf5df;color:#3c6b1f;min-width:170px}
-.tile-ai{background:#efeafb;color:#5b3fc4;min-width:100px;align-items:center}
+.pf-promo-card{
+  position:relative;height:88px;border-radius:16px;padding:12px 16px 10px;display:flex;flex-direction:column;justify-content:center;gap:4px;
+  color:#fff;overflow:hidden;cursor:pointer;transition:transform .15s ease;
+}
+.pf-promo-card:hover{transform:translateY(-1px)}
+.promo-badge{position:absolute;top:8px;left:14px;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:999px;font-family:var(--font-head)}
+.badge-popular{background:#fde68a;color:#7a5b00}
+.badge-new{background:#ff8fc8;color:#7a0044}
+.promo-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.promo-icon{width:26px;height:26px;flex:none;display:grid;place-items:center}
+.promo-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8}
+.promo-title{font-family:var(--font-head);font-weight:800;font-size:15px;white-space:nowrap}
+.promo-arrow{margin-left:auto;font-size:18px;font-weight:700;opacity:.85}
+.promo-sub{font-size:10.5px;opacity:.85;margin-left:34px;white-space:nowrap}
 
-.pf-stack-col{display:flex;flex-direction:column;gap:4px;min-width:160px;height:52px}
+.promo-list{flex:1.35;min-width:190px;background:linear-gradient(135deg,#22a55c,#0d7a3d)}
+.promo-ai{flex:1.2;min-width:170px;background:linear-gradient(135deg,#6f5ce8,#4531c9)}
+.promo-eye{flex:1;min-width:150px;background:linear-gradient(135deg,#5f85d6,#3f5fa8);opacity:.92}
+.promo-eye .promo-title{font-size:13px}
+
+.pf-stack-col{display:flex;flex-direction:column;gap:4px;min-width:160px;height:88px}
 .pf-stack-col .pf-quick-btn{flex:1;height:auto}
 
 .pf-siire-top-divider{width:1px;background:var(--line-strong);align-self:stretch;flex:none}
-.pf-cart-box{width:52px;height:52px;flex:none;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.pf-cart-box{width:52px;height:88px;flex:none;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center}
 .pf-cart-box svg{width:18px;height:18px;stroke:var(--faint);fill:none;stroke-width:1.8}
 .pf-goal-card{
-  height:52px;flex:1.3;min-width:340px;background:#12182a;border-radius:12px;color:#fff;padding:0 18px;
+  height:88px;flex:1.3;min-width:340px;background:#12182a;border-radius:12px;color:#fff;padding:0 18px;
   display:flex;align-items:center;gap:22px;flex-wrap:nowrap;overflow:hidden;
 }
 .pf-goal-head{display:flex;flex-direction:column;gap:2px}
@@ -401,15 +415,34 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   <section class="pf-panel" id="panel-siire">
 
     <div class="pf-siire-top">
-      <div class="pf-action-tile tile-list">
-        <div class="title"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect></svg>仕入リスト一覧</div>
+      <div class="pf-promo-card promo-list">
+        <span class="promo-badge badge-popular">👑 人気</span>
+        <div class="promo-row">
+          <span class="promo-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect></svg></span>
+          <span class="promo-title">仕入れリスト一覧</span>
+          <span class="promo-arrow">›</span>
+        </div>
+        <div class="promo-sub">利益商品を今すぐチェック</div>
       </div>
 
-      <div class="pf-action-tile tile-ai">
-        <div class="title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle></svg>AI講師</div>
+      <div class="pf-promo-card promo-ai">
+        <span class="promo-badge badge-new">NEW</span>
+        <div class="promo-row">
+          <span class="promo-icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"></rect><circle cx="9" cy="14" r="1.4"></circle><circle cx="15" cy="14" r="1.4"></circle><path d="M12 8V5"></path><circle cx="12" cy="4" r="1.2"></circle></svg></span>
+          <span class="promo-title">AI講師</span>
+          <span class="promo-arrow">›</span>
+        </div>
+        <div class="promo-sub">プロが作る次世代の仕入れ判断</div>
       </div>
 
-      <div class="pf-eye-banner">PROFiNDER 👁 eye</div>
+      <div class="pf-promo-card promo-eye">
+        <div class="promo-row">
+          <span class="promo-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+          <span class="promo-title">PROFiNDER 👁 eye</span>
+          <span class="promo-arrow">›</span>
+        </div>
+        <div class="promo-sub">勝てる商品をAIで見つける</div>
+      </div>
 
       <div class="pf-stack-col">
         <button type="button" class="pf-quick-btn qb-refresh"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"></path></svg>在庫を最新にする</button>

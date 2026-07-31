@@ -912,7 +912,7 @@ html[data-sidebar="collapsed"] .wmc-pf-pill{display:none!important}
 .sidebar{transition:width .2s ease}
 .sidebar-toggle-btn{
   position:static;
-  flex:none;width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);
+  flex:none;width:26px!important;height:26px!important;border-radius:8px!important;border:1px solid var(--line);background:var(--panel2);
   display:grid;place-items:center;color:var(--muted);cursor:pointer;transition:.15s ease;
 }
 .sidebar-toggle-btn:hover{color:var(--accent);border-color:var(--accent)}
@@ -926,7 +926,7 @@ html[data-sidebar="collapsed"] .sidebar-brand-logo{width:36px;border-radius:10px
 /* ---- ツールバー(展開/縮小・完全に隠す)のボタン群 ---- */
 .sidebar-toggle-group{position:static;display:flex;gap:6px;justify-content:center;width:100%}
 .sidebar-hide-btn{
-  display:none!important;width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);
+  display:none!important;width:26px!important;height:26px!important;border-radius:8px!important;border:1px solid var(--line);background:var(--panel2);
   align-items:center;justify-content:center;color:var(--muted);cursor:pointer;transition:.15s ease;
 }
 .sidebar-hide-btn:hover{color:var(--accent);border-color:var(--accent)}
