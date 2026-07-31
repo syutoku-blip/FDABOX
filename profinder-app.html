@@ -222,6 +222,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 .pf-th-main{display:flex;align-items:center;justify-content:center;gap:5px}
 .pf-th-sub{display:flex;flex-direction:column;align-items:center;gap:4px}
+.pf-th-updated{font-size:10px;color:var(--faint);text-align:right;font-family:var(--font-mono);white-space:nowrap}
 .pf-th-chevron{width:22px;height:22px;border-radius:7px;background:rgba(var(--accent-rgb),.12);color:var(--accent-dark);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
 .pf-th-chevron svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.6;transition:transform .15s ease}
 .pf-th-chevron.open svg{transform:rotate(90deg)}
@@ -613,7 +614,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'profit')">想定利益額</span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="rate"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'rate')">想定利益率</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="index"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'index')">指数</span><span class="pf-th-chevron" onclick="pfToggleColGroup('index')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div></div>
+        <div class="pf-th-updated">最終更新 07/31 12:00</div>
       </div>
 
       <div class="pf-siire-row">
