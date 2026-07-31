@@ -216,6 +216,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-scroll-edge.right{right:0;justify-content:flex-end;padding-right:12px;background:linear-gradient(270deg,rgba(var(--accent-rgb),.28),rgba(var(--accent-rgb),.16) 55%,rgba(var(--accent-rgb),0));border-radius:0 18px 18px 0}
 .pf-siire-row{display:grid;grid-template-columns:100px 60px 1fr 140px 100px 100px 110px 90px 50px 140px;gap:14px;align-items:center;padding:18px 16px;border-bottom:1px solid var(--line);min-width:1270px}
 .pf-siire-row.head{background:#fafafd;color:var(--muted);font-size:12.5px;font-weight:700}
+.pf-siire-row.head > *{position:relative}
+.pf-siire-row.head > *:not(:first-child):before{
+  content:"";position:absolute;left:-7px;top:-18px;bottom:-18px;width:1px;background:var(--line-strong);
+}
 .pf-th-main{display:flex;align-items:center;justify-content:center;gap:5px}
 .pf-th-sub{display:flex;flex-direction:column;align-items:center;gap:4px}
 .pf-th-sub .sub-label{font-size:10px;font-weight:400;color:var(--faint)}
