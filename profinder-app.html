@@ -463,6 +463,34 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pcalc-tariff-table td{padding:5px 4px;border-bottom:1px solid var(--line)}
 .pcalc-tariff-table input{width:52px;height:26px;border-radius:6px;border:1px solid var(--line-strong);text-align:right;padding:0 6px;font-family:var(--font-mono);font-size:12px}
 
+.csvup-modal-box{width:min(560px,100%);display:flex;flex-direction:column;max-height:85vh}
+.csvup-body{padding:0 22px 22px;overflow-y:auto}
+.csvup-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.csvup-dropzone{
+  border:2px dashed var(--line-strong);border-radius:14px;padding:28px 20px;text-align:center;
+  background:var(--panel2);transition:.15s ease;
+}
+.csvup-dropzone.dragover{border-color:var(--accent);background:rgba(var(--accent-rgb),.08)}
+.csvup-dropzone svg{width:32px;height:32px;stroke:var(--faint);fill:none;stroke-width:1.6;margin-bottom:8px}
+.csvup-dz-title{font-family:var(--font-head);font-weight:700;font-size:13.5px;color:var(--navy);margin-bottom:4px}
+.csvup-dz-sub{font-size:11.5px;color:var(--faint);margin-bottom:12px}
+.csvup-dz-btn{height:38px;padding:0 18px;border-radius:9px;border:0;background:var(--accent);color:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;cursor:pointer}
+.csvup-dz-btn:hover{background:var(--accent-dark)}
+.csvup-example{font-size:11.5px;color:var(--faint);line-height:1.7;margin-top:12px}
+.csvup-example code{background:var(--panel2);border-radius:4px;padding:1px 5px;font-family:var(--font-mono)}
+.csvup-results{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+.csvup-results-head{font-family:var(--font-head);font-weight:800;font-size:13px;color:var(--navy);margin-bottom:10px}
+.csvup-results-list{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto}
+.csvup-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+.csvup-row-type{flex:none;font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px;font-family:var(--font-head)}
+.csvup-row-type.asin{background:rgba(var(--accent-rgb),.12);color:var(--accent-dark)}
+.csvup-row-type.seller{background:rgba(46,107,31,.12);color:#2e6b1f}
+.csvup-row-type.unknown{background:rgba(122,111,96,.14);color:var(--muted)}
+.csvup-row-val{flex:1;font-family:var(--font-mono);font-size:12.5px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.csvup-row-btn{flex:none;height:30px;padding:0 12px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-family:var(--font-head);font-weight:700;font-size:11px;cursor:pointer}
+.csvup-row-btn.seller{background:#2e6b1f}
+.csvup-row-btn:hover{opacity:.85}
+
 .pf-id-register-btn{
   height:48px;padding:0 16px;border-radius:10px;border:0;background:linear-gradient(100deg,var(--accent),var(--accent-dark));
   color:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:7px;
@@ -704,6 +732,29 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <input type="checkbox">
         <div><div class="pcalc-checkbox-title">追加の上乗せ（既定オフ）</div><div class="pcalc-checkbox-desc">一律10%の上乗せ措置は2026-07-24に失効。制度が変わった場合にそなえて、必要になったときだけONにできます。</div></div>
       </label>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="csvUploadModal" onclick="if(event.target===this)closeCsvUploadModal()">
+  <div class="modal-box csvup-modal-box">
+    <div class="modal-head">
+      <h3>📄 CSVで一括検索</h3>
+      <button type="button" class="modal-close" onclick="closeCsvUploadModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="csvup-body">
+      <div class="csvup-desc">ASIN・セラーIDを一括で検索できます。<b>A列（1列目）に1行につき1つ</b>ずつ記載したCSVファイルをご用意ください。</div>
+      <div class="csvup-dropzone" id="csvDropzone">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <div class="csvup-dz-title">ここにCSVファイルをドラッグ＆ドロップ</div>
+        <div class="csvup-dz-sub">または</div>
+        <button type="button" class="csvup-dz-btn" onclick="document.getElementById('pfCsvFileInput').click()">ファイルを選択</button>
+      </div>
+      <div class="csvup-example">例：A列に <code>B0DEMO0001</code>（ASIN）や <code>A1B2C3D4E5F6G7</code>（セラーID）のように1つずつ記載してください。</div>
+      <div class="csvup-results hidden" id="csvResults">
+        <div class="csvup-results-head"><span id="csvResultCount">0</span>件を読み込みました</div>
+        <div class="csvup-results-list" id="csvResultList"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1388,19 +1439,98 @@ if(pfHelpBtn){
   });
 }
 
-/* ---- CSVで一括検索(デモ: ファイル選択のみ) ---- */
+/* ---- CSVで一括検索 ---- */
+function openCsvUploadModal(){
+  var modal = document.getElementById("csvUploadModal");
+  if(!modal) return;
+  modal.classList.add("visible");
+  document.body.style.overflow = "hidden";
+}
+function closeCsvUploadModal(){
+  var modal = document.getElementById("csvUploadModal");
+  if(!modal) return;
+  modal.classList.remove("visible");
+  document.body.style.overflow = "";
+}
+function pfDetectIdType(str){
+  var s = (str || "").trim().toUpperCase();
+  if(/^B0[A-Z0-9]{8}$/.test(s)) return "asin";
+  if(/^A[A-Z0-9]{12,13}$/.test(s)) return "seller";
+  return "unknown";
+}
+function pfParseCsvText(text){
+  return text.split(/\r\n|\n|\r/)
+    .map(function(line){ return line.split(",")[0].trim().replace(/^"|"$/g, ""); })
+    .filter(function(v){ return v.length > 0; });
+}
+function pfRenderCsvResults(values){
+  var list = document.getElementById("csvResultList");
+  var results = document.getElementById("csvResults");
+  var count = document.getElementById("csvResultCount");
+  list.innerHTML = "";
+  values.forEach(function(v){
+    var type = pfDetectIdType(v);
+    var row = document.createElement("div");
+    row.className = "csvup-row";
+    var typeLabel = type === "asin" ? "ASIN" : (type === "seller" ? "セラーID" : "不明");
+    var btnHtml = "";
+    if(type === "asin"){
+      btnHtml = '<button type="button" class="csvup-row-btn" onclick="pfCsvResearchAsin(\''+v.replace(/'/g,"")+'\')">このASINをリサーチする</button>';
+    } else if(type === "seller"){
+      btnHtml = '<button type="button" class="csvup-row-btn seller" onclick="pfCsvRegisterSeller(\''+v.replace(/'/g,"")+'\')">このセラーIDをセラーリストに登録する</button>';
+    }
+    row.innerHTML = '<span class="csvup-row-type '+type+'">'+typeLabel+'</span><span class="csvup-row-val">'+v+'</span>'+btnHtml;
+    list.appendChild(row);
+  });
+  count.textContent = values.length;
+  results.classList.remove("hidden");
+}
+function pfHandleCsvFile(file){
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    var values = pfParseCsvText(String(reader.result || ""));
+    pfRenderCsvResults(values);
+  };
+  reader.readAsText(file);
+}
+function pfCsvResearchAsin(asin){
+  var searchInput = document.querySelector(".pf-search");
+  if(searchInput) searchInput.value = asin;
+  closeCsvUploadModal();
+}
+function pfCsvRegisterSeller(sellerId){
+  var searchInput = document.querySelector(".pf-search");
+  if(searchInput) searchInput.value = sellerId;
+  var sellerTab = document.querySelector('.pf-tab[data-tab="seller"]');
+  if(sellerTab) sellerTab.click();
+  closeCsvUploadModal();
+}
 var csvBtn = document.getElementById("pfCsvUploadBtn");
 var csvInput = document.getElementById("pfCsvFileInput");
 if(csvBtn && csvInput){
-  csvBtn.addEventListener("click", function(){ csvInput.click(); });
+  csvBtn.addEventListener("click", function(){ openCsvUploadModal(); });
   csvInput.addEventListener("change", function(){
     if(csvInput.files && csvInput.files[0]){
-      var searchInput = document.querySelector(".pf-search");
-      searchInput.placeholder = csvInput.files[0].name + " を読み込みました（デモ）";
+      pfHandleCsvFile(csvInput.files[0]);
       csvInput.value = "";
     }
   });
 }
+var csvDropzone = document.getElementById("csvDropzone");
+if(csvDropzone){
+  ["dragenter","dragover"].forEach(function(evt){
+    csvDropzone.addEventListener(evt, function(e){ e.preventDefault(); e.stopPropagation(); csvDropzone.classList.add("dragover"); });
+  });
+  ["dragleave","drop"].forEach(function(evt){
+    csvDropzone.addEventListener(evt, function(e){ e.preventDefault(); e.stopPropagation(); csvDropzone.classList.remove("dragover"); });
+  });
+  csvDropzone.addEventListener("drop", function(e){
+    var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if(file) pfHandleCsvFile(file);
+  });
+}
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeCsvUploadModal(); });
 
 var miningBtn = document.getElementById("miningBtn");
 var miningPopup = document.getElementById("miningPopup");
