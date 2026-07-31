@@ -114,14 +114,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-siire-top{display:flex;gap:14px;margin-bottom:16px;align-items:stretch;flex-wrap:wrap}
 
 .pf-promo-card{
-  position:relative;height:88px;border-radius:16px;padding:12px 16px 10px;display:flex;flex-direction:column;justify-content:center;gap:4px;
+  position:relative;height:56px;border-radius:14px;padding:0 16px;display:flex;flex-direction:column;justify-content:center;gap:4px;
   color:#fff;overflow:hidden;cursor:pointer;transition:transform .15s ease;
 }
 .pf-promo-card:hover{transform:translateY(-1px)}
-.promo-badge{position:absolute;top:8px;left:14px;font-size:9.5px;font-weight:800;padding:2px 8px;border-radius:999px;font-family:var(--font-head)}
+.promo-badge{position:absolute;top:6px;right:10px;left:auto;font-size:9px;font-weight:800;padding:1px 7px;border-radius:999px;font-family:var(--font-head)}
 .badge-popular{background:#fde68a;color:#7a5b00}
 .badge-new{background:#ff8fc8;color:#7a0044}
-.promo-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.promo-row{display:flex;align-items:center;gap:8px}
 .promo-icon{width:26px;height:26px;flex:none;display:grid;place-items:center}
 .promo-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8}
 .promo-title{font-family:var(--font-head);font-weight:800;font-size:15px;white-space:nowrap}
@@ -133,14 +133,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .promo-eye{flex:1;min-width:150px;background:linear-gradient(135deg,#5f85d6,#3f5fa8);opacity:.92}
 .promo-eye .promo-title{font-size:13px}
 
-.pf-stack-col{display:flex;flex-direction:column;gap:4px;min-width:160px;height:88px}
+.pf-stack-col{display:flex;flex-direction:column;gap:4px;min-width:160px;height:56px}
 .pf-stack-col .pf-quick-btn{flex:1;height:auto}
 
 .pf-siire-top-divider{width:1px;background:var(--line-strong);align-self:stretch;flex:none}
-.pf-cart-box{width:52px;height:88px;flex:none;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.pf-cart-box{width:52px;height:56px;flex:none;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center}
 .pf-cart-box svg{width:18px;height:18px;stroke:var(--faint);fill:none;stroke-width:1.8}
 .pf-goal-card{
-  height:88px;flex:1.3;min-width:340px;background:#12182a;border-radius:12px;color:#fff;padding:0 18px;
+  height:56px;flex:1.3;min-width:340px;background:#12182a;border-radius:12px;color:#fff;padding:0 18px;
   display:flex;align-items:center;gap:22px;flex-wrap:nowrap;overflow:hidden;
 }
 .pf-goal-head{display:flex;flex-direction:column;gap:2px}
@@ -416,13 +416,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
     <div class="pf-siire-top">
       <div class="pf-promo-card promo-list">
-        <span class="promo-badge badge-popular">👑 人気</span>
         <div class="promo-row">
           <span class="promo-icon"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect></svg></span>
           <span class="promo-title">仕入れリスト一覧</span>
           <span class="promo-arrow">›</span>
         </div>
-        <div class="promo-sub">利益商品を今すぐチェック</div>
       </div>
 
       <div class="pf-promo-card promo-ai">
@@ -432,16 +430,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
           <span class="promo-title">AI講師</span>
           <span class="promo-arrow">›</span>
         </div>
-        <div class="promo-sub">プロが作る次世代の仕入れ判断</div>
       </div>
 
       <div class="pf-promo-card promo-eye">
         <div class="promo-row">
           <span class="promo-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
-          <span class="promo-title">PROFiNDER 👁 eye</span>
+          <span class="promo-title">PROFiNDER eye</span>
           <span class="promo-arrow">›</span>
         </div>
-        <div class="promo-sub">勝てる商品をAIで見つける</div>
       </div>
 
       <div class="pf-stack-col">
