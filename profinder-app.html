@@ -354,19 +354,31 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-seller-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;position:relative}
 .pf-seller-title{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--navy)}
 .pf-seller-title svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:1.8}
-.pf-outline-pill{height:38px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;color:var(--text);display:flex;align-items:center;gap:6px;cursor:pointer}
-.pf-outline-pill.blue{border-color:rgba(var(--accent-rgb),.4);background:rgba(var(--accent-rgb),.1);color:var(--accent-dark)}
+.pf-outline-pill{height:38px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;color:var(--text);display:flex;align-items:center;gap:6px;cursor:pointer;transition:.15s ease}
+.pf-outline-pill:hover{border-color:var(--accent);color:var(--accent-dark);box-shadow:var(--shadow-sm)}
 .pf-outline-pill.amber{border-color:#eccb8d;background:#fbf1de;color:#8a5a08}
-.pf-check-label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text)}
-.pf-check-label input{width:16px;height:16px;accent-color:var(--accent)}
-.pf-check-label .on{color:#2e6b1f}
+.pf-toggle-pill{position:relative}
+.pf-toggle-badge{margin-left:2px;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.03em}
+.pf-toggle-badge.on{background:rgba(46,107,31,.14);color:#2e6b1f}
+.pf-toggle-badge.off{background:rgba(122,111,96,.14);color:var(--muted)}
+.pf-outline-pill.amber[aria-pressed="false"]{border-color:var(--line-strong);background:#fff;color:var(--muted);opacity:.75}
 
-.pf-mining-btn{
-  margin-left:auto;height:40px;padding:0 16px;border-radius:10px;background:#3a2a12;color:#f0d693;
-  font-family:var(--font-head);font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;cursor:pointer;border:0;
+.pf-id-register-btn{
+  height:38px;padding:0 16px;border-radius:10px;border:0;background:linear-gradient(100deg,var(--accent),var(--accent-dark));
+  color:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:7px;
+  cursor:pointer;box-shadow:0 3px 10px rgba(var(--accent-rgb),.3);transition:.15s ease;
 }
+.pf-id-register-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--accent-rgb),.4)}
+
+.pf-mining-wrap{position:relative}
+.pf-mining-btn{
+  height:40px;padding:0 18px;border-radius:10px;background:linear-gradient(100deg,#4a3418,#2b1e0c);color:#f0d693;
+  font-family:var(--font-head);font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;cursor:pointer;border:1px solid #6b4d20;
+  box-shadow:0 3px 10px rgba(58,42,18,.35);transition:.15s ease;
+}
+.pf-mining-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(58,42,18,.45)}
 .pf-mining-popup{
-  position:absolute;top:48px;right:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
+  position:absolute;top:48px;left:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
   padding:18px;box-shadow:0 14px 34px rgba(0,0,0,.14);z-index:20;
 }
 .pf-mining-popup .head{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:#5c3d00;font-size:14.5px;margin-bottom:14px}
@@ -724,18 +736,19 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   <section class="pf-panel" id="panel-seller">
     <div class="pf-seller-head">
       <div class="pf-seller-title"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"></circle><path d="M2 21v-2a4 4 0 014-4h6a4 4 0 014 4v2"></path><circle cx="17" cy="8" r="3"></circle><path d="M22 21v-1.5a3.5 3.5 0 00-2.5-3.4"></path></svg>セラー（登録29社・デモ）</div>
-      <button type="button" class="pf-outline-pill blue">▽ 扱うカテゴリ</button>
-      <button type="button" class="pf-outline-pill amber">🔖 要申請カテゴリ</button>
-      <label class="pf-check-label"><input type="checkbox" checked>要申請ASINを取得しない<span class="on">ON</span></label>
-
-      <button type="button" class="pf-mining-btn" id="miningBtn">⛏ セラーマイニング</button>
-      <div class="pf-mining-popup hidden" id="miningPopup">
-        <div class="head">⛏ セラーマイニング<span id="miningClose">✕</span></div>
-        <div class="pf-mining-result"><div class="lbl">今日の成果</div><div class="val">0 セラー獲得</div></div>
-        <div class="pf-mining-note">⛏ あと1回 採掘できる</div>
-        <button type="button" class="pf-mining-go">⛏ 今すぐ取得する</button>
-        <button type="button" class="pf-mining-more">もっとセラーを取得する</button>
+      <div class="pf-mining-wrap">
+        <button type="button" class="pf-mining-btn" id="miningBtn">⛏ セラーマイニング</button>
+        <div class="pf-mining-popup hidden" id="miningPopup">
+          <div class="head">⛏ セラーマイニング<span id="miningClose">✕</span></div>
+          <div class="pf-mining-result"><div class="lbl">今日の成果</div><div class="val">0 セラー獲得</div></div>
+          <div class="pf-mining-note">⛏ あと1回 採掘できる</div>
+          <button type="button" class="pf-mining-go">⛏ 今すぐ取得する</button>
+          <button type="button" class="pf-mining-more">もっとセラーを取得する</button>
+        </div>
       </div>
+      <button type="button" class="pf-id-register-btn">🪪 セラーID登録</button>
+      <button type="button" class="pf-outline-pill amber pf-toggle-pill" id="pfReqCategoryBtn" aria-pressed="true">🔖 要申請カテゴリ<span class="pf-toggle-badge on" id="pfReqCategoryBadge">ON</span></button>
+      <button type="button" class="pf-outline-pill"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><path d="M4 5h16l-6 8v6l-4-2v-4z"></path></svg>フィルター</button>
     </div>
 
     <div class="pf-card">
@@ -756,6 +769,20 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 </div>
 
 <script>
+/* ---- 要申請カテゴリ：ON/OFF切り替え ---- */
+var pfReqCategoryBtn = document.getElementById("pfReqCategoryBtn");
+if(pfReqCategoryBtn){
+  pfReqCategoryBtn.addEventListener("click", function(){
+    var isOn = pfReqCategoryBtn.getAttribute("aria-pressed") === "true";
+    var next = !isOn;
+    pfReqCategoryBtn.setAttribute("aria-pressed", next ? "true" : "false");
+    var badge = document.getElementById("pfReqCategoryBadge");
+    badge.textContent = next ? "ON" : "OFF";
+    badge.classList.toggle("on", next);
+    badge.classList.toggle("off", !next);
+  });
+}
+
 /* ---- 仕入リスト：チェック済みの商品を非表示にする ---- */
 var PF_EYE_ICON = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle>';
 var PF_EYE_OFF_ICON = '<path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a21.8 21.8 0 015.06-5.94"></path><path d="M9.9 4.24A10.94 10.94 0 0112 4c7 0 11 7 11 7a21.8 21.8 0 01-2.16 3.19"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
