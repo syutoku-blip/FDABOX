@@ -363,11 +363,34 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-outline-pill{height:38px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;color:var(--text);display:flex;align-items:center;gap:6px;cursor:pointer;transition:.15s ease}
 .pf-outline-pill:hover{border-color:var(--accent);color:var(--accent-dark);box-shadow:var(--shadow-sm)}
 .pf-outline-pill.amber{border-color:#eccb8d;background:#fbf1de;color:#8a5a08}
-.pf-toggle-pill{position:relative}
-.pf-toggle-badge{margin-left:2px;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.03em}
-.pf-toggle-badge.on{background:rgba(46,107,31,.14);color:#2e6b1f}
-.pf-toggle-badge.off{background:rgba(122,111,96,.14);color:var(--muted)}
-.pf-outline-pill.amber[aria-pressed="false"]{border-color:var(--line-strong);background:#fff;color:var(--muted);opacity:.75}
+.pf-toggle-pill{padding:0 6px 0 14px;gap:8px;cursor:default}
+.pf-toggle-pill.dim{border-color:var(--line-strong);background:#fff;color:var(--muted);opacity:.75}
+.pf-req-cat-label{display:flex;align-items:center;gap:6px;background:none;border:0;padding:2px 0;font:inherit;color:inherit;cursor:pointer}
+.pf-req-cat-label:hover{text-decoration:underline}
+.pf-toggle-badge{
+  border:0;padding:4px 10px;border-radius:999px;font-family:var(--font-head);font-size:10px;font-weight:800;
+  letter-spacing:.03em;cursor:pointer;transition:.15s ease;
+}
+.pf-toggle-badge.on{background:#2e6b1f;color:#fff}
+.pf-toggle-badge.off{background:rgba(122,111,96,.16);color:var(--muted)}
+.pf-toggle-badge:hover{opacity:.85}
+
+.reqcat-modal-box{width:min(760px,100%)}
+.reqcat-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.reqcat-stat{flex:1;min-width:180px;background:var(--panel2);border-radius:14px;padding:14px 16px}
+.reqcat-stat .lbl{font-size:12px;color:var(--muted);margin-bottom:6px}
+.reqcat-stat .val{font-family:var(--font-head);font-weight:800;font-size:21px;color:var(--navy)}
+.reqcat-stat .val.plus{color:#a8650a}
+.reqcat-stat .val.total{color:#1a9c5a}
+.reqcat-chart{margin-bottom:18px}
+.reqcat-row{display:grid;grid-template-columns:130px 1fr;align-items:center;gap:10px;height:30px}
+.reqcat-rowlabel{font-size:12.5px;color:var(--text);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reqcat-bartrack{height:20px;background:var(--panel2);border-radius:4px;overflow:hidden}
+.reqcat-bar{height:100%;border-radius:4px;cursor:pointer;transition:filter .15s ease}
+.reqcat-bar:hover{filter:brightness(1.1)}
+.reqcat-axis{display:grid;grid-template-columns:130px 1fr;gap:10px;margin-top:6px}
+.reqcat-axis-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);font-family:var(--font-mono)}
+.reqcat-note{font-size:12px;color:var(--muted);line-height:1.8;border-top:1px solid var(--line);padding-top:14px}
 
 .pf-id-register-btn{
   height:38px;padding:0 16px;border-radius:10px;border:0;background:linear-gradient(100deg,var(--accent),var(--accent-dark));
@@ -376,7 +399,13 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 .pf-id-register-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(var(--accent-rgb),.4)}
 
-.pf-mining-wrap{position:relative}
+.pf-mining-wrap{position:relative;margin-top:10px}
+.pf-mining-chip{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);z-index:1;
+  background:linear-gradient(100deg,#e2531f,#c62a44);color:#fff;font-family:var(--font-head);
+  font-size:9.5px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap;
+  box-shadow:0 2px 6px rgba(0,0,0,.22);
+}
 .pf-mining-btn{
   height:40px;padding:0 18px;border-radius:10px;background:linear-gradient(100deg,#4a3418,#2b1e0c);color:#f0d693;
   font-family:var(--font-head);font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;cursor:pointer;border:1px solid #6b4d20;
@@ -426,6 +455,36 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 <body>
 
 <div class="pf-col-info-popup hidden" id="pfColInfoPopup"></div>
+
+<div class="modal-overlay" id="reqCategoryModal" onclick="if(event.target===this)closeReqCategoryModal()">
+  <div class="modal-box reqcat-modal-box">
+    <div class="modal-head">
+      <h3>🔖 要申請カテゴリ ― 申請が通ったら増える利益</h3>
+      <button type="button" class="modal-close" onclick="closeReqCategoryModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="reqcat-stats">
+        <div class="reqcat-stat"><div class="lbl">今すぐ出品できる利益</div><div class="val">¥985,300</div></div>
+        <div class="reqcat-stat"><div class="lbl">申請が通ったら増える利益</div><div class="val plus">＋¥9,853,169</div></div>
+        <div class="reqcat-stat"><div class="lbl">合計（承認後）</div><div class="val total">¥10,838,469</div></div>
+      </div>
+      <div class="reqcat-chart">
+        <div class="reqcat-row"><div class="reqcat-rowlabel">スポーツ・アウトドア</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:93.9%;background:#1a7a3e" title="¥5,633,169"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">楽器</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:28.3%;background:#8b3fd8" title="¥1,700,000"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">オフィス</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:25.8%;background:#2f5fe0" title="¥1,550,000"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">車・バイク</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:4.2%;background:#1c2333" title="¥250,000"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">おもちゃ</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:3.8%;background:#e2531f" title="¥230,000"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">衣類・靴・宝飾</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:3%;background:#c81e5c" title="¥180,000"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">手芸・クラフト</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:2%;background:#7a1040" title="¥120,000"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">CD・レコード</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:1.5%;background:#3d5fe0" title="¥90,000"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">工具・住設</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:1%;background:#6b7280" title="¥60,000"></div></div></div>
+        <div class="reqcat-row"><div class="reqcat-rowlabel">ホーム・キッチン</div><div class="reqcat-bartrack"><div class="reqcat-bar" style="width:0.7%;background:#0f9d8f" title="¥40,000"></div></div></div>
+        <div class="reqcat-axis"><div></div><div class="reqcat-axis-labels"><span>¥0</span><span>¥1000k</span><span>¥2000k</span><span>¥3000k</span><span>¥4000k</span><span>¥5000k</span><span>¥6000k</span></div></div>
+      </div>
+      <div class="reqcat-note">米国Amazonで出品の承認（申請）が必要なぶんの利益を、カテゴリ別に積み上げたものです。承認を取れば「出品できる利益」に加算されます。<br><b>棒をクリックするとサブカテゴリ別の内訳</b>が見られます（申請はサブカテゴリ単位で出すため）。扱わないカテゴリの除外設定を反映しています。</div>
+    </div>
+  </div>
+</div>
 
 <header class="pf-header">
   <img class="pf-logo-img" src="profinderlogo.png" alt="PROFiNDER">
@@ -743,8 +802,9 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 
   <section class="pf-panel" id="panel-seller">
     <div class="pf-seller-head">
-      <div class="pf-seller-title"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"></circle><path d="M2 21v-2a4 4 0 014-4h6a4 4 0 014 4v2"></path><circle cx="17" cy="8" r="3"></circle><path d="M22 21v-1.5a3.5 3.5 0 00-2.5-3.4"></path></svg>セラー（登録29社・デモ）</div>
+      <div class="pf-seller-title"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"></circle><path d="M2 21v-2a4 4 0 014-4h6a4 4 0 014 4v2"></path><circle cx="17" cy="8" r="3"></circle><path d="M22 21v-1.5a3.5 3.5 0 00-2.5-3.4"></path></svg>セラー（登録29社）</div>
       <div class="pf-mining-wrap">
+        <span class="pf-mining-chip">新規優良セラーを取得</span>
         <button type="button" class="pf-mining-btn" id="miningBtn">⛏ セラーマイニング</button>
         <div class="pf-mining-popup hidden" id="miningPopup">
           <div class="head">⛏ セラーマイニング<span id="miningClose">✕</span></div>
@@ -755,7 +815,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         </div>
       </div>
       <button type="button" class="pf-id-register-btn">🪪 セラーID登録</button>
-      <button type="button" class="pf-outline-pill amber pf-toggle-pill" id="pfReqCategoryBtn" aria-pressed="true">🔖 要申請カテゴリ<span class="pf-toggle-badge on" id="pfReqCategoryBadge">ON</span></button>
+      <div class="pf-outline-pill amber pf-toggle-pill" id="pfReqCategoryPill">
+        <button type="button" class="pf-req-cat-label" onclick="openReqCategoryModal()">🔖 要申請カテゴリ</button>
+        <button type="button" class="pf-toggle-badge on" id="pfReqCategoryBadge" aria-pressed="true">ON</button>
+      </div>
       <button type="button" class="pf-outline-pill"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><path d="M4 5h16l-6 8v6l-4-2v-4z"></path></svg>フィルター</button>
     </div>
 
@@ -802,19 +865,36 @@ document.addEventListener("click", hideColInfo);
 document.addEventListener("scroll", hideColInfo, true);
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") hideColInfo(); });
 
-/* ---- 要申請カテゴリ：ON/OFF切り替え ---- */
-var pfReqCategoryBtn = document.getElementById("pfReqCategoryBtn");
-if(pfReqCategoryBtn){
-  pfReqCategoryBtn.addEventListener("click", function(){
-    var isOn = pfReqCategoryBtn.getAttribute("aria-pressed") === "true";
+/* ---- 要申請カテゴリ：ON/OFF切り替え（チップ単体で切り替え） ---- */
+var pfReqCategoryBadge = document.getElementById("pfReqCategoryBadge");
+if(pfReqCategoryBadge){
+  pfReqCategoryBadge.addEventListener("click", function(e){
+    e.stopPropagation();
+    var isOn = pfReqCategoryBadge.getAttribute("aria-pressed") === "true";
     var next = !isOn;
-    pfReqCategoryBtn.setAttribute("aria-pressed", next ? "true" : "false");
-    var badge = document.getElementById("pfReqCategoryBadge");
-    badge.textContent = next ? "ON" : "OFF";
-    badge.classList.toggle("on", next);
-    badge.classList.toggle("off", !next);
+    pfReqCategoryBadge.setAttribute("aria-pressed", next ? "true" : "false");
+    pfReqCategoryBadge.textContent = next ? "ON" : "OFF";
+    pfReqCategoryBadge.classList.toggle("on", next);
+    pfReqCategoryBadge.classList.toggle("off", !next);
+    var pill = document.getElementById("pfReqCategoryPill");
+    if(pill) pill.classList.toggle("dim", !next);
   });
 }
+
+/* ---- 要申請カテゴリ：内訳モーダル ---- */
+function openReqCategoryModal(){
+  var modal = document.getElementById("reqCategoryModal");
+  if(!modal) return;
+  modal.classList.add("visible");
+  document.body.style.overflow = "hidden";
+}
+function closeReqCategoryModal(){
+  var modal = document.getElementById("reqCategoryModal");
+  if(!modal) return;
+  modal.classList.remove("visible");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeReqCategoryModal(); });
 
 /* ---- 仕入リスト：チェック済みの商品を非表示にする ---- */
 var PF_EYE_ICON = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle>';
