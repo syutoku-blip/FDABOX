@@ -270,7 +270,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-th-center{text-align:center;min-width:0}
 .pf-th-hint{border-bottom:1px dashed var(--faint)}
 .pf-col-info-popup{
-  position:fixed;z-index:3000;width:280px;background:#fff;border:1px solid var(--line);border-radius:14px;
+  position:fixed;z-index:3000;width:320px;background:#fff;border:1px solid var(--line);border-radius:14px;
   box-shadow:var(--shadow-md);padding:14px 16px;font-size:12.5px;color:var(--text);line-height:1.8;
 }
 .pf-col-info-popup.hidden{display:none}
@@ -464,6 +464,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .catfilter-row:last-child{border-bottom:0}
 .catfilter-row input{width:17px;height:17px;accent-color:var(--accent);flex:none}
 .cat-tag{border:1.5px solid;border-radius:8px;padding:3px 10px;font-size:12px;font-weight:700;flex:none}
+.pf-seller-cats{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.pf-seller-cats .cat-tag{font-size:11px;padding:2px 8px;white-space:nowrap}
 .catfilter-count{margin-left:auto;font-size:12.5px;color:var(--muted);font-family:var(--font-mono)}
 
 .dispset-modal-box{width:min(640px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
@@ -1283,7 +1285,12 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <table class="pf-seller-table">
           <thead><tr>
             <th>☆</th><th>セラー</th><th>発送</th><th><button type="button" class="pf-research-btn">🔍 全セラーでリサーチ</button></th>
-            <th>出品できる利益▼</th><th>要申請利益</th><th>未登録</th><th>類似率</th><th>カテゴリー一致率</th><th>出品単価</th><th>総ASIN</th>
+            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerProfit')">出品できる利益▼</span></th>
+            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerReq')">要申請利益</span></th>
+            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerUnreg')">未登録</span></th>
+            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerSim')">類似率</span></th>
+            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerCatMatch')">カテゴリー一致率</span></th>
+            <th>出品単価</th><th>総ASIN</th><th>カテゴリ構成</th>
           </tr></thead>
           <tbody id="sellerTbody"></tbody>
         </table>
@@ -1302,7 +1309,12 @@ var PF_COL_INFO = {
   price: "販売額＝現在の米ドル価格。見出しをクリックで基準（現価／TWAP）を選択。囲みボタンでTWAP／乖離率／価格バンドの上限・下限／バンド指数を開閉。",
   profit: "想定利益額＝推奨仕入数ぶんの合計利益（返品反映）。見出しをクリックで基準（日本Amazon仕入／過去仕入優先／自分の仕入額）を選択＝額・率・在庫改善指数すべてに連動。囲みボタンで内訳を開閉。",
   rate: "想定利益率＝利益率－返品率。基準は想定利益額と共通（見出しクリックで同じモーダル）。囲みボタンで 過去仕入率／TWAP率／返品率を開閉。",
-  index: "仕入判断に使っている5つの指数（BPI・PVI・DPI・SRI・DRA）。開くと各指数の列が表示されます。"
+  index: "仕入判断に使っている5つの指数（BPI・PVI・DPI・SRI・DRA）。開くと各指数の列が表示されます。",
+  sellerProfit: "★このセラーで「リサーチする」を押したときに出る「利益を増やせる余地」と完全に同じ数字です（同じ計算）。取得して分析済みの候補を、推奨どおり（安全に持てる最長の日数分）仕入れて売った場合に増やせる利益。①日本仕入可・②知財該当でない・③規制でない・④出品できる、を満たすものだけ。未取得ぶんは含みません（＝「未登録」列が掘る余地）／　クリックで並び替え（もう一度で昇順↔降順）",
+  sellerReq: "④米国出品制限で「承認が要る」ぶんの月間粗利（別枠）。会員が未取扱で、代表アカウント基準では要申請のASIN。承認さえ取れば主軸利益に加わる伸びしろ／　クリックで並び替え（もう一度で昇順↔降順）",
+  sellerUnreg: "あなたがまだ扱っていない、このセラーがFBAで出品しているASIN数＝掘る余地の大きさ。下段「分析済」＝そのうち実際に中身を取得して利益を算出した件数（左の利益はこの分析済ぶんの実額）／　クリックで並び替え（もう一度で昇順↔降順）",
+  sellerSim: "品揃えの一致率（%）＝あなたの取扱ASINのうち、このセラーも扱っている割合。高いほど品揃えが似ている＝相性が良い／　クリックで並び替え（もう一度で昇順↔降順）",
+  sellerCatMatch: "このセラーの品揃えが、あなたの取扱カテゴリとどれだけ重なるか（%）。高いほど自分に扱いやすい／　クリックで並び替え（もう一度で昇順↔降順）"
 };
 function showColInfo(evt, key){
   var popup = document.getElementById("pfColInfoPopup");
@@ -1312,10 +1324,10 @@ function showColInfo(evt, key){
   popup.textContent = text;
   var margin = 12;
   var x = evt.clientX + 10, y = evt.clientY + 10;
-  var maxX = window.innerWidth - 280 - margin;
-  var maxY = window.innerHeight - 140 - margin;
+  var maxX = window.innerWidth - 320 - margin;
+  var maxY = window.innerHeight - 180 - margin;
   if(x > maxX) x = Math.max(margin, maxX);
-  if(y > maxY) y = evt.clientY - 10 - 140;
+  if(y > maxY) y = evt.clientY - 10 - 180;
   popup.style.left = x + "px";
   popup.style.top = y + "px";
   popup.classList.remove("hidden");
@@ -1651,17 +1663,18 @@ document.addEventListener("keydown", function(e){ if(e.key === "Escape") pfHideS
 
 /* ---- セラータブ(ダミーデータ) ---- */
 var SAMPLE_SELLERS = [
-  {name:"サンプルセラーA", id:"A00000000001", ship:["FBA","FBM"], profit:"¥678,218", req:"¥43,766", unreg:"—", analyzed:"180件", sim:"6.1%", cat:"—", price:"—", total:"812"},
-  {name:"サンプルセラーB", id:"A00000000002", ship:["FBA"], profit:"¥556,672", req:"—", unreg:"143", analyzed:"17件", sim:"0%", cat:"90%", price:"$251", total:"165"},
-  {name:"サンプルセラーC", id:"A00000000003", ship:[], profit:"¥298,920", req:"—", unreg:"—", analyzed:"44件", sim:"—", cat:"—", price:"—", total:"44"},
-  {name:"サンプルセラーD", id:"A00000000004", ship:["FBA"], profit:"¥106,830", req:"¥21,960", unreg:"297", analyzed:"17件", sim:"8.2%", cat:"85%", price:"$131", total:"321"},
-  {name:"サンプルセラーE", id:"A00000000005", ship:[], profit:"¥85,764", req:"—", unreg:"—", analyzed:"4件", sim:"—", cat:"—", price:"—", total:"4"}
+  {name:"サンプルセラーA", id:"A00000000001", ship:["FBA","FBM"], profit:"¥678,218", req:"¥43,766", unreg:"—", analyzed:"180件", sim:"6.1%", cat:"—", price:"—", total:"812", cats:[["衣類・靴・宝飾","#c81e5c"],["携帯","#0284c7"],["家電","#0ea5e9"]]},
+  {name:"サンプルセラーB", id:"A00000000002", ship:["FBA"], profit:"¥556,672", req:"—", unreg:"143", analyzed:"17件", sim:"0%", cat:"90%", price:"$251", total:"165", cats:[["おもちゃ","#e2531f"],["スポーツ・アウトドア","#1a7a3e"]]},
+  {name:"サンプルセラーC", id:"A00000000003", ship:[], profit:"¥298,920", req:"—", unreg:"—", analyzed:"44件", sim:"—", cat:"—", price:"—", total:"44", cats:[["その他","#6b6b6b"]]},
+  {name:"サンプルセラーD", id:"A00000000004", ship:["FBA"], profit:"¥106,830", req:"¥21,960", unreg:"297", analyzed:"17件", sim:"8.2%", cat:"85%", price:"$131", total:"321", cats:[["CD・レコード","#7c3aed"],["楽器","#8b3fd8"],["オフィス","#2f5fe0"]]},
+  {name:"サンプルセラーE", id:"A00000000005", ship:[], profit:"¥85,764", req:"—", unreg:"—", analyzed:"4件", sim:"—", cat:"—", price:"—", total:"4", cats:[["ホーム・キッチン","#16a34a"]]}
 ];
 document.getElementById("sellerTbody").innerHTML = SAMPLE_SELLERS.map(function(s){
   var shipHtml = s.ship.length
     ? '<div class="pf-ship-badges">' + s.ship.map(function(t){ return '<span class="pf-ship-tag '+t.toLowerCase()+'">'+t+'</span>'; }).join("") + '</div>'
     : '-';
   var reqHtml = s.req === "—" ? '—' : '<span class="col-profit-amber">'+s.req+'</span>';
+  var catsHtml = '<div class="pf-seller-cats">' + s.cats.map(function(c){ return '<span class="cat-tag" style="border-color:'+c[1]+';color:'+c[1]+'">'+c[0]+'</span>'; }).join("") + '</div>';
   return '<tr>'
     + '<td class="star">☆</td>'
     + '<td class="sellercell"><div class="sname">'+s.name+'</div><div class="said">'+s.id+'</div></td>'
@@ -1674,6 +1687,7 @@ document.getElementById("sellerTbody").innerHTML = SAMPLE_SELLERS.map(function(s
     + '<td>'+s.cat+'</td>'
     + '<td>'+s.price+'</td>'
     + '<td>'+s.total+'</td>'
+    + '<td>'+catsHtml+'</td>'
     + '</tr>';
 }).join("");
 
