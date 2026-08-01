@@ -394,7 +394,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-seller-title{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--navy)}
 .pf-seller-title svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:1.8}
 .pf-seller-count{margin-left:auto;font-size:11.5px;color:var(--faint);font-family:var(--font-mono)}
-.pf-outline-pill{height:48px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;color:var(--text);display:flex;align-items:center;gap:6px;cursor:pointer;transition:.15s ease}
+.pf-outline-pill{height:58px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12.5px;color:var(--text);display:flex;align-items:center;gap:6px;cursor:pointer;transition:.15s ease}
 .pf-outline-pill:hover{border-color:var(--accent);color:var(--accent-dark);box-shadow:var(--shadow-sm)}
 .pf-outline-pill.amber{border-color:#eccb8d;background:#fbf1de;color:#8a5a08}
 .pf-toggle-pill{padding:0 10px 0 14px;gap:10px;cursor:default}
@@ -437,6 +437,22 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-filter-chip.new{background:var(--danger);color:#fff}
 .pf-filter-chip.excl{background:#fbeee0;color:#a8650a;border:1px solid #eccb8d}
 .pf-filter-chip.action{background:var(--accent);color:#fff}
+.pf-shortcut-menu{
+  position:fixed;z-index:3000;width:260px;background:#fff;border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow-md);padding:8px;
+}
+.pf-shortcut-menu.hidden{display:none}
+.pf-shortcut-menu-title{font-family:var(--font-head);font-weight:800;font-size:11px;color:var(--muted);padding:8px 10px 6px}
+.pf-shortcut-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px}
+.pf-shortcut-item .pf-shortcut-icon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.pf-shortcut-item .pf-shortcut-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+.pf-shortcut-item .pf-shortcut-label{flex:1;font-size:13px;color:var(--text)}
+.pf-shortcut-item .pf-shortcut-value{font-family:var(--font-head);font-weight:800;font-size:13px}
+.pf-shortcut-divider{height:1px;background:var(--line);margin:6px 4px}
+.pf-shortcut-action{cursor:pointer;transition:.1s ease}
+.pf-shortcut-action:hover{background:var(--panel2)}
+.pf-shortcut-action .pf-shortcut-icon{background:var(--accent);color:#fff}
+.pf-shortcut-action .pf-shortcut-label{font-weight:700;color:var(--accent-dark)}
 .pf-filter-chip-x{width:15px;height:15px;flex:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.3)}
 .pf-filter-chip.excl .pf-filter-chip-x{background:rgba(168,101,10,.15)}
 .pf-filter-chip-x svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:3}
@@ -512,7 +528,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .csvup-or-divider:before,.csvup-or-divider:after{content:"";flex:1;height:1px;background:var(--line)}
 
 .guide-modal-box{width:min(620px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
-.guide-tabs{display:flex;gap:6px;padding:0 22px 18px;margin-bottom:6px;border-bottom:1px solid var(--line);flex-wrap:wrap;flex:none}
+.guide-tabs{display:flex;gap:6px;padding:18px 22px 18px;margin-bottom:6px;border-bottom:1px solid var(--line);flex-wrap:wrap;flex:none}
 .guide-tab{height:34px;padding:0 14px;border-radius:9px;border:1px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--muted);cursor:pointer;transition:.15s ease}
 .guide-tab:hover{border-color:var(--accent);color:var(--accent-dark)}
 .guide-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -541,23 +557,22 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .csvup-row-btn:hover{opacity:.85}
 
 .pf-id-register-btn{
-  height:48px;padding:0 16px;border-radius:10px;border:1.5px solid rgba(var(--accent-rgb),.35);background:rgba(var(--accent-rgb),.06);
+  height:58px;padding:0 16px;border-radius:10px;border:1.5px solid rgba(var(--accent-rgb),.35);background:rgba(var(--accent-rgb),.06);
   color:var(--accent-dark);font-family:var(--font-head);font-weight:700;font-size:12.5px;display:flex;align-items:center;gap:7px;
   cursor:pointer;transition:.15s ease;
 }
 .pf-id-register-btn:hover{background:rgba(var(--accent-rgb),.12);border-color:var(--accent)}
 
-.pf-mining-wrap{position:relative;padding-top:11px}
+.pf-mining-wrap{position:relative}
 .pf-mining-chip{
-  position:absolute;top:0;left:16px;z-index:1;
+  align-self:flex-start;position:static;
   background:linear-gradient(100deg,var(--danger),#c62a44);color:#fff;font-family:var(--font-head);
   font-size:8.5px;font-weight:800;padding:2px 9px;border-radius:999px;white-space:nowrap;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
 .pf-mining-btn{
-  height:48px;padding:0 20px;border-radius:10px;position:relative;overflow:hidden;
+  height:58px;padding:7px 20px;border-radius:10px;position:relative;overflow:hidden;
   background:linear-gradient(100deg,var(--navy),#2a3a6b 45%,var(--accent-dark));color:var(--amber);
-  font-family:var(--font-head);font-weight:800;font-size:13px;display:flex;align-items:center;gap:9px;
+  font-family:var(--font-head);font-weight:800;font-size:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
   cursor:pointer;border:1px solid rgba(246,168,33,.4);box-shadow:0 5px 16px rgba(21,34,56,.4);transition:.15s ease;
 }
 .pf-mining-btn:before{
@@ -566,10 +581,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   transform:skewX(-20deg);animation:pfMiningShine 3.2s ease-in-out infinite;
 }
 @keyframes pfMiningShine{0%{left:-60%}55%,100%{left:130%}}
+.pf-mining-label{display:flex;align-items:center;gap:8px}
 .pf-mining-pick{width:17px;height:17px;stroke:var(--amber);fill:none;stroke-width:2;flex:none}
 .pf-mining-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(21,34,56,.5)}
 .pf-mining-popup{
-  position:absolute;top:58px;left:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
+  position:absolute;top:66px;left:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
   padding:18px;box-shadow:0 14px 34px rgba(0,0,0,.14);z-index:20;
 }
 .pf-mining-popup .head{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:#5c3d00;font-size:14.5px;margin-bottom:14px}
@@ -611,6 +627,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 <body>
 
 <div class="pf-col-info-popup hidden" id="pfColInfoPopup"></div>
+<div class="pf-shortcut-menu hidden" id="pfShortcutMenu"></div>
 
 <div class="modal-overlay" id="reqCategoryModal" onclick="if(event.target===this)closeReqCategoryModal()">
   <div class="modal-box reqcat-modal-box">
@@ -994,8 +1011,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       </div>
     </div>
 
+    <div class="pf-filter-chips" id="pfSiireFilterChips"></div>
     <div class="pf-siire-filter hidden" id="pfSiireFilterPanel">
-      <div class="pf-filter-chips" id="pfSiireFilterChips"></div>
       <div class="pf-sf-row">
         <span class="pf-sf-label">▽ フィルター</span>
         <input type="text" class="pf-sf-input pf-sf-search" placeholder="商品名／ASIN／SKU">
@@ -1008,7 +1025,6 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <select class="pf-sf-select"><option>すべて表示</option><option>あり</option><option>なし</option></select>
       </div>
       <div class="pf-sf-row">
-        <label class="pf-sf-check pf-sf-new" id="pfSiireNewWrap"><input type="checkbox" id="pfSiireNewCheck"><span class="catfilter-new-badge">NEW</span>追加から24時間以内のみ表示</label>
         <button type="button" class="pf-sf-dropdown-btn">知財を隠す ▾</button>
         <span class="pf-sf-label">状態：</span>
         <select class="pf-sf-select"><option>選択</option><option>要申請</option><option>NG</option><option>正常</option></select>
@@ -1235,10 +1251,9 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   <section class="pf-panel" id="panel-seller">
     <div class="pf-seller-head">
       <div class="pf-mining-wrap">
-        <span class="pf-mining-chip">新規優良セラーを取得</span>
         <button type="button" class="pf-mining-btn" id="miningBtn">
-          <svg class="pf-mining-pick" viewBox="0 0 24 24"><path d="M4 4c6 0 14 4 16 10-4-1-9 1-12 4C6 15 5 9 4 4z"></path></svg>
-          <span>セラーマイニング</span>
+          <span class="pf-mining-chip">新規優良セラーを取得</span>
+          <span class="pf-mining-label"><svg class="pf-mining-pick" viewBox="0 0 24 24"><path d="M4 4c4 0 8 2 10 6"></path><path d="M20 4c-4 0-8 2-10 6"></path><line x1="10" y1="10" x2="4" y2="20"></line></svg>セラーマイニング</span>
         </button>
         <div class="pf-mining-popup hidden" id="miningPopup">
           <div class="head">⛏ セラーマイニング<span id="miningClose">✕</span></div>
@@ -1592,6 +1607,48 @@ document.getElementById("statGrid").insertAdjacentHTML("afterbegin", STAT_CARDS.
     + '</div>';
 }).join(""));
 
+/* ---- 仕入リスト：表内の未使用エリアを右クリックするとホームのアクションをショートカット表示 ---- */
+function pfBuildShortcutMenuHTML(){
+  var html = '<div class="pf-shortcut-menu-title">ホームのアクション</div>';
+  html += STAT_CARDS.map(function(c){
+    return '<div class="pf-shortcut-item"><span class="pf-shortcut-icon '+c.tone+'"><svg viewBox="0 0 24 24">'+c.icon+'</svg></span>'
+      + '<span class="pf-shortcut-label">'+c.label+'</span><span class="pf-shortcut-value">'+c.value+'件</span></div>';
+  }).join("");
+  html += '<div class="pf-shortcut-divider"></div>';
+  html += '<div class="pf-shortcut-item pf-shortcut-action" onclick="pfDiscoverNewAsin();pfHideShortcutMenu()"><span class="pf-shortcut-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span><span class="pf-shortcut-label">新規ASINを発掘</span></div>';
+  html += '<div class="pf-shortcut-item pf-shortcut-action" onclick="pfDiscoverNewSeller();pfHideShortcutMenu()"><span class="pf-shortcut-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></span><span class="pf-shortcut-label">新規セラーを発掘</span></div>';
+  return html;
+}
+function pfShowShortcutMenu(evt){
+  var menu = document.getElementById("pfShortcutMenu");
+  if(!menu) return;
+  evt.preventDefault();
+  menu.innerHTML = pfBuildShortcutMenuHTML();
+  var margin = 12, menuW = 260, menuH = 500;
+  var x = evt.clientX + 8, y = evt.clientY + 8;
+  var maxX = window.innerWidth - menuW - margin;
+  var maxY = window.innerHeight - menuH - margin;
+  if(x > maxX) x = Math.max(margin, maxX);
+  if(y > maxY) y = Math.max(margin, evt.clientY - menuH);
+  menu.style.left = x + "px";
+  menu.style.top = y + "px";
+  menu.classList.remove("hidden");
+}
+function pfHideShortcutMenu(){
+  var menu = document.getElementById("pfShortcutMenu");
+  if(menu) menu.classList.add("hidden");
+}
+var pfSiirePanelForShortcut = document.getElementById("panel-siire");
+if(pfSiirePanelForShortcut){
+  pfSiirePanelForShortcut.addEventListener("contextmenu", function(evt){
+    if(evt.target.closest(".pf-th-hint")) return; // 既存の右クリック説明はそのまま優先
+    pfShowShortcutMenu(evt);
+  });
+}
+document.addEventListener("click", pfHideShortcutMenu);
+document.addEventListener("scroll", pfHideShortcutMenu, true);
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") pfHideShortcutMenu(); });
+
 /* ---- セラータブ(ダミーデータ) ---- */
 var SAMPLE_SELLERS = [
   {name:"サンプルセラーA", id:"A00000000001", ship:["FBA","FBM"], profit:"¥678,218", req:"¥43,766", unreg:"—", analyzed:"180件", sim:"6.1%", cat:"—", price:"—", total:"812"},
@@ -1652,10 +1709,6 @@ function pfShowActionChip(containerId, label){
 function pfDiscoverNewAsin(){
   var tab = document.querySelector('.pf-tab[data-tab="siire"]');
   if(tab) tab.click();
-  var panel = document.getElementById("pfSiireFilterPanel");
-  if(panel) panel.classList.remove("hidden");
-  var newCheck = document.getElementById("pfSiireNewCheck");
-  if(newCheck) newCheck.checked = true;
   pfShowActionChip("pfSiireFilterChips", "新規ASIN取得");
 }
 function pfApplySellerNewFilter(actionLabel){

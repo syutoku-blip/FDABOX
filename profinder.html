@@ -25,7 +25,6 @@
   </div>
 </div>
 
-<div class="help-tip-bubble" id="globalTooltip" role="tooltip"></div>
 
 <div class="modal-overlay" id="pfAsinModal" onclick="if(event.target===this)closePfAsinModal()">
   <div class="modal-box" style="width:min(920px,100%);max-height:90vh">
@@ -108,30 +107,19 @@
       </button>
     </div>
   </aside>
-  <main class="main-content"><iframe id="profinderFrame" src="profinder-app.html" title="PROFiNDER" style="width:100%;min-height:600px;border:0;display:block" scrolling="no"></iframe></main>
+  <main class="main-content"><iframe id="profinderFrame" src="profinder-app.html" title="PROFiNDER" style="width:100%;height:100vh;border:0;display:block"></iframe></main>
 </div>
 
 <script>
 (function(){
   var frame = document.getElementById("profinderFrame");
   function resizeFrame(){
-    try{
-      var doc = frame.contentWindow.document;
-      var h = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
-      frame.style.height = h + "px";
-    }catch(e){}
+    // position:fixedのモーダル等が正しく画面内に収まるよう、
+    // ページの中身の長さに関係なく常にウィンドウの高さに固定する
+    // (iframe自身の中で必要に応じてスクロールする)
+    frame.style.height = window.innerHeight + "px";
   }
-  frame.addEventListener("load", function(){
-    resizeFrame();
-    // 中のタブ切替・データ描画などでも高さが変わるので継続的に監視する
-    setInterval(resizeFrame, 500);
-    try{
-      var innerDoc = frame.contentWindow.document;
-      if(window.ResizeObserver){
-        new ResizeObserver(resizeFrame).observe(innerDoc.body);
-      }
-    }catch(e){}
-  });
+  resizeFrame();
   window.addEventListener("resize", resizeFrame);
 })();
 </script>
