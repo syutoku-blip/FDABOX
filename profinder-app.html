@@ -863,8 +863,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
     <div class="guide-tabs">
       <button type="button" class="guide-tab active" data-guide-tab="basic" onclick="pfSwitchGuideTab('basic')">①基本操作</button>
       <button type="button" class="guide-tab" data-guide-tab="action" onclick="pfSwitchGuideTab('action')">②アクションボタン</button>
-      <button type="button" class="guide-tab" data-guide-tab="siire" onclick="pfSwitchGuideTab('siire')">③仕入れページ</button>
-      <button type="button" class="guide-tab" data-guide-tab="seller" onclick="pfSwitchGuideTab('seller')">④セラーページ</button>
+      <button type="button" class="guide-tab" data-guide-tab="siire" onclick="pfSwitchGuideTab('siire')">③仕入れリスト</button>
+      <button type="button" class="guide-tab" data-guide-tab="seller" onclick="pfSwitchGuideTab('seller')">④セラーリスト</button>
     </div>
     <div class="guide-body">
       <div class="guide-panel active" data-guide-panel="basic">
@@ -874,20 +874,20 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       </div>
       <div class="guide-panel" data-guide-panel="action">
         <h4>②アクションボタン</h4>
-        <div class="guide-item"><b>ホーム：</b>各アクションに合わせて、仕入れリスト・セラーページのうち、やりたいことに対応したページや絞り込み状態を瞬時に呼び出します。</div>
+        <div class="guide-item"><b>ホーム：</b>各アクションに合わせて、仕入れリスト・セラーリストのうち、やりたいことに対応したページや絞り込み状態を瞬時に呼び出します。</div>
         <div class="guide-item"><b>仕入れリストページ：</b>ページ内のどこかで右クリックすると、ホームと同じアクションボタンをショートカットとして呼び出せます。</div>
       </div>
       <div class="guide-panel" data-guide-panel="siire">
-        <h4>③仕入れページ</h4>
+        <h4>③仕入れリスト</h4>
         <div class="guide-item">このページに表示されるASINは、自分が扱ったことのある商品（現在販売中の商品、過去に扱ったことのある商品）です。</div>
         <div class="guide-callout">
           <div class="guide-callout-label">ポイント</div>
           <div class="guide-item">「新規ASIN取得」のアクションボタンを押すと、セラーリストの中から自分がまだ扱ったことがなく、かつ利益を見込める商品のみを取得します。</div>
-          <button type="button" class="guide-link" onclick="pfSwitchGuideTab('seller')">セラーページについてはこちら</button>
+          <button type="button" class="guide-link" onclick="pfSwitchGuideTab('seller')">セラーリストについてはこちら</button>
         </div>
       </div>
       <div class="guide-panel" data-guide-panel="seller">
-        <h4>④セラーページ</h4>
+        <h4>④セラーリスト</h4>
         <div class="guide-item">このページに表示されるセラーは、自分がリサーチしたことのあるセラーです。</div>
         <div class="guide-callout">
           <div class="guide-callout-label">ポイント</div>
@@ -905,7 +905,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   <nav class="pf-tabs">
     <button type="button" class="pf-tab active" data-tab="home">ホーム</button>
     <button type="button" class="pf-tab" data-tab="siire">仕入リスト</button>
-    <button type="button" class="pf-tab" data-tab="seller">セラー</button>
+    <button type="button" class="pf-tab" data-tab="seller">セラーリスト</button>
     <button type="button" class="pf-tab" data-tab="tana">棚卸</button>
   </nav>
 
