@@ -1907,11 +1907,11 @@ function pfCaptureSiireFilterDefaults(){
     selects: Array.prototype.map.call(panel.querySelectorAll("select"), function(s){ return s.selectedIndex; })
   };
 }
-function pfUpdateSiireFilterChips(){
+function pfUpdateSiireFilterChips(preserveActionChips){
   var panel = document.getElementById("pfSiireFilterPanel");
   var container = document.getElementById("pfSiireFilterChips");
   if(!panel || !container || !PF_SIIRE_FILTER_DEFAULTS) return;
-  var actionChips = Array.prototype.slice.call(container.querySelectorAll(".pf-filter-chip.action"));
+  var actionChips = preserveActionChips ? Array.prototype.slice.call(container.querySelectorAll(".pf-filter-chip.action")) : [];
   container.innerHTML = "";
   function addChip(label, onRemove){
     var chip = document.createElement("span");
@@ -1949,15 +1949,23 @@ function pfUpdateSiireFilterChips(){
   });
   actionChips.forEach(function(chip){ container.appendChild(chip); });
 }
-function pfSiireFilterChanged(){
-  pfUpdateSiireFilterChips();
+function pfSiireFilterChanged(preserveActionChips){
+  pfUpdateSiireFilterChips(preserveActionChips);
   pfApplySiireTagFilter();
 }
 var pfSiireFilterPanelEl = document.getElementById("pfSiireFilterPanel");
 if(pfSiireFilterPanelEl){
   pfCaptureSiireFilterDefaults();
-  pfSiireFilterPanelEl.addEventListener("input", pfSiireFilterChanged);
-  pfSiireFilterPanelEl.addEventListener("change", pfSiireFilterChanged);
+  /* タグ（NEW／補充／ストック／滞留）は同時に1つだけ選べるようにする */
+  pfSiireFilterPanelEl.addEventListener("change", function(e){
+    if(e.target && e.target.dataset && e.target.dataset.tagFilter && e.target.checked){
+      pfSiireFilterPanelEl.querySelectorAll('input[data-tag-filter]').forEach(function(cb){
+        if(cb !== e.target) cb.checked = false;
+      });
+    }
+  });
+  pfSiireFilterPanelEl.addEventListener("input", function(){ pfSiireFilterChanged(); });
+  pfSiireFilterPanelEl.addEventListener("change", function(){ pfSiireFilterChanged(); });
 }
 function pfShowActionChip(containerId, label){
   var container = document.getElementById(containerId);
@@ -1971,8 +1979,10 @@ function pfShowActionChip(containerId, label){
 function pfCheckSiireTag(tagValue){
   var panel = document.getElementById("pfSiireFilterPanel");
   if(!panel) return;
-  var cb = panel.querySelector('input[data-tag-filter="'+tagValue+'"]');
-  if(cb){ cb.checked = true; pfSiireFilterChanged(); }
+  panel.querySelectorAll('input[data-tag-filter]').forEach(function(cb){
+    cb.checked = (cb.dataset.tagFilter === tagValue);
+  });
+  pfSiireFilterChanged(true);
 }
 function pfDiscoverNewAsin(){
   var tab = document.querySelector('.pf-tab[data-tab="siire"]');
