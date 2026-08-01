@@ -94,7 +94,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-discover-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
 .pf-discover-card-label{font-family:var(--font-head);font-weight:800;font-size:15px}
 
-.pf-stat-card{border-radius:18px;padding:22px 18px;text-align:center;border:1px solid transparent}
+.pf-stat-card{border-radius:18px;padding:22px 18px;text-align:center;border:1px solid transparent;transition:.15s ease}
+.pf-stat-card[role="button"]:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(21,34,56,.12)}
 .pf-stat-icon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;color:#fff}
 .pf-stat-icon svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2.2}
 .pf-stat-label{font-weight:700;font-size:14px;margin-bottom:6px}
@@ -288,9 +289,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .col-gain .sub{font-size:10.5px;color:var(--faint);margin-top:2px;line-height:1.4}
 .col-gain .dash{color:var(--faint);font-size:16px}
 
-.pf-badge{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:11px;font-weight:700;margin-bottom:6px}
+.pf-badge{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:6px;font-size:11px;font-weight:700;margin-bottom:6px;margin-right:5px}
 .badge-restock{background:rgba(var(--accent-rgb),.14);color:var(--accent-dark)}
 .badge-stock{background:#faf0cf;color:#8a6d12}
+.badge-new{background:#e8f0ff;color:#2f5fe0}
+.badge-stale{background:#e7e3da;color:#57534a}
 .pf-prod-name{font-size:13.5px;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:4px}
 .pf-prod-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .pf-prod-asin{font-family:var(--font-mono);font-size:12px;color:var(--accent)}
@@ -308,7 +311,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .col-recommend{text-align:center;min-width:0}
 .col-recommend .ok-circle{width:26px;height:26px;border-radius:50%;border:2px solid #2e8b57;color:#2e8b57;display:flex;align-items:center;justify-content:center;margin:0 auto 4px}
 .col-recommend .ok-circle svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:3}
-.col-recommend .stock-link{font-size:11.5px;color:var(--accent);text-decoration:underline;font-family:var(--font-mono);cursor:pointer}
+.col-recommend .stock-link{font-size:11.5px;color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent);font-family:var(--font-mono);cursor:pointer}
 .pf-day-tabs{display:flex;gap:4px;justify-content:center}
 .pf-day-tab{width:32px;padding:4px 0;border-radius:7px;text-align:center;font-size:10px;color:var(--muted);background:#f4f5f8}
 .pf-day-tab b{display:block;font-size:13px;color:var(--navy)}
@@ -409,7 +412,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-switch-thumb{position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .18s ease}
 .pf-switch-wrap[aria-pressed="true"] .pf-switch-thumb{left:17px}
 
-.reqcat-modal-box{width:min(760px,100%);align-self:flex-start;margin-top:20px;max-height:calc(100vh - 40px);display:flex;flex-direction:column;overflow:hidden}
+.reqcat-modal-box{width:min(760px,100%);align-self:flex-start;max-height:calc(100vh - 48px);display:flex;flex-direction:column;overflow:hidden}
 .reqcat-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
 .reqcat-stat{flex:1;min-width:180px;background:var(--panel2);border-radius:14px;padding:14px 16px}
 .reqcat-stat .lbl{font-size:12px;color:var(--muted);margin-bottom:6px}
@@ -426,8 +429,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .reqcat-axis-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);font-family:var(--font-mono)}
 .reqcat-note{font-size:12px;color:var(--muted);line-height:1.8;border-top:1px solid var(--line);padding-top:14px}
 
-.catfilter-modal-box{width:min(600px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
-.catfilter-body{padding:18px 22px 22px;overflow-y:auto}
+.catfilter-modal-box{width:min(600px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 48px);align-self:flex-start;overflow:hidden}
+.catfilter-body{padding:18px 22px 22px;overflow-y:auto;flex:1;min-height:0}
 .catfilter-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:14px}
 .catfilter-new-row{display:flex;align-items:center;gap:9px;padding:11px 14px;background:var(--panel2);border-radius:10px;margin-bottom:10px;font-size:13px;font-weight:700;color:var(--text);cursor:pointer}
 .catfilter-new-row input{width:16px;height:16px;accent-color:var(--accent);flex:none}
@@ -471,10 +474,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-seller-cats .cat-tag{font-size:11px;padding:2px 8px;white-space:nowrap}
 .catfilter-count{margin-left:auto;font-size:12.5px;color:var(--muted);font-family:var(--font-mono)}
 
-.dispset-modal-box{width:min(640px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
+.dispset-modal-box{width:min(640px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 48px);align-self:flex-start;overflow:hidden}
 .dispset-desc{font-size:12.5px;color:var(--muted);line-height:1.7;padding:0 22px 16px}
-.dispset-body{overflow-y:auto;padding-top:6px}
-.dispset-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 22px;border-top:1px solid var(--line)}
+.dispset-body{overflow-y:auto;padding-top:6px;flex:1;min-height:0}
+.dispset-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 22px}
+.dispset-row + .dispset-row{border-top:1px solid var(--line)}
 .dispset-row-text{flex:1}
 .dispset-row-title{font-family:var(--font-head);font-weight:800;font-size:14px;color:var(--navy);margin-bottom:4px}
 .dispset-row-desc{font-size:12px;color:var(--muted);line-height:1.6}
@@ -491,8 +495,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-th-info-btn:hover{color:var(--accent-dark)}
 .pf-th-info-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
 
-.pcalc-modal-box{width:min(540px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
-.pcalc-body{padding:18px 22px 20px;overflow-y:auto}
+.pcalc-modal-box{width:min(540px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 48px);align-self:flex-start;overflow:hidden}
+.pcalc-body{padding:18px 22px 20px;overflow-y:auto;flex:1;min-height:0}
 .pcalc-desc{font-size:12.5px;color:var(--muted);margin-bottom:14px}
 .pcalc-radio-card{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:.15s ease}
 .pcalc-radio-card.selected{border-color:var(--accent);background:rgba(var(--accent-rgb),.06)}
@@ -509,8 +513,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pcalc-tariff-table td{padding:5px 4px;border-bottom:1px solid var(--line)}
 .pcalc-tariff-table input{width:52px;height:26px;border-radius:6px;border:1px solid var(--line-strong);text-align:right;padding:0 6px;font-family:var(--font-mono);font-size:12px}
 
-.stockdet-modal-box{width:min(460px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
-.stockdet-body{padding:18px 22px 20px;overflow-y:auto}
+.stockdet-modal-box{width:min(460px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 48px);align-self:flex-start;overflow:hidden}
+.stockdet-body{padding:18px 22px 20px;overflow-y:auto;flex:1;min-height:0}
 .stockdet-prod-name{font-family:var(--font-head);font-weight:700;font-size:14.5px;color:var(--navy);line-height:1.4}
 .stockdet-asin{font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-top:4px}
 .stockdet-total{display:flex;align-items:baseline;gap:6px;margin:20px 0 18px}
@@ -526,8 +530,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .stockdet-val{font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--navy)}
 .stockdet-note{font-size:11.5px;color:var(--faint);line-height:1.7;margin-top:16px}
 
-.csvup-modal-box{width:min(560px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
-.csvup-body{padding:18px 22px 22px;overflow-y:auto}
+.csvup-modal-box{width:min(560px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 48px);align-self:flex-start;overflow:hidden}
+.csvup-body{padding:18px 22px 22px;overflow-y:auto;flex:1;min-height:0}
 .csvup-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:16px}
 .csvup-dropzone{
   border:2px dashed var(--line-strong);border-radius:14px;padding:28px 20px;text-align:center;
@@ -549,12 +553,12 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .csvup-or-divider{display:flex;align-items:center;gap:10px;margin:14px 0;font-size:11px;color:var(--faint)}
 .csvup-or-divider:before,.csvup-or-divider:after{content:"";flex:1;height:1px;background:var(--line)}
 
-.guide-modal-box{width:min(620px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
+.guide-modal-box{width:min(620px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 48px);align-self:flex-start;overflow:hidden}
 .guide-tabs{display:flex;gap:6px;padding:18px 22px 18px;margin-bottom:6px;border-bottom:1px solid var(--line);flex-wrap:wrap;flex:none}
 .guide-tab{height:34px;padding:0 14px;border-radius:9px;border:1px solid var(--line-strong);background:#fff;font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--muted);cursor:pointer;transition:.15s ease}
 .guide-tab:hover{border-color:var(--accent);color:var(--accent-dark)}
 .guide-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.guide-body{padding:24px 22px 24px;overflow-y:auto}
+.guide-body{padding:24px 22px 24px;overflow-y:auto;flex:1;min-height:0}
 .guide-panel{display:none}
 .guide-panel.active{display:block}
 .guide-panel h4{font-family:var(--font-head);font-weight:800;font-size:15px;color:var(--navy);margin-bottom:12px}
@@ -592,26 +596,32 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
   font-size:8.5px;font-weight:800;padding:2px 9px;border-radius:999px;white-space:nowrap;
 }
 .pf-mining-btn{
-  height:58px;padding:7px 20px;border-radius:10px;position:relative;overflow:hidden;
-  background:linear-gradient(100deg,var(--navy),#2a3a6b 45%,var(--accent-dark));color:var(--amber);
+  height:58px;padding:7px 22px;border-radius:10px;position:relative;overflow:hidden;
+  background:
+    repeating-linear-gradient(135deg,rgba(212,175,55,.06) 0px,rgba(212,175,55,.06) 1px,transparent 1px,transparent 7px),
+    linear-gradient(155deg,#1c1712 0%,#2b2214 48%,#15110c 100%);
   font-family:var(--font-head);font-weight:800;font-size:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
-  cursor:pointer;border:1px solid rgba(246,168,33,.4);box-shadow:0 5px 16px rgba(21,34,56,.4);transition:.15s ease;
+  cursor:pointer;border:1px solid rgba(212,175,55,.5);
+  box-shadow:0 5px 16px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);transition:.15s ease;
 }
 .pf-mining-btn:before{
   content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent);
+  background:linear-gradient(100deg,transparent,rgba(245,220,160,.20),transparent);
   transform:skewX(-20deg);animation:pfMiningShine 3.2s ease-in-out infinite;
 }
 @keyframes pfMiningShine{0%{left:-60%}55%,100%{left:130%}}
-.pf-mining-label{display:flex;align-items:center;gap:8px}
-.pf-mining-pick{font-size:15px;line-height:1;flex:none}
-.pf-mining-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(21,34,56,.5)}
-.mining-modal-box{width:min(360px,100%);background:#fdf6e3;border:1.5px solid #e6c369;align-self:flex-start;margin-top:20px}
+.pf-mining-label{
+  display:flex;align-items:center;gap:8px;letter-spacing:.02em;
+  background:linear-gradient(180deg,#f3dd9c 15%,#c9a052 85%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+}
+.pf-mining-pick{font-size:15px;line-height:1;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
+.pf-mining-btn:hover{transform:translateY(-1px);border-color:rgba(212,175,55,.8);box-shadow:0 8px 22px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.09)}
+.mining-modal-box{width:min(360px,100%);background:#fdf6e3;border:1.5px solid #e6c369;align-self:flex-start;max-height:calc(100vh - 48px);display:flex;flex-direction:column;overflow:hidden}
 .mining-modal-box .modal-head{border-bottom:1.5px solid #e6c369}
 .mining-modal-box .modal-head h3{color:#5c3d00;font-size:15px}
 .mining-modal-box .modal-close{border-color:#e6c369;color:#8a6a1f;background:transparent}
 .mining-modal-box .modal-close:hover{background:#f4e2ab;color:#5c3d00}
-.mining-body{padding:18px}
+.mining-body{padding:18px;overflow-y:auto;flex:1;min-height:0}
 .pf-mining-result{border:1.5px dashed #d8b361;border-radius:12px;padding:14px;text-align:center;margin-bottom:12px}
 .pf-mining-result .lbl{font-size:12px;color:#8a6a1f;margin-bottom:6px}
 .pf-mining-result .val{font-family:var(--font-head);font-size:24px;font-weight:800;color:#5c3d00}
@@ -1082,6 +1092,13 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <select class="pf-sf-select"><option>すべて表示</option><option>あり</option><option>なし</option></select>
       </div>
       <div class="pf-sf-row">
+        <span class="pf-sf-label">タグで絞り込み：</span>
+        <label class="pf-sf-check"><input type="checkbox" data-tag-filter="NEW">NEW</label>
+        <label class="pf-sf-check"><input type="checkbox" data-tag-filter="補充">補充</label>
+        <label class="pf-sf-check"><input type="checkbox" data-tag-filter="ストック">ストック</label>
+        <label class="pf-sf-check"><input type="checkbox" data-tag-filter="滞留">滞留</label>
+      </div>
+      <div class="pf-sf-row">
         <button type="button" class="pf-sf-dropdown-btn">知財を隠す ▾</button>
         <span class="pf-sf-label">状態：</span>
         <select class="pf-sf-select"><option>選択</option><option>要申請</option><option>NG</option><option>正常</option></select>
@@ -1120,7 +1137,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <div class="pf-prod-cell">
           <div class="pf-prod-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
           <div>
-            <span class="pf-badge badge-restock">補充</span>
+            <span class="pf-badge badge-new">NEW</span><span class="pf-badge badge-restock">補充</span>
             <div class="pf-prod-name">サンプル商品A（デモ）</div>
             <div class="pf-prod-meta"><span class="pf-prod-asin">B0DEMO0001</span><span class="pf-warn-badge"><svg viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.8L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z"></path></svg></span></div>
             <div class="pf-edit-chip">🗓 添削</div>
@@ -1186,7 +1203,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <div class="pf-prod-cell">
           <div class="pf-prod-thumb"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></div>
           <div>
-            <span class="pf-badge badge-stock">ストック</span>
+            <span class="pf-badge badge-stale">滞留</span>
             <div class="pf-prod-name">サンプル商品C（デモ）</div>
             <div class="pf-prod-meta"><span class="pf-prod-asin">B0DEMO0003</span><span class="pf-warn-badge amber"><svg viewBox="0 0 24 24"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.8L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z"></path></svg></span></div>
             <div class="pf-edit-chip">🗓 添削</div>
@@ -1333,11 +1350,11 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <table class="pf-seller-table">
           <thead><tr>
             <th>☆</th><th>セラー</th><th>発送</th><th><button type="button" class="pf-research-btn">🔍 全セラーでリサーチ</button></th>
-            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerProfit')" onclick="pfSortSellerBy('sellerProfit')">出品できる利益▼<span class="pf-sort-arrow" id="sellerSortArrow-sellerProfit"></span></span></th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerProfit')" onclick="pfSortSellerBy('sellerProfit')">出品できる利益<span class="pf-sort-arrow" id="sellerSortArrow-sellerProfit"></span></span></th>
             <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerReq')" onclick="pfSortSellerBy('sellerReq')">要申請利益<span class="pf-sort-arrow" id="sellerSortArrow-sellerReq"></span></span></th>
             <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerUnreg')" onclick="pfSortSellerBy('sellerUnreg')">未登録<span class="pf-sort-arrow" id="sellerSortArrow-sellerUnreg"></span></span></th>
             <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerSim')" onclick="pfSortSellerBy('sellerSim')">類似率<span class="pf-sort-arrow" id="sellerSortArrow-sellerSim"></span></span></th>
-            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerCatMatch')" onclick="pfSortSellerBy('sellerCatMatch')">カテゴリー一致率<span class="pf-sort-arrow" id="sellerSortArrow-sellerCatMatch"></span></span></th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerCatMatch')" onclick="pfSortSellerBy('sellerCatMatch')">カテゴリ一致率<span class="pf-sort-arrow" id="sellerSortArrow-sellerCatMatch"></span></span></th>
             <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerPrice')" onclick="pfSortSellerBy('sellerPrice')">出品単価<span class="pf-sort-arrow" id="sellerSortArrow-sellerPrice"></span></span></th>
             <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerAsinCount')" onclick="pfSortSellerBy('sellerAsinCount')">総ASIN<span class="pf-sort-arrow" id="sellerSortArrow-sellerAsinCount"></span></span></th>
             <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerCatComp')">カテゴリ構成</span></th>
@@ -1715,16 +1732,17 @@ document.querySelectorAll(".pf-tab").forEach(function(btn){
 
 /* ---- ホームタブの集計カード(ダミーデータ) ---- */
 var STAT_CARDS = [
-  {tone:"tone-red",    label:"即補充",     value:28,  amount:"¥110,707", icon:'<path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.8L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z"></path>'},
+  {tone:"tone-red",    label:"即補充",     value:28,  amount:"¥110,707", icon:'<path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.3 3.8L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z"></path>', action:"pfDiscoverInstantRestock"},
   {tone:"tone-green",  label:"仕入好機",    value:20,  amount:"¥95,292",  icon:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"></path>'},
   {tone:"tone-mint",   label:"リピート仕入", value:8,   amount:"¥27,647",  icon:'<polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 014-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 01-4 4H3"></path>'},
   {tone:"tone-blue",   label:"バリエーション", value:9,  amount:"¥216,949", icon:'<rect x="3" y="8" width="6" height="12" rx="1"></rect><rect x="9" y="4" width="6" height="16" rx="1"></rect><rect x="15" y="11" width="6" height="9" rx="1"></rect>'},
-  {tone:"tone-orange", label:"完全在庫切れ", value:19,  amount:"¥95,069",  icon:'<circle cx="12" cy="12" r="9"></circle><line x1="6" y1="6" x2="18" y2="18"></line>'},
+  {tone:"tone-orange", label:"完全在庫切れ", value:19,  amount:"¥95,069",  icon:'<circle cx="12" cy="12" r="9"></circle><line x1="6" y1="6" x2="18" y2="18"></line>', action:"pfDiscoverStockOut"},
   {tone:"tone-gray",   label:"滞留在庫",    value:105, amount:"現金化 ¥721,691", icon:'<circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 15"></polyline>'},
   {tone:"tone-purple", label:"知財入り商品", value:84,  amount:"¥273,040", icon:'<circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>'}
 ];
 document.getElementById("statGrid").insertAdjacentHTML("afterbegin", STAT_CARDS.map(function(c){
-  return '<div class="pf-stat-card '+c.tone+'">'
+  var clickAttrs = c.action ? ' role="button" tabindex="0" style="cursor:pointer" onclick="'+c.action+'()"' : '';
+  return '<div class="pf-stat-card '+c.tone+'"'+clickAttrs+'>'
     + '<div class="pf-stat-icon"><svg viewBox="0 0 24 24">'+c.icon+'</svg></div>'
     + '<div class="pf-stat-label">'+c.label+'</div>'
     + '<div class="pf-stat-value">'+c.value+'<sub>件</sub></div>'
@@ -1734,9 +1752,10 @@ document.getElementById("statGrid").insertAdjacentHTML("afterbegin", STAT_CARDS.
 
 /* ---- 仕入リスト：表内の未使用エリアを右クリックするとホームのアクションをショートカット表示 ---- */
 function pfBuildShortcutMenuHTML(){
-  var html = '<div class="pf-shortcut-menu-title">ホームのアクション</div>';
+  var html = '<div class="pf-shortcut-menu-title">ショートカットアクション</div>';
   html += STAT_CARDS.map(function(c){
-    return '<div class="pf-shortcut-item"><span class="pf-shortcut-icon '+c.tone+'"><svg viewBox="0 0 24 24">'+c.icon+'</svg></span>'
+    var clickAttrs = c.action ? ' style="cursor:pointer" onclick="'+c.action+'();pfHideShortcutMenu()"' : '';
+    return '<div class="pf-shortcut-item"'+clickAttrs+'><span class="pf-shortcut-icon '+c.tone+'"><svg viewBox="0 0 24 24">'+c.icon+'</svg></span>'
       + '<span class="pf-shortcut-label">'+c.label+'</span><span class="pf-shortcut-value">'+c.value+'件</span></div>';
   }).join("");
   html += '<div class="pf-shortcut-divider"></div>';
@@ -1862,7 +1881,21 @@ function pfClearSiireFilter(){
   panel.querySelectorAll('input[type="text"],input[type="number"]').forEach(function(i){ i.value = ""; });
   panel.querySelectorAll('input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
   panel.querySelectorAll("select").forEach(function(s){ s.selectedIndex = 0; });
-  pfUpdateSiireFilterChips();
+  pfSiireFilterChanged();
+}
+/* ---- 仕入リスト：タグ（NEW／補充／ストック／滞留）で行を絞り込み ---- */
+function pfApplySiireTagFilter(){
+  var panel = document.getElementById("pfSiireFilterPanel");
+  var head = document.querySelector(".pf-siire-row.head");
+  var wrap = head && head.parentElement;
+  if(!panel || !wrap) return;
+  var activeTags = Array.prototype.filter.call(panel.querySelectorAll('input[data-tag-filter]'), function(cb){ return cb.checked; })
+    .map(function(cb){ return cb.dataset.tagFilter; });
+  wrap.querySelectorAll(".pf-siire-row:not(.head)").forEach(function(row){
+    if(activeTags.length === 0){ row.style.display = ""; return; }
+    var tags = Array.prototype.map.call(row.querySelectorAll(".pf-badge"), function(b){ return b.textContent.trim(); });
+    row.style.display = activeTags.some(function(t){ return tags.indexOf(t) !== -1; }) ? "" : "none";
+  });
 }
 /* ---- 仕入リスト：フィルターを設定したら、アクションボタンと同じ見た目のチップで表示 ---- */
 var PF_SIIRE_FILTER_DEFAULTS = null;
@@ -1884,7 +1917,7 @@ function pfUpdateSiireFilterChips(){
     var chip = document.createElement("span");
     chip.className = "pf-filter-chip excl";
     chip.innerHTML = label + '<span class="pf-filter-chip-x"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>';
-    chip.querySelector(".pf-filter-chip-x").addEventListener("click", function(){ onRemove(); pfUpdateSiireFilterChips(); });
+    chip.querySelector(".pf-filter-chip-x").addEventListener("click", function(){ onRemove(); pfSiireFilterChanged(); });
     container.appendChild(chip);
   }
   var search = panel.querySelector('input[type="text"]');
@@ -1896,7 +1929,8 @@ function pfUpdateSiireFilterChips(){
     var def = PF_SIIRE_FILTER_DEFAULTS.checks[i];
     if(cb.checked !== def){
       var label = cb.closest("label") ? cb.closest("label").textContent.trim() : "";
-      addChip((cb.checked ? "隠す：" : "表示：") + label, function(){ cb.checked = def; });
+      var prefix = cb.dataset.tagFilter ? "タグ：" : (cb.checked ? "隠す：" : "表示：");
+      addChip(prefix + label, function(){ cb.checked = def; });
     }
   });
   var selects = panel.querySelectorAll("select");
@@ -1915,11 +1949,15 @@ function pfUpdateSiireFilterChips(){
   });
   actionChips.forEach(function(chip){ container.appendChild(chip); });
 }
+function pfSiireFilterChanged(){
+  pfUpdateSiireFilterChips();
+  pfApplySiireTagFilter();
+}
 var pfSiireFilterPanelEl = document.getElementById("pfSiireFilterPanel");
 if(pfSiireFilterPanelEl){
   pfCaptureSiireFilterDefaults();
-  pfSiireFilterPanelEl.addEventListener("input", pfUpdateSiireFilterChips);
-  pfSiireFilterPanelEl.addEventListener("change", pfUpdateSiireFilterChips);
+  pfSiireFilterPanelEl.addEventListener("input", pfSiireFilterChanged);
+  pfSiireFilterPanelEl.addEventListener("change", pfSiireFilterChanged);
 }
 function pfShowActionChip(containerId, label){
   var container = document.getElementById(containerId);
@@ -1930,10 +1968,29 @@ function pfShowActionChip(containerId, label){
   chip.querySelector(".pf-filter-chip-x").addEventListener("click", function(){ chip.remove(); });
   container.appendChild(chip);
 }
+function pfCheckSiireTag(tagValue){
+  var panel = document.getElementById("pfSiireFilterPanel");
+  if(!panel) return;
+  var cb = panel.querySelector('input[data-tag-filter="'+tagValue+'"]');
+  if(cb){ cb.checked = true; pfSiireFilterChanged(); }
+}
 function pfDiscoverNewAsin(){
   var tab = document.querySelector('.pf-tab[data-tab="siire"]');
   if(tab) tab.click();
+  pfCheckSiireTag("NEW");
   pfShowActionChip("pfSiireFilterChips", "新規ASIN取得");
+}
+function pfDiscoverInstantRestock(){
+  var tab = document.querySelector('.pf-tab[data-tab="siire"]');
+  if(tab) tab.click();
+  pfCheckSiireTag("補充");
+  pfShowActionChip("pfSiireFilterChips", "即補充");
+}
+function pfDiscoverStockOut(){
+  var tab = document.querySelector('.pf-tab[data-tab="siire"]');
+  if(tab) tab.click();
+  pfCheckSiireTag("ストック");
+  pfShowActionChip("pfSiireFilterChips", "完全在庫切れ");
 }
 function pfApplySellerNewFilter(actionLabel){
   var newCheck = document.getElementById("catFilterNewOnly");
