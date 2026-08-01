@@ -269,6 +269,9 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pf-row-hidden{display:none}
 .pf-th-center{text-align:center;min-width:0}
 .pf-th-hint{border-bottom:1px dashed var(--faint)}
+.pf-th-sortable{cursor:pointer;user-select:none}
+.pf-th-sortable:hover{color:var(--accent-dark)}
+.pf-sort-arrow{margin-left:4px;color:var(--accent);font-size:9px;display:inline-block;width:8px}
 .pf-col-info-popup{
   position:fixed;z-index:3000;width:320px;background:#fff;border:1px solid var(--line);border-radius:14px;
   box-shadow:var(--shadow-md);padding:14px 16px;font-size:12.5px;color:var(--text);line-height:1.8;
@@ -305,7 +308,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .col-recommend{text-align:center;min-width:0}
 .col-recommend .ok-circle{width:26px;height:26px;border-radius:50%;border:2px solid #2e8b57;color:#2e8b57;display:flex;align-items:center;justify-content:center;margin:0 auto 4px}
 .col-recommend .ok-circle svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:3}
-.col-recommend .stock-link{font-size:11.5px;color:var(--accent);text-decoration:underline;font-family:var(--font-mono)}
+.col-recommend .stock-link{font-size:11.5px;color:var(--accent);text-decoration:underline;font-family:var(--font-mono);cursor:pointer}
 .pf-day-tabs{display:flex;gap:4px;justify-content:center}
 .pf-day-tab{width:32px;padding:4px 0;border-radius:7px;text-align:center;font-size:10px;color:var(--muted);background:#f4f5f8}
 .pf-day-tab b{display:block;font-size:13px;color:var(--navy)}
@@ -506,6 +509,23 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 .pcalc-tariff-table td{padding:5px 4px;border-bottom:1px solid var(--line)}
 .pcalc-tariff-table input{width:52px;height:26px;border-radius:6px;border:1px solid var(--line-strong);text-align:right;padding:0 6px;font-family:var(--font-mono);font-size:12px}
 
+.stockdet-modal-box{width:min(460px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
+.stockdet-body{padding:18px 22px 20px;overflow-y:auto}
+.stockdet-prod-name{font-family:var(--font-head);font-weight:700;font-size:14.5px;color:var(--navy);line-height:1.4}
+.stockdet-asin{font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-top:4px}
+.stockdet-total{display:flex;align-items:baseline;gap:6px;margin:20px 0 18px}
+.stockdet-total b{font-family:var(--font-head);font-size:38px;font-weight:800;color:var(--navy)}
+.stockdet-total span{font-size:13px;color:var(--muted)}
+.stockdet-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.stockdet-sq{width:10px;height:10px;border-radius:2px;flex:none}
+.stockdet-sq.sold{background:#4b8a1f}
+.stockdet-sq.moving{background:#2f6fed}
+.stockdet-sq.slc{background:#8a5a2f}
+.stockdet-sq.intl{background:#1a94a8}
+.stockdet-label{flex:1;font-size:13px;color:var(--text)}
+.stockdet-val{font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--navy)}
+.stockdet-note{font-size:11.5px;color:var(--faint);line-height:1.7;margin-top:16px}
+
 .csvup-modal-box{width:min(560px,100%);display:flex;flex-direction:column;max-height:calc(100vh - 40px);align-self:flex-start;margin-top:20px}
 .csvup-body{padding:18px 22px 22px;overflow-y:auto}
 .csvup-desc{font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:16px}
@@ -584,20 +604,21 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 }
 @keyframes pfMiningShine{0%{left:-60%}55%,100%{left:130%}}
 .pf-mining-label{display:flex;align-items:center;gap:8px}
-.pf-mining-pick{width:17px;height:17px;stroke:var(--amber);fill:none;stroke-width:2;flex:none}
+.pf-mining-pick{font-size:15px;line-height:1;flex:none}
 .pf-mining-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(21,34,56,.5)}
-.pf-mining-popup{
-  position:absolute;top:66px;left:0;width:280px;background:#fdf6e3;border:1.5px solid #e6c369;border-radius:16px;
-  padding:18px;box-shadow:0 14px 34px rgba(0,0,0,.14);z-index:20;
-}
-.pf-mining-popup .head{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:#5c3d00;font-size:14.5px;margin-bottom:14px}
-.pf-mining-popup .head span{cursor:pointer;color:var(--faint);font-weight:400}
+.mining-modal-box{width:min(360px,100%);background:#fdf6e3;border:1.5px solid #e6c369;align-self:flex-start;margin-top:20px}
+.mining-modal-box .modal-head{border-bottom:1.5px solid #e6c369}
+.mining-modal-box .modal-head h3{color:#5c3d00;font-size:15px}
+.mining-modal-box .modal-close{border-color:#e6c369;color:#8a6a1f;background:transparent}
+.mining-modal-box .modal-close:hover{background:#f4e2ab;color:#5c3d00}
+.mining-body{padding:18px}
 .pf-mining-result{border:1.5px dashed #d8b361;border-radius:12px;padding:14px;text-align:center;margin-bottom:12px}
 .pf-mining-result .lbl{font-size:12px;color:#8a6a1f;margin-bottom:6px}
 .pf-mining-result .val{font-family:var(--font-head);font-size:24px;font-weight:800;color:#5c3d00}
 .pf-mining-note{font-size:12px;color:#8a6a1f;margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .pf-mining-go{width:100%;height:42px;border-radius:10px;background:#3a2a12;color:#f0d693;font-family:var(--font-head);font-weight:700;font-size:13px;border:0;margin-bottom:8px;cursor:pointer}
 .pf-mining-more{width:100%;height:40px;border-radius:10px;background:transparent;color:#5c3d00;font-family:var(--font-head);font-weight:700;font-size:12.5px;border:1.5px solid #d8b361;cursor:pointer}
+
 
 .pf-seller-table{width:100%;border-collapse:collapse;font-size:13px;min-width:1100px}
 .pf-seller-table th{font-size:11.5px;color:var(--muted);font-weight:700;text-align:center;padding:12px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -798,6 +819,40 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <input type="checkbox">
         <div><div class="pcalc-checkbox-title">追加の上乗せ（既定オフ）</div><div class="pcalc-checkbox-desc">一律10%の上乗せ措置は2026-07-24に失効。制度が変わった場合にそなえて、必要になったときだけONにできます。</div></div>
       </label>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="stockDetailModal" onclick="if(event.target===this)closeStockDetailModal()">
+  <div class="modal-box stockdet-modal-box">
+    <div class="modal-head">
+      <h3>在庫の内訳</h3>
+      <button type="button" class="modal-close" onclick="closeStockDetailModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="stockdet-body">
+      <div class="stockdet-prod-name" id="stockdetProdName"></div>
+      <div class="stockdet-asin" id="stockdetAsin"></div>
+      <div class="stockdet-total"><b id="stockdetTotal">0</b><span>個（合計）</span></div>
+      <div class="stockdet-row"><span class="stockdet-sq sold"></span><span class="stockdet-label">販売中（Amazonで今すぐ売れる）</span><span class="stockdet-val" id="stockdetSold">0 個</span></div>
+      <div class="stockdet-row"><span class="stockdet-sq moving"></span><span class="stockdet-label">移動中（Amazonへ入荷予定）</span><span class="stockdet-val" id="stockdetMoving">0 個</span></div>
+      <div class="stockdet-row"><span class="stockdet-sq slc"></span><span class="stockdet-label">SLC滞留（当社倉庫・発送前）</span><span class="stockdet-val" id="stockdetSlc">0 個</span></div>
+      <div class="stockdet-row"><span class="stockdet-sq intl"></span><span class="stockdet-label">海外輸送中（発送済・Amazon未反映）</span><span class="stockdet-val" id="stockdetIntl">0 個</span></div>
+      <div class="stockdet-note">SLC＝SLC滞留＋海外輸送中。①入荷待ち（発注残）は在庫に含みません。</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="miningModal" onclick="if(event.target===this)closeMiningModal()">
+  <div class="modal-box mining-modal-box">
+    <div class="modal-head">
+      <h3>⛏ セラーマイニング</h3>
+      <button type="button" class="modal-close" onclick="closeMiningModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="mining-body">
+      <div class="pf-mining-result"><div class="lbl">今日の成果</div><div class="val">0 セラー獲得</div></div>
+      <div class="pf-mining-note">⛏ あと1回 採掘できる</div>
+      <button type="button" class="pf-mining-go" onclick="pfMiningTakeAction()">⛏ 今すぐ取得する</button>
+      <button type="button" class="pf-mining-more" onclick="pfMiningTakeAction()">もっとセラーを取得する</button>
     </div>
   </div>
 </div>
@@ -1043,7 +1098,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
     <div class="pf-updated-note">最終更新 07/31 12:00</div>
     <div class="pf-table-wrap">
       <div class="pf-siire-row head">
-        <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'gain')">利益を増やせる<br>余地</span></div>
+        <div class="pf-th-main"><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'gain')" onclick="pfSortSiireBy('gain')">利益を増やせる<br>余地<span class="pf-sort-arrow" id="siireSortArrow-gain"></span></span></div>
         <div class="pf-th-main">仕入
           <button type="button" class="pf-hide-checked-btn" id="pfHideCheckedBtn" aria-pressed="false" title="チェック済みの商品を非表示にする">
             <svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -1051,10 +1106,10 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         </div>
         <div class="pf-th-center">商品</div>
         <div class="pf-th-main"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'recommend')">推奨仕入</span></div>
-        <div class="pf-th-sub" data-colgroup="until"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'until')">在庫切れまで</span><span class="pf-th-chevron" onclick="pfToggleColGroup('until')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="price"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'price')">販売額$</span><span class="pf-th-chevron" onclick="pfToggleColGroup('price')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-label-row"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'profit')">想定利益額</span><span class="pf-th-info-btn" onclick="event.stopPropagation();openPcalcModal()" title="計算基準の設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></span></span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
-        <div class="pf-th-sub" data-colgroup="rate"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'rate')">想定利益率</span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="until"><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'until')" onclick="pfSortSiireBy('until')">在庫切れまで<span class="pf-sort-arrow" id="siireSortArrow-until"></span></span><span class="pf-th-chevron" onclick="pfToggleColGroup('until')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="price"><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'price')" onclick="pfSortSiireBy('price')">販売額$<span class="pf-sort-arrow" id="siireSortArrow-price"></span></span><span class="pf-th-chevron" onclick="pfToggleColGroup('price')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="profit"><span class="pf-th-label-row"><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'profit')" onclick="pfSortSiireBy('profit')">想定利益額<span class="pf-sort-arrow" id="siireSortArrow-profit"></span></span><span class="pf-th-info-btn" onclick="event.stopPropagation();openPcalcModal()" title="計算基準の設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="11" x2="12" y2="16"></line><circle cx="12" cy="8" r="0.1"></circle></svg></span></span><span class="pf-th-chevron" onclick="pfToggleColGroup('profit')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
+        <div class="pf-th-sub" data-colgroup="rate"><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'rate')" onclick="pfSortSiireBy('rate')">想定利益率<span class="pf-sort-arrow" id="siireSortArrow-rate"></span></span><span class="pf-th-chevron" onclick="pfToggleColGroup('rate')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div class="pf-th-sub" data-colgroup="index"><span class="pf-th-hint" oncontextmenu="showColInfo(event,'index')">指数</span><span class="pf-th-chevron" onclick="pfToggleColGroup('index')"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg></span></div>
         <div></div>
       </div>
@@ -1078,7 +1133,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
             <div class="pf-day-tab">30日<b>1</b></div>
             <div class="pf-day-tab rec">60日<b>4</b>推奨</div>
           </div>
-          <a class="stock-link">在庫 2</a>
+          <a class="stock-link" oncontextmenu="showStockDetailModal(event,this)" title="右クリックで在庫の内訳を表示" data-stock-sold="0" data-stock-moving="2" data-stock-slc="0" data-stock-intl="0">在庫 2</a>
         </div>
         <div class="col-until" data-colgroup="until">20日</div>
         <div class="col-price" data-colgroup="price">$1020.00</div>
@@ -1111,7 +1166,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
             <div class="pf-day-tab">30日<b>9</b></div>
             <div class="pf-day-tab rec">60日<b>19</b>推奨</div>
           </div>
-          <a class="stock-link">在庫 0</a>
+          <a class="stock-link" oncontextmenu="showStockDetailModal(event,this)" title="右クリックで在庫の内訳を表示" data-stock-sold="0" data-stock-moving="0" data-stock-slc="0" data-stock-intl="0">在庫 0</a>
         </div>
         <div class="col-until" data-colgroup="until">0日</div>
         <div class="col-price" data-colgroup="price">$78.99</div>
@@ -1144,7 +1199,7 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
             <div class="pf-day-tab">30日<b>9</b></div>
             <div class="pf-day-tab rec">60日<b>19</b>推奨</div>
           </div>
-          <a class="stock-link">在庫 0</a>
+          <a class="stock-link" oncontextmenu="showStockDetailModal(event,this)" title="右クリックで在庫の内訳を表示" data-stock-sold="0" data-stock-moving="0" data-stock-slc="0" data-stock-intl="0">在庫 0</a>
         </div>
         <div class="col-until" data-colgroup="until">0日</div>
         <div class="col-price" data-colgroup="price">$64.50</div>
@@ -1255,15 +1310,8 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
       <div class="pf-mining-wrap">
         <button type="button" class="pf-mining-btn" id="miningBtn">
           <span class="pf-mining-chip">新規優良セラーを取得</span>
-          <span class="pf-mining-label"><svg class="pf-mining-pick" viewBox="0 0 24 24"><path d="M4 4c4 0 8 2 10 6"></path><path d="M20 4c-4 0-8 2-10 6"></path><line x1="10" y1="10" x2="4" y2="20"></line></svg>セラーマイニング</span>
+          <span class="pf-mining-label"><span class="pf-mining-pick" aria-hidden="true">⛏</span>セラーマイニング</span>
         </button>
-        <div class="pf-mining-popup hidden" id="miningPopup">
-          <div class="head">⛏ セラーマイニング<span id="miningClose">✕</span></div>
-          <div class="pf-mining-result"><div class="lbl">今日の成果</div><div class="val">0 セラー獲得</div></div>
-          <div class="pf-mining-note">⛏ あと1回 採掘できる</div>
-          <button type="button" class="pf-mining-go">⛏ 今すぐ取得する</button>
-          <button type="button" class="pf-mining-more">もっとセラーを取得する</button>
-        </div>
       </div>
       <button type="button" class="pf-id-register-btn" onclick="openSellerRegisterModal()">🪪 セラーID登録</button>
       <div class="pf-outline-pill amber pf-toggle-pill" id="pfReqCategoryPill">
@@ -1285,12 +1333,14 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
         <table class="pf-seller-table">
           <thead><tr>
             <th>☆</th><th>セラー</th><th>発送</th><th><button type="button" class="pf-research-btn">🔍 全セラーでリサーチ</button></th>
-            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerProfit')">出品できる利益▼</span></th>
-            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerReq')">要申請利益</span></th>
-            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerUnreg')">未登録</span></th>
-            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerSim')">類似率</span></th>
-            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerCatMatch')">カテゴリー一致率</span></th>
-            <th>出品単価</th><th>総ASIN</th><th>カテゴリ構成</th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerProfit')" onclick="pfSortSellerBy('sellerProfit')">出品できる利益▼<span class="pf-sort-arrow" id="sellerSortArrow-sellerProfit"></span></span></th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerReq')" onclick="pfSortSellerBy('sellerReq')">要申請利益<span class="pf-sort-arrow" id="sellerSortArrow-sellerReq"></span></span></th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerUnreg')" onclick="pfSortSellerBy('sellerUnreg')">未登録<span class="pf-sort-arrow" id="sellerSortArrow-sellerUnreg"></span></span></th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerSim')" onclick="pfSortSellerBy('sellerSim')">類似率<span class="pf-sort-arrow" id="sellerSortArrow-sellerSim"></span></span></th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerCatMatch')" onclick="pfSortSellerBy('sellerCatMatch')">カテゴリー一致率<span class="pf-sort-arrow" id="sellerSortArrow-sellerCatMatch"></span></span></th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerPrice')" onclick="pfSortSellerBy('sellerPrice')">出品単価<span class="pf-sort-arrow" id="sellerSortArrow-sellerPrice"></span></span></th>
+            <th><span class="pf-th-hint pf-th-sortable" oncontextmenu="showColInfo(event,'sellerAsinCount')" onclick="pfSortSellerBy('sellerAsinCount')">総ASIN<span class="pf-sort-arrow" id="sellerSortArrow-sellerAsinCount"></span></span></th>
+            <th><span class="pf-th-hint" oncontextmenu="showColInfo(event,'sellerCatComp')">カテゴリ構成</span></th>
           </tr></thead>
           <tbody id="sellerTbody"></tbody>
         </table>
@@ -1303,18 +1353,21 @@ body{font-family:var(--font-body);color:var(--text);background:var(--bg);overflo
 <script>
 /* ---- 列見出し：点線の下線で右クリックすると説明を表示 ---- */
 var PF_COL_INFO = {
-  gain: "利益を増やせる余地＝推奨どおり（安全に持てる最長の日数分＝推奨仕入の推奨段）仕入れて売れば増やせる利益（円）＋バリエ機会損失。推奨仕入の日数と連動します。基準の選択にも連動。",
+  gain: "利益を増やせる余地＝推奨どおり（安全に持てる最長の日数分＝推奨仕入の推奨段）仕入れて売れば増やせる利益（円）＋バリエ機会損失。推奨仕入の日数と連動します。基準の選択にも連動。／　クリックで並び替え（もう一度で昇順↔降順）",
   recommend: "推奨仕入れ数＝目標在庫－（在庫＋移動中＋発送前）。今いくつ仕入れるべきか。下の（在庫◯）は現在庫合計で、クリックすると内訳モーダルが開きます。空欄＝アイコンで理由（在庫足りている/在庫過多/仕入不可）を表示。",
-  until: "在庫切れまで＝今の在庫があと何日で無くなるか（在庫÷日販）。囲みボタンで 日販／Amazon30日販売数／セラー数（出品者数）を開閉。",
-  price: "販売額＝現在の米ドル価格。見出しをクリックで基準（現価／TWAP）を選択。囲みボタンでTWAP／乖離率／価格バンドの上限・下限／バンド指数を開閉。",
-  profit: "想定利益額＝推奨仕入数ぶんの合計利益（返品反映）。見出しをクリックで基準（日本Amazon仕入／過去仕入優先／自分の仕入額）を選択＝額・率・在庫改善指数すべてに連動。囲みボタンで内訳を開閉。",
-  rate: "想定利益率＝利益率－返品率。基準は想定利益額と共通（見出しクリックで同じモーダル）。囲みボタンで 過去仕入率／TWAP率／返品率を開閉。",
+  until: "在庫切れまで＝今の在庫があと何日で無くなるか（在庫÷日販）。囲みボタンで 日販／Amazon30日販売数／セラー数（出品者数）を開閉。／　クリックで並び替え（もう一度で昇順↔降順）",
+  price: "販売額＝現在の米ドル価格。囲みボタンでTWAP／乖離率／価格バンドの上限・下限／バンド指数を開閉。／　クリックで並び替え（もう一度で昇順↔降順）",
+  profit: "想定利益額＝推奨仕入数ぶんの合計利益（返品反映）。計算基準（日本Amazon仕入／過去仕入優先／自分の仕入額）は右のⓘから設定＝額・率・在庫改善指数すべてに連動。囲みボタンで内訳を開閉。／　クリックで並び替え（もう一度で昇順↔降順）",
+  rate: "想定利益率＝利益率－返品率。基準は想定利益額と共通（右のⓘから設定）。囲みボタンで 過去仕入率／TWAP率／返品率を開閉。／　クリックで並び替え（もう一度で昇順↔降順）",
   index: "仕入判断に使っている5つの指数（BPI・PVI・DPI・SRI・DRA）。開くと各指数の列が表示されます。",
   sellerProfit: "★このセラーで「リサーチする」を押したときに出る「利益を増やせる余地」と完全に同じ数字です（同じ計算）。取得して分析済みの候補を、推奨どおり（安全に持てる最長の日数分）仕入れて売った場合に増やせる利益。①日本仕入可・②知財該当でない・③規制でない・④出品できる、を満たすものだけ。未取得ぶんは含みません（＝「未登録」列が掘る余地）／　クリックで並び替え（もう一度で昇順↔降順）",
   sellerReq: "④米国出品制限で「承認が要る」ぶんの月間粗利（別枠）。会員が未取扱で、代表アカウント基準では要申請のASIN。承認さえ取れば主軸利益に加わる伸びしろ／　クリックで並び替え（もう一度で昇順↔降順）",
   sellerUnreg: "あなたがまだ扱っていない、このセラーがFBAで出品しているASIN数＝掘る余地の大きさ。下段「分析済」＝そのうち実際に中身を取得して利益を算出した件数（左の利益はこの分析済ぶんの実額）／　クリックで並び替え（もう一度で昇順↔降順）",
   sellerSim: "品揃えの一致率（%）＝あなたの取扱ASINのうち、このセラーも扱っている割合。高いほど品揃えが似ている＝相性が良い／　クリックで並び替え（もう一度で昇順↔降順）",
-  sellerCatMatch: "このセラーの品揃えが、あなたの取扱カテゴリとどれだけ重なるか（%）。高いほど自分に扱いやすい／　クリックで並び替え（もう一度で昇順↔降順）"
+  sellerCatMatch: "このセラーの品揃えが、あなたの取扱カテゴリとどれだけ重なるか（%）。高いほど自分に扱いやすい／　クリックで並び替え（もう一度で昇順↔降順）",
+  sellerPrice: "このセラーの出品の平均販売価格（USD）。高単価ほど1個あたりの利益余地が大きい／　クリックで並び替え（もう一度で昇順↔降順）",
+  sellerAsinCount: "このセラーがストアフロントに出品している全ASIN数＝品揃えの大きさ。大きいほど掘る余地が広い／　クリックで並び替え（もう一度で昇順↔降順）",
+  sellerCatComp: "このセラーから取得したASINの上位3カテゴリ（扱わないカテゴリを除外すると反映）。何を売っているセラーかが一目で分かります"
 };
 function showColInfo(evt, key){
   var popup = document.getElementById("pfColInfoPopup");
@@ -1339,6 +1392,34 @@ function hideColInfo(){
 document.addEventListener("click", hideColInfo);
 document.addEventListener("scroll", hideColInfo, true);
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") hideColInfo(); });
+
+/* ---- 仕入リスト：列見出しクリックで並び替え ---- */
+var PF_SIIRE_SORT_STATE = {key:null, dir:1};
+function pfSiireCellValue(row, key){
+  var el = key === "gain" ? row.querySelector(".col-gain .amt") : row.querySelector(".col-"+key);
+  if(!el) return null;
+  var n = parseFloat(el.textContent.replace(/[^0-9.\-]/g,""));
+  return isNaN(n) ? null : n;
+}
+function pfSortSiireBy(key){
+  var head = document.querySelector(".pf-siire-row.head");
+  var wrap = head && head.parentElement;
+  if(!wrap) return;
+  if(PF_SIIRE_SORT_STATE.key === key) PF_SIIRE_SORT_STATE.dir *= -1;
+  else { PF_SIIRE_SORT_STATE.key = key; PF_SIIRE_SORT_STATE.dir = 1; }
+  var rows = Array.prototype.slice.call(wrap.querySelectorAll(".pf-siire-row:not(.head)"));
+  rows.sort(function(a,b){
+    var va = pfSiireCellValue(a, key), vb = pfSiireCellValue(b, key);
+    if(va === null && vb === null) return 0;
+    if(va === null) return 1;
+    if(vb === null) return -1;
+    return (va - vb) * PF_SIIRE_SORT_STATE.dir;
+  });
+  rows.forEach(function(r){ wrap.appendChild(r); });
+  document.querySelectorAll(".pf-siire-row.head .pf-sort-arrow").forEach(function(a){ a.textContent = ""; });
+  var arrow = document.getElementById("siireSortArrow-" + key);
+  if(arrow) arrow.textContent = PF_SIIRE_SORT_STATE.dir === 1 ? "▲" : "▼";
+}
 
 /* ---- 要申請カテゴリ：ON/OFF切り替え（スイッチ単体で切り替え） ---- */
 var pfReqCategoryBadge = document.getElementById("pfReqCategoryBadge");
@@ -1468,6 +1549,38 @@ function pfPcalcSelectTariff(id){
   });
 }
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") closePcalcModal(); });
+
+/* ---- 在庫リンク：右クリックで在庫の内訳モーダル ---- */
+function showStockDetailModal(evt, el){
+  evt.preventDefault();
+  evt.stopPropagation();
+  var row = el.closest(".pf-siire-row");
+  var name = row ? (row.querySelector(".pf-prod-name") || {}).textContent : "";
+  var asin = row ? (row.querySelector(".pf-prod-asin") || {}).textContent : "";
+  var sold = parseInt(el.dataset.stockSold || "0", 10);
+  var moving = parseInt(el.dataset.stockMoving || "0", 10);
+  var slc = parseInt(el.dataset.stockSlc || "0", 10);
+  var intl = parseInt(el.dataset.stockIntl || "0", 10);
+  var total = sold + moving + slc + intl;
+  document.getElementById("stockdetProdName").textContent = name || "";
+  document.getElementById("stockdetAsin").textContent = asin || "";
+  document.getElementById("stockdetTotal").textContent = total;
+  document.getElementById("stockdetSold").textContent = sold + " 個";
+  document.getElementById("stockdetMoving").textContent = moving + " 個";
+  document.getElementById("stockdetSlc").textContent = slc + " 個";
+  document.getElementById("stockdetIntl").textContent = intl + " 個";
+  var modal = document.getElementById("stockDetailModal");
+  if(!modal) return;
+  modal.classList.add("visible");
+  document.body.style.overflow = "hidden";
+}
+function closeStockDetailModal(){
+  var modal = document.getElementById("stockDetailModal");
+  if(!modal) return;
+  modal.classList.remove("visible");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeStockDetailModal(); });
 
 /* ---- 仕入リスト：列見出しの展開（在庫切れまで／販売額$／想定利益額／想定利益率／指数） ---- */
 var PF_COL_GROUPS = {
@@ -1654,6 +1767,7 @@ var pfSiirePanelForShortcut = document.getElementById("panel-siire");
 if(pfSiirePanelForShortcut){
   pfSiirePanelForShortcut.addEventListener("contextmenu", function(evt){
     if(evt.target.closest(".pf-th-hint")) return; // 既存の右クリック説明はそのまま優先
+    if(evt.target.closest(".stock-link")) return; // 在庫の内訳モーダルはそのまま優先
     pfShowShortcutMenu(evt);
   });
 }
@@ -1669,27 +1783,65 @@ var SAMPLE_SELLERS = [
   {name:"サンプルセラーD", id:"A00000000004", ship:["FBA"], profit:"¥106,830", req:"¥21,960", unreg:"297", analyzed:"17件", sim:"8.2%", cat:"85%", price:"$131", total:"321", cats:[["CD・レコード","#7c3aed"],["楽器","#8b3fd8"],["オフィス","#2f5fe0"]]},
   {name:"サンプルセラーE", id:"A00000000005", ship:[], profit:"¥85,764", req:"—", unreg:"—", analyzed:"4件", sim:"—", cat:"—", price:"—", total:"4", cats:[["ホーム・キッチン","#16a34a"]]}
 ];
-document.getElementById("sellerTbody").innerHTML = SAMPLE_SELLERS.map(function(s){
-  var shipHtml = s.ship.length
-    ? '<div class="pf-ship-badges">' + s.ship.map(function(t){ return '<span class="pf-ship-tag '+t.toLowerCase()+'">'+t+'</span>'; }).join("") + '</div>'
-    : '-';
-  var reqHtml = s.req === "—" ? '—' : '<span class="col-profit-amber">'+s.req+'</span>';
-  var catsHtml = '<div class="pf-seller-cats">' + s.cats.map(function(c){ return '<span class="cat-tag" style="border-color:'+c[1]+';color:'+c[1]+'">'+c[0]+'</span>'; }).join("") + '</div>';
-  return '<tr>'
-    + '<td class="star">☆</td>'
-    + '<td class="sellercell"><div class="sname">'+s.name+'</div><div class="said">'+s.id+'</div></td>'
-    + '<td>'+shipHtml+'</td>'
-    + '<td><button type="button" class="pf-research-btn">🔍 このセラーでリサーチする</button></td>'
-    + '<td class="col-profit-green">'+s.profit+'</td>'
-    + '<td>'+reqHtml+'</td>'
-    + '<td class="pf-unreg-cell">'+(s.unreg==="—"?'—':'<b>'+s.unreg+'</b>')+'<div class="an">分析済<br>'+s.analyzed+'</div></td>'
-    + '<td class="col-sim">'+s.sim+'</td>'
-    + '<td>'+s.cat+'</td>'
-    + '<td>'+s.price+'</td>'
-    + '<td>'+s.total+'</td>'
-    + '<td>'+catsHtml+'</td>'
-    + '</tr>';
-}).join("");
+var PF_SELLER_SORT_STATE = {key:null, dir:1};
+var PF_SELLER_SORT_FIELD = {
+  sellerProfit:"profit", sellerReq:"req", sellerUnreg:"unreg", sellerSim:"sim",
+  sellerCatMatch:"cat", sellerPrice:"price", sellerAsinCount:"total"
+};
+function pfSellerSortValue(s, field){
+  var raw = s[field];
+  if(raw === undefined || raw === "—" || raw === "-" || raw === "") return null;
+  var n = parseFloat(String(raw).replace(/[^0-9.\-]/g,""));
+  return isNaN(n) ? null : n;
+}
+function pfSortSellerBy(key){
+  var field = PF_SELLER_SORT_FIELD[key];
+  if(!field) return;
+  if(PF_SELLER_SORT_STATE.key === key) PF_SELLER_SORT_STATE.dir *= -1;
+  else { PF_SELLER_SORT_STATE.key = key; PF_SELLER_SORT_STATE.dir = 1; }
+  pfRenderSellerTbody();
+}
+function pfRenderSellerTbody(){
+  var list = SAMPLE_SELLERS.slice();
+  var state = PF_SELLER_SORT_STATE;
+  if(state.key){
+    var field = PF_SELLER_SORT_FIELD[state.key];
+    list.sort(function(a,b){
+      var va = pfSellerSortValue(a, field), vb = pfSellerSortValue(b, field);
+      if(va === null && vb === null) return 0;
+      if(va === null) return 1;
+      if(vb === null) return -1;
+      return (va - vb) * state.dir;
+    });
+  }
+  document.getElementById("sellerTbody").innerHTML = list.map(function(s){
+    var shipHtml = s.ship.length
+      ? '<div class="pf-ship-badges">' + s.ship.map(function(t){ return '<span class="pf-ship-tag '+t.toLowerCase()+'">'+t+'</span>'; }).join("") + '</div>'
+      : '-';
+    var reqHtml = s.req === "—" ? '—' : '<span class="col-profit-amber">'+s.req+'</span>';
+    var catsHtml = '<div class="pf-seller-cats">' + s.cats.map(function(c){ return '<span class="cat-tag" style="border-color:'+c[1]+';color:'+c[1]+'">'+c[0]+'</span>'; }).join("") + '</div>';
+    return '<tr>'
+      + '<td class="star">☆</td>'
+      + '<td class="sellercell"><div class="sname">'+s.name+'</div><div class="said">'+s.id+'</div></td>'
+      + '<td>'+shipHtml+'</td>'
+      + '<td><button type="button" class="pf-research-btn">🔍 このセラーでリサーチする</button></td>'
+      + '<td class="col-profit-green">'+s.profit+'</td>'
+      + '<td>'+reqHtml+'</td>'
+      + '<td class="pf-unreg-cell">'+(s.unreg==="—"?'—':'<b>'+s.unreg+'</b>')+'<div class="an">分析済<br>'+s.analyzed+'</div></td>'
+      + '<td class="col-sim">'+s.sim+'</td>'
+      + '<td>'+s.cat+'</td>'
+      + '<td>'+s.price+'</td>'
+      + '<td>'+s.total+'</td>'
+      + '<td>'+catsHtml+'</td>'
+      + '</tr>';
+  }).join("");
+  document.querySelectorAll(".pf-seller-table thead .pf-sort-arrow").forEach(function(a){ a.textContent = ""; });
+  if(state.key){
+    var arrow = document.getElementById("sellerSortArrow-" + state.key);
+    if(arrow) arrow.textContent = state.dir === 1 ? "▲" : "▼";
+  }
+}
+pfRenderSellerTbody();
 
 /* ---- 発送確認バナー:「あとで」で閉じる ---- */
 var shipNoticeLaterBtn = document.getElementById("pfShipNoticeLater");
@@ -1925,16 +2077,28 @@ if(csvDropzone){
 }
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeCsvUploadModal(); });
 
-var miningBtn = document.getElementById("miningBtn");
-var miningPopup = document.getElementById("miningPopup");
-if(miningBtn){
-  miningBtn.addEventListener("click", function(){
-    var wasHidden = miningPopup.classList.contains("hidden");
-    miningPopup.classList.toggle("hidden");
-    if(wasHidden) pfApplySellerNewFilter("セラーマイニング");
-  });
-  document.getElementById("miningClose").addEventListener("click", function(){ miningPopup.classList.add("hidden"); });
+function openMiningModal(){
+  var modal = document.getElementById("miningModal");
+  if(!modal) return;
+  modal.classList.add("visible");
+  document.body.style.overflow = "hidden";
 }
+function pfMiningTakeAction(){
+  pfApplySellerNewFilter("セラーマイニング");
+  closeMiningModal();
+}
+function closeMiningModal(){
+  var modal = document.getElementById("miningModal");
+  if(!modal) return;
+  modal.classList.remove("visible");
+  document.body.style.overflow = "";
+}
+var miningBtn = document.getElementById("miningBtn");
+if(miningBtn){
+  miningBtn.addEventListener("click", openMiningModal);
+}
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMiningModal(); });
+
 
 /* ---- 表の横スクロール: 左右の縦長オーバーレイをクリックでスライド ---- */
 function addEdgeScrollers(el){
